@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCeFLeV_6TcQRPxxoTZu8zdvgjd4jh4f58mz-yhAJFCQvbriO4TzXA70eghw4EQQr-zg/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0HjM7_HzP3aX6Ye2AMGF21QtUyefO8CQf_hjiNHHBOp3e77-g5RjkZD9llRHheWTC/exec";
 
 exports.handler = async function(event) {
   const cuit = ((event.queryStringParameters && event.queryStringParameters.cuit) || "").replace(/\D/g, "");
