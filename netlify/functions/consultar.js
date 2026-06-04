@@ -12,7 +12,7 @@ exports.handler = async function(event) {
   }
 
   try {
-    const res = await fetch(`${APPS_SCRIPT_URL}?cuit=${cuit}`);
+    const res = await fetch(`${APPS_SCRIPT_URL}?cuit=${cuit}&origen=estudiotango.netlify.app/`); 
     const data = await res.json();
     return {
       statusCode: 200,
