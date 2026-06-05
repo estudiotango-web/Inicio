@@ -1452,19 +1452,24 @@
        la barra sticky compacta.
     ════════════════════════════════════════════ */
     var stickyBar = document.getElementById("sticky-search-bar");
-    var sentinel  = document.getElementById("search-card-sentinel");
+var sentinel  = document.getElementById("search-card-sentinel");
 
-    var stickyObserver = new IntersectionObserver(function(entries) {
-      if (!isMobile()) return;
-      if (!entries[0].isIntersecting) {
-        stickyBar.classList.add("visible");
-      } else {
-        stickyBar.classList.remove("visible");
-      }
-    }, { threshold: 0, rootMargin: "0px" });
+// No mostrar sticky hasta que el usuario haya scrolleado
+var userHasScrolled = false;
+window.addEventListener("scroll", function() { userHasScrolled = true; }, { once: true, passive: true });
 
-    stickyObserver.observe(sentinel);
+var stickyObserver = new IntersectionObserver(function(entries) {
+  if (!isMobile()) return;
+  if (!userHasScrolled) return;
+  if (!entries[0].isIntersecting) {
+    stickyBar.classList.add("visible");
+  } else {
+    stickyBar.classList.remove("visible");
+  }
+}, { threshold: 0, rootMargin: "0px" });
 
+stickyObserver.observe(sentinel);
+    
     /* Sincronizar los inputs: cuando se escribe en uno
        se copia al otro para que siempre estén en sintonía */
     var cuitMain   = document.getElementById("cuit");
