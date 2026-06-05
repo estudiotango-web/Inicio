@@ -1451,24 +1451,26 @@
        search card) sale del viewport, mostramos
        la barra sticky compacta.
     ════════════════════════════════════════════ */
-    var stickyBar = document.getElementById("sticky-search-bar");
-var sentinel  = document.getElementById("search-card-sentinel");
+   var stickyBar = document.getElementById("sticky-search-bar");
+var searchCard = document.getElementById("search-card");
 
-// No mostrar sticky hasta que el usuario haya scrolleado
 var userHasScrolled = false;
 window.addEventListener("scroll", function() { userHasScrolled = true; }, { once: true, passive: true });
 
-var stickyObserver = new IntersectionObserver(function(entries) {
+function updateStickyBar() {
   if (!isMobile()) return;
   if (!userHasScrolled) return;
-  if (!entries[0].isIntersecting) {
+  var rect = searchCard.getBoundingClientRect();
+  // Mostrar solo cuando el borde INFERIOR del search card ya pasó hacia arriba
+  if (rect.bottom < 0) {
     stickyBar.classList.add("visible");
   } else {
     stickyBar.classList.remove("visible");
   }
-}, { threshold: 0, rootMargin: "0px" });
+}
 
-stickyObserver.observe(sentinel);
+window.addEventListener("scroll", updateStickyBar, { passive: true });
+window.addEventListener("resize", updateStickyBar, { passive: true });
     
     /* Sincronizar los inputs: cuando se escribe en uno
        se copia al otro para que siempre estén en sintonía */
