@@ -1187,9 +1187,7 @@
 
       <p class="top-label" id="top-label-main" aria-hidden="true">Informe financiero personalizado</p>
 
-      <!-- Sentinel: marca el borde inferior del search card
-           para saber cuándo activar el sticky -->
-      <div class="search-card-sentinel" id="search-card-sentinel"></div>
+      
 
       <!-- SEARCH CARD -->
       <section class="search-card" id="search-card" aria-label="Consultar informe crediticio">
@@ -1242,7 +1240,10 @@
           </div>
         </div>
       </section>
-
+<!-- Sentinel: marca el borde inferior del search card
+           para saber cuándo activar el sticky -->
+      <div class="search-card-sentinel" id="search-card-sentinel"></div>
+      
       <!-- RESULTADO -->
       <div id="resultado-wrapper">
         <!-- Header mobile con botón cerrar — solo visible en modo resultado mobile -->
@@ -1486,9 +1487,11 @@
 
     /* Desde el sticky bar, copiar valor y lanzar consulta */
     function consultarSticky() {
-      cuitMain.value = cuitSticky.value;
-      consultar();
-    }
+  cuitMain.value = cuitSticky.value;
+  // Scroll al search card para que se vea la barra de progreso
+  document.getElementById("search-card").scrollIntoView({ behavior: "smooth", block: "start" });
+  setTimeout(function() { consultar(); }, 350);
+}
 
     /* ════════════════════════════════════════════
        MODO RESULTADO en MOBILE
