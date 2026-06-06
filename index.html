@@ -1435,6 +1435,7 @@
     ════════════════════════════════════════════ */
     const API = "https://script.google.com/macros/s/AKfycbw0HjM7_HzP3aX6Ye2AMGF21QtUyefO8CQf_hjiNHHBOp3e77-g5RjkZD9llRHheWTC/exec";
     const TURNO_URL = "#";
+    let ultimoCuitConsultado = "";
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -1537,15 +1538,24 @@ window.addEventListener("resize", updateStickyBar, { passive: true });
       // if(typeof gtag !== 'undefined') { ... }
     }
 
-    function reservarTurno() {
-      trackConversion('reserva_consulta', 0);
-      if (!TURNO_URL || TURNO_URL === "#") {
-        alert("Próximamente vas a poder reservar tu videollamada profesional desde acá.");
-        return;
-      }
-      window.open(TURNO_URL, "_blank", "noopener noreferrer");
-    }
+   function reservarTurno() {
+  trackConversion('reserva_consulta', 0);
 
+  if (!ultimoCuitConsultado) {
+    alert("Primero realizá una consulta.");
+    return;
+  }
+
+  const mensaje =
+`Hola, solicito una reunión virtual con un asesor.
+
+Mi CUIT/CUIL es: ${ultimoCuitConsultado}`;
+
+  window.open(
+    `https://wa.me/5493435020970?text=${encodeURIComponent(mensaje)}`,
+    '_blank'
+  );
+}
     /* ════════════════════════════════════════════
        LOADER
     ════════════════════════════════════════════ */
@@ -1714,6 +1724,7 @@ window.addEventListener("resize", updateStickyBar, { passive: true });
     ════════════════════════════════════════════ */
     async function consultar() {
       var cuit = cuitMain.value.trim().replace(/\D/g,"");
+      ultimoCuitConsultado = cuit;
       var res  = document.getElementById("resultado");
       res.innerHTML = "";
       /* Salir de modo resultado si estaba activo */
