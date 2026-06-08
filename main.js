@@ -529,3 +529,225 @@ function renderizar(json) {
 
   res.innerHTML = html;
 }
+
+/* ════════════════════════════════════════════
+   CHAT WIDGET — 
+════════════════════════════════════════════ */
+
+// URL de tu Apps Script del chat (distinto al del BCRA)
+var CHAT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqiYHeDnYigHNES_S7FWosqsKFGYgNqVbj92sRXMxYfkKbg9Bcz2bsICnkXyI_AjyR/exec";
+
+var chatIsOpen     = false;
+var chatBusy       = false;
+var chatMsgs       = [];   // historial para contexto
+var chatBadgeDone  = false;
+
+// Mostrar badge de notificación después de 4 segundos
+setTimeout(function () {
+  if (!chatIsOpen && !chatBadgeDone) {
+    var b = document.getElementById("chat-badge");
+    if (b) { b.style.display = "flex"; chatBadgeDone = true; }
+  }
+}, 4000);
+
+/* ── Abrir / cerrar ── */
+function chatToggle() {
+  chatIsOpen = !chatIsOpen;
+  var win    = document.getElementById("chat-window");
+  var iconO  = document.getElementById("chat-btn-icon-open");
+  var iconC  = document.getElementById("chat-btn-icon-close");
+  var label  = document.getElementById("chat-btn-label");
+  var badge  = document.getElementById("chat-badge");
+  var btn    = document.getElementById("btn-chat-flotante");
+
+  if (chatIsOpen) {
+    win.style.display = "flex";
+    btn.setAttribute("aria-expanded", "true");
+    iconO.style.display = "none";
+    iconC.style.display = "inline-flex";
+    label.textContent   = "Cerrar";
+    if (badge) badge.style.display = "none";
+    if (chatMsgs.length === 0) chatInitMessages();
+    setTimeout(function () { document.getElementById("chat-input").focus(); }, 120);
+    chatScrollBottom();
+  } else {
+    win.style.display = "none";
+    btn.setAttribute("aria-expanded", "false");
+    iconO.style.display = "inline-flex";
+    iconC.style.display = "none";
+    label.textContent   = "Consulta rápida";
+  }
+}
+
+/* ── Mensaje inicial y sugerencias ── */
+function chatInitMessages() {
+  var msgs = document.getElementById("chat-messages");
+  msgs.innerHTML = "";
+
+  // Divider fecha
+  var div = document.createElement("div");
+  div.className   = "chat-divider";
+  div.textContent = "Hoy";
+  msgs.appendChild(div);
+
+  // Bienvenida
+  chatAppend("bot", "Hola 👋 Soy el asistente de <strong>TANGO Recuperación Financiera</strong>.<br><br>Puedo ayudarte con dudas sobre tu historial crediticio, el Veraz o cómo regularizar deudas. ¿En qué te puedo ayudar?");
+
+  // Sugerencias rápidas
+  var sugg = document.createElement("div");
+  sugg.className = "chat-suggestions";
+  sugg.id        = "chat-suggestions";
+  var opciones = [
+    "¿Cómo salgo del Veraz?",
+    "¿Cuánto cuesta la consulta?",
+    "¿Cuánto tiempo lleva?",
+    "¿Qué es la situación BCRA?"
+  ];
+  opciones.forEach(function (txt) {
+    var b = document.createElement("button");
+    b.className   = "chat-sugg-btn";
+    b.textContent = txt;
+    b.onclick     = function () { chatUseSuggestion(txt); };
+    sugg.appendChild(b);
+  });
+  msgs.appendChild(sugg);
+  chatScrollBottom();
+}
+
+function chatUseSuggestion(txt) {
+  var sugg = document.getElementById("chat-suggestions");
+  if (sugg) sugg.remove();
+  document.getElementById("chat-input").value = txt;
+  chatSend();
+}
+
+/* ── Enviar mensaje ── */
+function chatSend() {
+  if (chatBusy) return;
+  var input = document.getElementById("chat-input");
+  var text  = input.value.trim();
+  if (!text) return;
+
+  input.value = "";
+  input.style.height = "auto";
+
+  var sugg = document.getElementById("chat-suggestions");
+  if (sugg) sugg.remove();
+
+  chatAppend("user", chatEsc(text));
+  chatMsgs.push({ role: "user", content: text });
+
+  chatBusy = true;
+  document.getElementById("chat-send-btn").disabled = true;
+  chatShowTyping();
+
+  // Llamada al Apps Script via JSONP
+  var cbName = "chatCb_" + Date.now();
+  window[cbName] = function (data) {
+    delete window[cbName];
+    var s = document.getElementById("chat-script-req");
+    if (s) s.remove();
+    chatHideTyping();
+    chatBusy = false;
+    document.getElementById("chat-send-btn").disabled = false;
+    if (data && data.ok && data.reply) {
+      chatAppend("bot", chatFormat(data.reply), data.showCta);
+      chatMsgs.push({ role: "assistant", content: data.reply });
+    } else {
+      chatAppend("bot", "Hubo un error al conectar. Intentá de nuevo en un momento.");
+    }
+    document.getElementById("chat-input").focus();
+  };
+
+  var script   = document.createElement("script");
+  script.id    = "chat-script-req";
+  script.src   = CHAT_SCRIPT_URL
+    + "?msg="      + encodeURIComponent(text)
+    + "&history="  + encodeURIComponent(JSON.stringify(chatMsgs.slice(-6)))
+    + "&callback=" + cbName;
+  script.onerror = function () {
+    delete window[cbName];
+    chatHideTyping();
+    chatBusy = false;
+    document.getElementById("chat-send-btn").disabled = false;
+    chatAppend("bot", "No se pudo conectar. Revisá tu conexión e intentá de nuevo.");
+  };
+  document.body.appendChild(script);
+}
+
+/* ── Helpers de UI ── */
+function chatNow() {
+  var d = new Date();
+  return d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0");
+}
+
+function chatAppend(role, html, showCta) {
+  var msgs = document.getElementById("chat-messages");
+  var wrap = document.createElement("div");
+  wrap.className = "chat-msg " + role;
+
+  var bubble = document.createElement("div");
+  bubble.className = "chat-bubble";
+  bubble.innerHTML = html;
+  wrap.appendChild(bubble);
+
+  var time = document.createElement("div");
+  time.className   = "chat-time";
+  time.textContent = chatNow();
+  wrap.appendChild(time);
+
+  if (showCta) {
+    var cta = document.createElement("div");
+    cta.className = "chat-cta";
+    cta.innerHTML =
+      '<p>¿Querés que un asesor analice tu caso en detalle?</p>'
+      + '<a href="' + (typeof RESERVA_URL !== "undefined" ? RESERVA_URL : "#") + '" class="chat-cta-btn" target="_blank" rel="noopener">'
+      + '📅 Reservar evaluación profesional'
+      + '</a>'
+      + '<p class="chat-cta-note">$10.000 · Reembolsable · Se descuenta de honorarios</p>';
+    wrap.appendChild(cta);
+  }
+
+  msgs.appendChild(wrap);
+  chatScrollBottom();
+}
+
+function chatShowTyping() {
+  var msgs = document.getElementById("chat-messages");
+  var div  = document.createElement("div");
+  div.className = "chat-msg bot chat-typing";
+  div.id        = "chat-typing";
+  div.innerHTML = '<div class="chat-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  msgs.appendChild(div);
+  chatScrollBottom();
+}
+
+function chatHideTyping() {
+  var t = document.getElementById("chat-typing");
+  if (t) t.remove();
+}
+
+function chatScrollBottom() {
+  var msgs = document.getElementById("chat-messages");
+  if (msgs) msgs.scrollTop = msgs.scrollHeight;
+}
+
+function chatKeyDown(e) {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); chatSend(); }
+}
+
+function chatResizeInput(el) {
+  el.style.height = "auto";
+  el.style.height = Math.min(el.scrollHeight, 80) + "px";
+}
+
+function chatEsc(str) {
+  return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");
+}
+
+function chatFormat(str) {
+  return str
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")
+    .replace(/\n/g,"<br>");
+}
