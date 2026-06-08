@@ -752,7 +752,7 @@
   //  ASESOR — datos del único asesor
   // ════════════════════════════════════════════════════════════════
   var ASESOR = {
-    nombre: 'Martín González',
+    nombre: 'Alejandro Martínez',
     cargo:  'Asesor en Recuperación Financiera',
     // ⚠️ Reemplazá esta URL con la foto real del asesor
     foto:   'https://res.cloudinary.com/dwgwbdtud/image/upload/v1780571332/qhp1rxgz7x8d1gv6cmwc.png',
@@ -817,13 +817,19 @@
   // ── Chequear retorno de Mercado Pago ──
   (function checkMpReturn() {
     var params = new URLSearchParams(window.location.search);
-    var estado    = params.get('estado');
-    var turnoId   = params.get('turno_id');
-    var paymentId = params.get('payment_id') || params.get('collection_id') || '';
+
+    // Mercado Pago devuelve en la back_url:
+    //   collection_id       → id del pago (= payment_id)
+    //   collection_status   → approved | pending | rejected
+    //   external_reference  → nuestro turno_id (lo mandamos en la preferencia)
+    var estado           = params.get('estado');
+    var turnoId          = params.get('turno_id') || params.get('external_reference') || '';
+    var paymentId        = params.get('collection_id') || params.get('payment_id') || '';
+    var collectionStatus = params.get('collection_status') || params.get('status') || '';
+
+    console.log('MP return:', { estado, turnoId, paymentId, collectionStatus, qs: window.location.search });
 
     if ((estado === 'ok' || estado === 'pendiente') && turnoId) {
-      // ✅ Tanto "ok" como "pendiente" muestran la confirmación
-      // (el turno ya está reservado; el estado pendiente es de MP, no de nosotros)
       window.history.replaceState({}, '', window.location.pathname);
       confirmarYMostrar(turnoId, paymentId);
     } else if (estado === 'fallo') {
