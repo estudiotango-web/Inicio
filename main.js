@@ -703,10 +703,13 @@ function chatAppend(role, html, showCta) {
     var cta = document.createElement("div");
     cta.className = "chat-cta";
     cta.innerHTML =
-      '<p>¿Querés que un asesor analice tu caso en detalle?</p>'
-      + '<a href="' + (typeof RESERVA_URL !== "undefined" ? RESERVA_URL : "#") + '" class="chat-cta-btn" target="_blank" rel="noopener">'
-      + '📅 Reservar evaluación profesional'
-      + '</a>'
+  '<p>Si querés que un asesor revise tu caso en detalle, podés reservar una consulta. '
+  + 'La reserva tiene un costo de <strong>$10.000</strong> que se descuenta de los honorarios finales '
+  + 'y es reembolsable si no hay alternativas viables para tu situación. '
+  + 'La reunión puede ser por videollamada, llamada o mensaje, como prefieras.</p>'
+  + '<a href="' + (typeof RESERVA_URL !== "undefined" ? RESERVA_URL : "#") + '" class="chat-cta-btn" target="_blank" rel="noopener">'
+  + '📅 Reservar consulta con un asesor'
+  + '</a>';
       + '<p class="chat-cta-note">$10.000 · Reembolsable · Se descuenta de honorarios</p>';
     wrap.appendChild(cta);
   }
