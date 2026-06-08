@@ -266,7 +266,10 @@ const SITS = {
 
 function si(n)  { return SITS[n] || { label: "Situación " + n, cls: "s6c", dot: "#5A5552" }; }
 function fmt(n) { return "$" + Math.round(n * 1000).toLocaleString("es-AR"); }
-function fmtD(d){ return (!d || d === 0) ? "Sin atraso" : d + " días"; }
+function fmtD(d) {
+  if (d && typeof d === "number" && d > 0) return d + " días";
+  return "No informa";
+}
 function ini(nom) {
   if (!nom) return "?";
   var p = nom.trim().split(/\s+/);
@@ -376,27 +379,27 @@ function renderizar(json) {
   var diagClass, diagIcon, diagRating, diagDesc, urgMsg, urgSub;
 
   if (peor <= 2) {
-    diagClass  = "alto";
-    diagIcon   = '<i class="ti ti-trending-up" style="color:#6DBF95" aria-hidden="true"></i>';
-    diagRating = "ALTO POTENCIAL DE RECUPERACIÓN";
-    diagDesc   = "Tu perfil presenta condiciones favorables. La regularización profesional puede liberar el acceso al crédito en el menor tiempo posible.";
-    urgMsg     = 'Tu perfil <em>tiene solución</em>. El primer paso es una consulta profesional.';
-    urgSub     = 'En 30 minutos evaluamos tu caso en detalle y definimos el camino concreto para limpiar tu historial crediticio.';
-  } else if (peor <= 4) {
-    diagClass  = "moderado";
-    diagIcon   = '<i class="ti ti-chart-line" style="color:#E2C16A" aria-hidden="true"></i>';
-    diagRating = "POTENCIAL MODERADO";
-    diagDesc   = "Existen registros que requieren atención. Con la estrategia adecuada es posible mejorar tu perfil crediticio de manera concreta.";
-    urgMsg     = 'Estos registros <em>tienen solución</em>, pero cada mes que pasa suma más daño a tu historial.';
-    urgSub     = 'Una consulta profesional permite definir exactamente qué acciones tomar y en qué orden para salir del Veraz y regularizar tu situación.';
-  } else {
-    diagClass  = "requiere";
-    diagIcon   = '<i class="ti ti-eye" style="color:#E8705F" aria-hidden="true"></i>';
-    diagRating = "REQUIERE ANÁLISIS PROFESIONAL";
-    diagDesc   = "Tu situación presenta complejidades que ameritan un análisis detallado para definir el mejor camino de recuperación crediticia.";
-    urgMsg     = 'Tu situación es compleja, pero <em>tiene salida</em>. Necesitás una estrategia clara y profesional.';
-    urgSub     = 'No todos los casos son iguales. En la consulta analizamos tu situación específica y te decimos exactamente qué es posible hacer.';
-  }
+  diagClass  = "alto";
+  diagIcon   = '<i class="ti ti-trending-up" style="color:#6DBF95" aria-hidden="true"></i>';
+  diagRating = "PERFIL CON BAJO NIVEL DE RIESGO REGISTRADO";
+  diagDesc   = "El BCRA no muestra registros críticos en este momento. Esto no descarta antecedentes en otras bases como Veraz u otros burós. Un asesor puede cruzar toda la información disponible.";
+  urgMsg     = 'Este resultado es <em>un punto de partida</em>, no un diagnóstico completo.';
+  urgSub     = 'El BCRA es solo una de las fuentes que usan los bancos para evaluar créditos. En 30 minutos un asesor puede ver el panorama completo y decirte exactamente en qué situación estás.';
+} else if (peor <= 4) {
+  diagClass  = "moderado";
+  diagIcon   = '<i class="ti ti-chart-line" style="color:#E2C16A" aria-hidden="true"></i>';
+  diagRating = "SE DETECTARON REGISTROS QUE REQUIEREN ATENCIÓN";
+  diagDesc   = "El BCRA informa antecedentes que pueden estar afectando tu acceso al crédito. La situación real puede ser distinta: hay casos que tienen solución y otros que requieren una estrategia específica.";
+  urgMsg     = 'Estos registros <em>pueden tener solución</em>, pero depende de cada caso.';
+  urgSub     = 'No todos los antecedentes tienen el mismo impacto ni el mismo camino de salida. Un asesor puede analizar tu situación específica y decirte qué es posible hacer y en qué plazo.';
+} else {
+  diagClass  = "requiere";
+  diagIcon   = '<i class="ti ti-eye" style="color:#E8705F" aria-hidden="true"></i>';
+  diagRating = "SITUACIÓN COMPLEJA — REQUIERE ANÁLISIS PROFESIONAL";
+  diagDesc   = "El BCRA muestra registros de alto riesgo. Este tipo de situaciones tiene salida en muchos casos, pero requiere una evaluación detallada para entender qué opciones están disponibles.";
+  urgMsg     = 'Una situación compleja <em>no es una situación sin salida</em>.';
+  urgSub     = 'Cada caso es distinto. Lo que determina si tiene solución no es solo lo que aparece en el BCRA, sino el conjunto de factores que un asesor puede evaluar en detalle.';
+}
 
   var html = "";
 
@@ -598,11 +601,11 @@ function chatInitMessages() {
   sugg.className = "chat-suggestions";
   sugg.id        = "chat-suggestions";
   var opciones = [
-    "¿Cómo salgo del Veraz?",
-    "¿Cuánto cuesta la consulta?",
-    "¿Cuánto tiempo lleva?",
-    "¿Qué es la situación BCRA?"
-  ];
+  "¿Por qué me rechazan créditos?",
+  "¿El BCRA es lo mismo que el Veraz?",
+  "¿Cómo sé si tengo deudas en otras bases?",
+  "¿Cuánto cuesta la consulta con un asesor?"
+];
   opciones.forEach(function (txt) {
     var b = document.createElement("button");
     b.className   = "chat-sugg-btn";
