@@ -1042,10 +1042,10 @@ details.faq-item summary:hover{color:var(--gold2)}
     right: 16px;
   }
 
-  /* Se oculta cuando está activo el modo resultado */
+  /* Se oculta cuando está activo el modo resultado 
   body.modo-resultado #btn-chat-flotante {
     display: none;
-  }
+  }*/
 
   #chat-window {
     right: 0; bottom: 0; left: 0;
