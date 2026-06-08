@@ -523,7 +523,6 @@ function renderizar(json) {
     + '<p class="cta-precio-nota">Reserva online: <strong>$10.000</strong><br>'
     + '<span>El importe se acredita a honorarios y es reembolsable si el caso no presenta alternativas viables.</span>'
     + '</p>'
-    + '<button class="btn-secondary-link" onclick="reservarTurno()">Prefiero que me contacten</button>'
     + '</div>'
     + '<p class="cta-note">Llamada 0 Videollamada de 30 minutos. Evaluación individual y confidencial de tu situación crediticia.</p>'
     + '</section>';
