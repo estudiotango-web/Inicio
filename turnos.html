@@ -920,50 +920,56 @@
   var DIAS  = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
 
   function renderCal() {
-    var y = state.calYear, m = state.calMonth;
-    document.getElementById('cal-month-label').textContent = MESES[m] + ' ' + y;
+  var y = state.calYear, m = state.calMonth;
+  document.getElementById('cal-month-label').textContent = MESES[m] + ' ' + y;
 
-    var firstDay    = new Date(y, m, 1).getDay();
-    var daysInMonth = new Date(y, m + 1, 0).getDate();
-    var today       = new Date(); today.setHours(0, 0, 0, 0);
+  var firstDow    = new Date(y, m, 1).getDay(); // 0=dom, 1=lun...
+  var daysInMonth = new Date(y, m + 1, 0).getDate();
+  var today       = new Date(); today.setHours(0, 0, 0, 0);
 
-    var html = DIAS.map(function(d) {
-      return '<div class="cal-day-name">' + d + '</div>';
-    }).join('');
+  // Encabezados — semana empieza en domingo
+  var html = DIAS.map(function(d) {
+    return '<div class="cal-day-name">' + d + '</div>';
+  }).join('');
 
-    for (var i = 0; i < firstDay; i++) {
-      html += '<div class="cal-day empty"></div>';
-    }
-
-    for (var d = 1; d <= daysInMonth; d++) {
-      var date = new Date(y, m, d);
-      var dow  = date.getDay();
-      var isPast   = date < today;
-      var isWeekend = (dow === 0 || dow === 6);
-      var isSelected = state.fecha && state.fecha.getTime() === date.getTime();
-      var isToday    = date.getTime() === today.getTime();
-
-      var cls = 'cal-day';
-      if (isPast || isWeekend) cls += ' disabled past';
-      else cls += ' available';
-      if (isSelected) cls += ' selected';
-      if (isToday) cls += ' today';
-
-      var onclick = (!isPast && !isWeekend)
-        ? 'onclick="selectDay(' + y + ',' + m + ',' + d + ')"'
-        : '';
-      html += '<div class="' + cls + '" ' + onclick + '>' + d + '</div>';
-    }
-
-    document.getElementById('cal-grid').innerHTML = html;
-
-    // Control nav anterior
-    var firstOfMonth = new Date(y, m, 1);
-    var prevOk = firstOfMonth > today;
-    var prevBtn = document.getElementById('cal-prev');
-    prevBtn.style.opacity = prevOk ? '1' : '.3';
-    prevBtn.style.pointerEvents = prevOk ? '' : 'none';
+  // Celdas vacías antes del día 1
+  for (var emp = 0; emp < firstDow; emp++) {
+    html += '<div class="cal-day empty"></div>';
   }
+
+  // Días del mes
+  for (var dia = 1; dia <= daysInMonth; dia++) {
+    var date      = new Date(y, m, dia);
+    var dow       = date.getDay();
+    var isPast    = date < today;
+    var isWeekend = (dow === 0 || dow === 6);
+    var isSelected = state.fecha && state.fecha.getTime() === date.getTime();
+    var isToday    = date.getTime() === today.getTime();
+
+    var cls = 'cal-day';
+    if (isPast || isWeekend) {
+      cls += ' disabled past';
+    } else {
+      cls += ' available';
+    }
+    if (isSelected) cls += ' selected';
+    if (isToday)    cls += ' today';
+
+    var onclick = (!isPast && !isWeekend)
+      ? 'onclick="selectDay(' + y + ',' + m + ',' + dia + ')"'
+      : '';
+
+    html += '<div class="' + cls + '" ' + onclick + '>' + dia + '</div>';
+  }
+
+  document.getElementById('cal-grid').innerHTML = html;
+
+  // Deshabilitar botón "mes anterior" si ya estamos en el mes actual
+  var prevOk = !(y === today.getFullYear() && m === today.getMonth());
+  var prevBtn = document.getElementById('cal-prev');
+  prevBtn.style.opacity       = prevOk ? '1' : '.3';
+  prevBtn.style.pointerEvents = prevOk ? '' : 'none';
+}
 
   function calNav(dir) {
     state.calMonth += dir;
