@@ -321,11 +321,11 @@ async function consultar() {
     const script = document.createElement("script");
     script.id = "script-bcra";
 
-    script.src =
-      API +
-      "?cuit=" + encodeURIComponent(cuit) +
-      "&callback=" + callbackName;
-
+   script.src =
+  API +
+  "?cuit=" + encodeURIComponent(cuit) +
+  "&callback=" + callbackName +
+  "&origen=" + encodeURIComponent("https://estudiotango-web.github.io/Inicio/");
     script.onerror = function() {
       delete window[callbackName];
       reject(new Error("Error al conectar con el servidor."));
