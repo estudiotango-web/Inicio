@@ -2,7 +2,7 @@
    CONFIG
 ════════════════════════════════════════════ */
 // CAMBIO A: URL de reserva
-const RESERVA_URL = "PEGAR_AQUI_URL";
+const RESERVA_URL = "https://estudiotango-web.github.io/Inicio/turnos.html";
 
 const API = "https://script.google.com/macros/s/AKfycbw0HjM7_HzP3aX6Ye2AMGF21QtUyefO8CQf_hjiNHHBOp3e77-g5RjkZD9llRHheWTC/exec";
 const TURNO_URL = "#";
@@ -416,7 +416,7 @@ function renderizar(json) {
     + '</div>'
     + '<button class="btn-reservar" onclick="reservarTurno()" aria-label="Solicitar evaluación profesional">'
     + '<span class="btn-reservar-label">Solicitar evaluación profesional</span>'
-    + '<span class="btn-reservar-meta">Videollamada · 30 min · Con asesor</span>'
+    + '<span class="btn-reservar-meta">Reunión Virtual · 30 min · Con asesor</span>'
     + '</button>'
     + '<p class="cta-precio-nota">Reserva online: <strong>$10.000</strong><br>'
     + '<span>El importe se acredita a honorarios y es reembolsable si el caso no presenta alternativas viables.</span>'
@@ -525,7 +525,7 @@ function renderizar(json) {
     + '</p>'
     + '<button class="btn-secondary-link" onclick="reservarTurno()">Prefiero que me contacten</button>'
     + '</div>'
-    + '<p class="cta-note">Videollamada de 30 minutos. Evaluación individual y confidencial de tu situación crediticia.</p>'
+    + '<p class="cta-note">Llamada 0 Videollamada de 30 minutos. Evaluación individual y confidencial de tu situación crediticia.</p>'
     + '</section>';
 
   res.innerHTML = html;
