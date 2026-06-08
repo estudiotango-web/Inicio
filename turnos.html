@@ -18,6 +18,7 @@
     ═══════════════════════════════════════ */
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
+      color-scheme: dark; 
       --bordo:#6B0F1A;
       --bordo2:#8B1525;
       --bordo-dark:#260308;
@@ -47,8 +48,8 @@
     html,body{min-height:100%}
     body{
       font-family:var(--sans);
-      background:var(--bg);
-      color:var(--text);
+     background: #0A0808;
+  color: #EDE9E3;
       overflow-x:hidden;
       font-size:16px;
       line-height:1.6;
@@ -166,20 +167,20 @@
       font-size:.6875rem;font-weight:700;color:var(--muted);
       text-transform:uppercase;letter-spacing:.06em;
     }
-    .form-input{
-      background:var(--s3);
-      border:1.5px solid rgba(255,255,255,.12);
-      border-radius:9px;
-      padding:.8125rem 1rem;
-      font-size:1rem;
-      color:var(--text);
-      font-family:var(--sans);
-      outline:none;
-      transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;
-      -webkit-appearance:none;
-      appearance:none;
-    }
-    .form-input::placeholder{color:var(--muted2)}
+   .form-input {
+  background: #242020;
+  border: 1.5px solid rgba(255,255,255,.12);
+  border-radius: 9px;
+  padding: .8125rem 1rem;
+  font-size: 1rem;
+  color: #EDE9E3;
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.form-input::placeholder { color: #2E2B29; }
     .form-input:focus{
       border-color:var(--gold-dim);
       box-shadow:0 0 0 3px rgba(201,168,76,.12);
