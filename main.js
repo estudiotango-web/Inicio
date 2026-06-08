@@ -545,13 +545,13 @@ var chatBusy       = false;
 var chatMsgs       = [];   // historial para contexto
 var chatBadgeDone  = false;
 
-// Mostrar badge de notificación después de 4 segundos
+// Mostrar badge de notificación después de 10 segundos
 setTimeout(function () {
   if (!chatIsOpen && !chatBadgeDone) {
     var b = document.getElementById("chat-badge");
     if (b) { b.style.display = "flex"; chatBadgeDone = true; }
   }
-}, 4000);
+}, 10000);
 
 /* ── Abrir / cerrar ── */
 function chatToggle() {
