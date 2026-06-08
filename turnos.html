@@ -979,35 +979,41 @@ var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','
   }
 
   function selectDay(y, m, d) {
-    state.fecha = new Date(y, m, d);
-    state.hora  = null;
-    document.getElementById('btn-paso2-next').disabled = true;
-    renderCal();
+  state.fecha = new Date(y, m, d);
+  state.hora  = null;
+  document.getElementById('btn-paso2-next').disabled = true;
+  renderCal();
 
-    var panel = document.getElementById('slots-panel');
-    panel.style.display = 'block';
-    document.getElementById('paso2-btns').style.display = 'flex';
+  var panel = document.getElementById('slots-panel');
+  panel.style.display = 'block';
+  document.getElementById('paso2-btns').style.display = 'flex';
 
-    var dow = state.fecha.getDay();
-    document.getElementById('slots-date-label').textContent =
-      DIAS[dow] + ' ' + d + ' de ' + MESES[m] + ' de ' + y;
+  var dow = state.fecha.getDay();
+  document.getElementById('slots-date-label').textContent =
+    DIAS[dow] + ' ' + d + ' de ' + MESES[m] + ' de ' + y;
 
-    document.getElementById('slots-loading').style.display = 'flex';
-    document.getElementById('slots-grid').style.display   = 'none';
+  document.getElementById('slots-loading').style.display = 'flex';
+  document.getElementById('slots-grid').style.display   = 'none';
 
-    var fechaStr = y + '-' + pad(m + 1) + '-' + pad(d);
-    var url = CONFIG.APPS_SCRIPT_URL + '?action=slots&fecha=' + fechaStr;
+  var fechaStr = y + '-' + pad(m + 1) + '-' + pad(d);
+  var url = CONFIG.APPS_SCRIPT_URL + '?action=slots&fecha=' + fechaStr;
 
-    jsonp(url, function(err, data) {
-      if (err || !data) {
-        state.ocupados = [];
-      } else {
-        state.ocupados = data.ocupados || [];
-      }
-      renderSlots();
-    });
-  }
+  jsonp(url, function(err, data) {
+    if (err || !data) {
+      state.ocupados = [];
+    } else {
+      // → normaliza las horas para que queden en formato HH:mm
+      state.ocupados = (data.ocupados || []).map(function(h){
+        if (typeof h !== 'string') return h;
+        var match = h.match(/(\d{2}):(\d{2})/);
+        return match ? match[1] + ':' + match[2] : h;
+      });
+    }
 
+    console.log("Horas ocupadas:", state.ocupados); // para verificar
+    renderSlots();
+  });
+}
   function pad(n) { return String(n).padStart(2, '0'); }
 
   function renderSlots() {
