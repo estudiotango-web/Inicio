@@ -1038,7 +1038,7 @@ details.faq-item summary:hover{color:var(--gold2)}
 }
 @media (max-width: 860px) {
   #btn-chat-flotante {
-    bottom: 80px;
+    bottom: 100px;
     right: 16px;
   }
 
