@@ -741,7 +741,8 @@
     calYear: 0, calMonth: 0,
     ocupados: []
   };
-
+var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var DIAS  = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
   // ════════════════════════════════════════════════════════════════
   //  INIT
   // ════════════════════════════════════════════════════════════════
@@ -916,8 +917,7 @@
   // ════════════════════════════════════════════════════════════════
   //  CALENDARIO
   // ════════════════════════════════════════════════════════════════
-  var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  var DIAS  = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  
 
   function renderCal() {
   var y = state.calYear, m = state.calMonth;
