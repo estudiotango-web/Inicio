@@ -307,9 +307,34 @@ async function consultar() {
   startProg();
 
   try {
-    var response = await fetch("/api/consultar?cuit=" + encodeURIComponent(cuit));
-    var json     = await response.json();
-    endProg();
+
+  var json = await new Promise(function(resolve, reject) {
+
+    const callbackName = "bcraCallback_" + Date.now();
+
+    window[callbackName] = function(data) {
+      delete window[callbackName];
+      document.getElementById("script-bcra")?.remove();
+      resolve(data);
+    };
+
+    const script = document.createElement("script");
+    script.id = "script-bcra";
+
+    script.src =
+      API +
+      "?cuit=" + encodeURIComponent(cuit) +
+      "&callback=" + callbackName;
+
+    script.onerror = function() {
+      delete window[callbackName];
+      reject(new Error("Error al conectar con el servidor."));
+    };
+
+    document.body.appendChild(script);
+  });
+
+  endProg();
 
     if (!json.ok) {
       var msg = json.error || "";
