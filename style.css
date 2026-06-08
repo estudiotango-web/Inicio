@@ -915,3 +915,48 @@ details.faq-item summary:hover{color:var(--gold2)}
   .main{padding:1rem 1rem 2.5rem}
   .hero-title{font-size:1.35rem}
 }
+
+/* NUEVO */
+.cta-precio-nota {
+  font-size: 0.72rem;
+  color: var(--muted, #9ca3af);
+  line-height: 1.6;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+.cta-precio-nota strong {
+  color: var(--text, #f5f0eb);
+  font-weight: 600;
+}
+.cta-precio-nota span {
+  opacity: 0.8;
+}
+ 
+/* Aviso datos BCRA antes de CTAs */
+.resultado-aviso-bcra {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  margin-bottom: 1rem;
+}
+.resultado-aviso-bcra p {
+  font-size: 0.75rem;
+  color: var(--muted, #9ca3af);
+  line-height: 1.65;
+  margin: 0 0 0.35rem 0;
+}
+.resultado-aviso-bcra p:last-child {
+  margin-bottom: 0;
+}
+ 
+/* Botón flotante WhatsApp — ajuste mobile para no tapar bar-nueva-consulta */
+@media (max-width: 768px) {
+  #btn-whatsapp-flotante {
+    bottom: 80px; /* empuja hacia arriba de la bar-nueva-consulta */
+  }
+  /* Cuando NO está en modo resultado, vuelve a posición normal */
+  body:not(.modo-resultado) #btn-whatsapp-flotante {
+    bottom: 24px;
+  }
+}
