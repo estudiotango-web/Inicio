@@ -971,18 +971,16 @@ details.faq-item summary:hover{color:var(--gold2)}
   bottom: 24px;
   right: 24px;
   z-index: 9000;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
   background: #25D366;
   color: #fff;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  padding: 12px 18px;
-  border-radius: 50px;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 4px 20px rgba(37,211,102,0.35);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
@@ -991,7 +989,11 @@ details.faq-item summary:hover{color:var(--gold2)}
   box-shadow: 0 6px 24px rgba(37,211,102,0.5);
 }
 
+/* Badge posicionado en el borde */
 #chat-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
   background: #FF3B30;
   color: #fff;
   font-size: 10px;
@@ -1002,8 +1004,18 @@ details.faq-item summary:hover{color:var(--gold2)}
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid #fff;
 }
 
+/* Ocultar label siempre */
+#chat-btn-label {
+  display: none;
+}
+
+/* Ocultar botón cuando el chat está abierto */
+#btn-chat-flotante[aria-expanded="true"] {
+  display: none;
+}
 /* Ventana */
 #chat-window {
   position: fixed;
