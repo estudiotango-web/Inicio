@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservar Turno | TANGO Recuperación Financiera</title>
+  <meta name="description" content="Reservá tu turno con los asesores de TANGO. Seña reembolsable de $10.000 via Mercado Pago. Lunes a viernes 10 a 18hs.">
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <style>
+    /* ═══════════════════════════════════════
+       RESET & VARIABLES (mismo sistema TANGO)
+    ═══════════════════════════════════════ */
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bordo:#6B0F1A;
+      --bordo2:#8B1525;
+      --bordo-dark:#260308;
+      --bordo-deep:#160206;
+      --gold:#C9A84C;
+      --gold2:#E2C16A;
+      --gold-dim:#8B6F34;
+      --gold-ghost:rgba(201,168,76,.08);
+      --bg:#0A0808;
+      --s1:#141010;
+      --s2:#1C1616;
+      --s3:#242020;
+      --s4:#2E2828;
+      --text:#EDE9E3;
+      --muted:#7A7570;
+      --muted2:#4A4744;
+      --muted3:#2E2B29;
+      --b1:rgba(255,255,255,.05);
+      --b2:rgba(255,255,255,.09);
+      --b3:rgba(255,255,255,.04);
+      --serif:'Playfair Display',Georgia,serif;
+      --sans:'Plus Jakarta Sans','DM Sans',system-ui,sans-serif;
+      --gold-glow:0 0 40px rgba(201,168,76,.12);
+      --radius:10px;
+    }
+    html{scroll-behavior:smooth}
+    html,body{min-height:100%}
+    body{
+      font-family:var(--sans);
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      font-size:16px;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+
+    /* ── Canvas background ── */
+    #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35}
+
+    /* ── Layout ── */
+    .page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+    .container{max-width:720px;margin:0 auto;padding:0 1.25rem}
+
+    /* ── Header ── */
+    .site-header{
+      padding:1.5rem 0 1rem;
+      border-bottom:1px solid var(--b1);
+    }
+    .site-header .inner{
+      display:flex;align-items:center;gap:.875rem;
+      max-width:720px;margin:0 auto;padding:0 1.25rem;
+    }
+    .header-logo img{width:40px;height:40px;object-fit:contain}
+    .header-brand{font-family:var(--serif);font-size:1.125rem;color:var(--text);letter-spacing:.03em}
+    .header-brand span{color:var(--gold);font-style:italic}
+    .header-sep{flex:1}
+    .header-badge{
+      font-size:.6875rem;font-weight:600;color:var(--gold);
+      background:var(--gold-ghost);border:1px solid rgba(201,168,76,.2);
+      padding:.25rem .625rem;border-radius:20px;letter-spacing:.04em;text-transform:uppercase;
+    }
+
+    /* ── Progress stepper ── */
+    .stepper{
+      display:flex;align-items:center;gap:0;
+      padding:1.5rem 0 .5rem;
+      max-width:720px;margin:0 auto;padding:1.5rem 1.25rem .75rem;
+    }
+    .step{
+      display:flex;flex-direction:column;align-items:center;gap:.3rem;
+      flex:1;position:relative;
+    }
+    .step:not(:last-child)::after{
+      content:'';position:absolute;top:13px;left:calc(50% + 14px);
+      right:calc(-50% + 14px);height:1px;background:var(--muted3);z-index:0;
+      transition:background .4s ease;
+    }
+    .step.done:not(:last-child)::after{background:var(--gold-dim)}
+    .step-dot{
+      width:26px;height:26px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:.7rem;font-weight:700;z-index:1;
+      border:1px solid var(--muted3);
+      background:var(--s1);color:var(--muted2);
+      transition:all .3s ease;
+    }
+    .step.active .step-dot{
+      background:var(--bordo);border-color:var(--bordo2);color:#fff;
+      box-shadow:0 0 0 4px rgba(107,15,26,.25);
+    }
+    .step.done .step-dot{background:var(--gold-dim);border-color:var(--gold);color:var(--bordo-deep)}
+    .step-lbl{font-size:.625rem;font-weight:500;color:var(--muted2);text-transform:uppercase;letter-spacing:.05em;text-align:center;white-space:nowrap}
+    .step.active .step-lbl{color:var(--text)}
+    .step.done .step-lbl{color:var(--gold-dim)}
+
+    /* ── Cards / Panels ── */
+    .panel{
+      background:var(--s1);
+      border:1px solid var(--b1);
+      border-radius:var(--radius);
+      padding:1.75rem 1.5rem;
+      margin-bottom:1.25rem;
+    }
+    .panel-title{
+      font-family:var(--serif);font-size:1.25rem;font-weight:500;
+      color:var(--text);margin-bottom:.5rem;
+      display:flex;align-items:center;gap:.625rem;
+    }
+    .panel-title i{color:var(--gold);font-size:1rem}
+    .panel-sub{font-size:.8125rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6}
+
+    /* ── Form ── */
+    .form-grid{display:grid;gap:.875rem}
+    .form-group{display:flex;flex-direction:column;gap:.375rem}
+    .form-label{
+      font-size:.75rem;font-weight:600;color:var(--muted);
+      text-transform:uppercase;letter-spacing:.05em;
+    }
+    .form-input{
+      background:var(--s2);border:1px solid var(--b2);border-radius:8px;
+      padding:.75rem 1rem;font-size:.9375rem;color:var(--text);
+      font-family:var(--sans);outline:none;
+      transition:border-color .2s ease,box-shadow .2s ease;
+    }
+    .form-input::placeholder{color:var(--muted2)}
+    .form-input:focus{border-color:var(--gold-dim);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+    .form-input.error{border-color:var(--bordo2);box-shadow:0 0 0 3px rgba(139,21,37,.15)}
+    .form-error{font-size:.75rem;color:#e07070;display:none}
+    .form-error.show{display:block}
+
+    /* ── Calendar ── */
+    .cal-header{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:1rem;
+    }
+    .cal-month{font-family:var(--serif);font-size:1rem;color:var(--text)}
+    .cal-nav{
+      background:var(--s3);border:1px solid var(--b2);color:var(--muted);
+      width:30px;height:30px;border-radius:6px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:.875rem;
+      transition:color .2s,border-color .2s;
+    }
+    .cal-nav:hover{color:var(--gold);border-color:var(--gold-dim)}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+    .cal-day-name{
+      text-align:center;font-size:.625rem;font-weight:600;
+      color:var(--muted2);text-transform:uppercase;padding:.25rem 0;
+    }
+    .cal-day{
+      aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+      font-size:.8125rem;border-radius:7px;cursor:pointer;
+      border:1px solid transparent;transition:all .18s ease;
+      color:var(--muted);
+    }
+    .cal-day.available{color:var(--text);cursor:pointer}
+    .cal-day.available:hover{background:var(--s3);border-color:var(--b2);color:var(--gold)}
+    .cal-day.selected{background:var(--bordo);border-color:var(--bordo2);color:#fff;font-weight:600}
+    .cal-day.today{border-color:var(--gold-dim)}
+    .cal-day.empty,.cal-day.disabled{color:var(--muted3);pointer-events:none}
+    .cal-day.past{color:var(--muted3);pointer-events:none}
+
+    /* ── Time slots ── */
+    .slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:.5rem;margin-top:.75rem}
+    .slot{
+      padding:.5rem .375rem;text-align:center;border-radius:7px;
+      border:1px solid var(--b2);background:var(--s2);
+      font-size:.8125rem;color:var(--muted);cursor:pointer;
+      transition:all .18s ease;
+    }
+    .slot.available{color:var(--text)}
+    .slot.available:hover{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-ghost)}
+    .slot.selected{border-color:var(--bordo2);background:var(--bordo);color:#fff;font-weight:600}
+    .slot.occupied{color:var(--muted3);pointer-events:none;text-decoration:line-through;opacity:.4}
+    .slots-loading{text-align:center;color:var(--muted);font-size:.8125rem;padding:1rem 0}
+
+    /* ── Summary box ── */
+    .summary-box{
+      background:var(--s2);border:1px solid var(--b2);border-radius:8px;
+      padding:1rem 1.25rem;margin-bottom:1.25rem;
+    }
+    .summary-row{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.375rem 0;border-bottom:1px solid var(--b1);font-size:.875rem;
+    }
+    .summary-row:last-child{border-bottom:none}
+    .summary-key{color:var(--muted)}
+    .summary-val{color:var(--text);font-weight:500;text-align:right}
+    .summary-highlight{color:var(--gold);font-weight:600}
+
+    /* ── Señal info ── */
+    .senal-info{
+      background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);
+      border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.25rem;
+      display:flex;gap:.75rem;align-items:flex-start;
+    }
+    .senal-info i{color:var(--gold);font-size:1rem;margin-top:.125rem;flex-shrink:0}
+    .senal-info-text{font-size:.8125rem;color:var(--muted);line-height:1.65}
+    .senal-info-text strong{color:var(--text)}
+
+    /* ── Buttons ── */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+      padding:.875rem 1.5rem;border-radius:8px;font-size:.9375rem;font-weight:600;
+      font-family:var(--sans);cursor:pointer;border:none;
+      transition:all .2s ease;text-decoration:none;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--bordo),var(--bordo2));
+      color:#fff;box-shadow:0 4px 16px rgba(107,15,26,.4);width:100%;
+    }
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(107,15,26,.5)}
+    .btn-primary:disabled{opacity:.5;pointer-events:none}
+    .btn-ghost{
+      background:transparent;color:var(--muted);
+      border:1px solid var(--b2);font-size:.875rem;padding:.625rem 1rem;
+    }
+    .btn-ghost:hover{color:var(--text);border-color:var(--b2)}
+    .btn-mp{
+      background:#009ee3;color:#fff;width:100%;
+      box-shadow:0 4px 16px rgba(0,158,227,.35);font-size:1rem;padding:1rem;
+    }
+    .btn-mp:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(0,158,227,.5);background:#00b3ff}
+    .btn-mp:disabled{opacity:.5;pointer-events:none}
+    .btn-row{display:flex;gap:.75rem;align-items:center}
+    .btn-row .btn-ghost{flex:0 0 auto}
+    .btn-row .btn-primary{flex:1}
+
+    /* ── Payment section ── */
+    .mp-logo{display:flex;align-items:center;gap:.5rem;margin-bottom:.875rem}
+    .mp-logo svg{width:28px;height:28px}
+    .mp-logo-text{font-size:.875rem;color:var(--muted);font-weight:500}
+    .mp-logo-text strong{color:var(--text)}
+
+    /* ── Ticket / Confirmación ── */
+    .ticket-wrap{text-align:center;padding:.5rem 0 1.5rem}
+    .ticket-icon{
+      width:56px;height:56px;background:rgba(201,168,76,.12);
+      border:1px solid rgba(201,168,76,.3);border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.5rem;color:var(--gold);margin:0 auto 1rem;
+    }
+    .ticket-title{font-family:var(--serif);font-size:1.5rem;color:var(--text);margin-bottom:.5rem}
+    .ticket-sub{font-size:.875rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
+    .ticket-card{
+      background:var(--s2);border:1px solid rgba(201,168,76,.2);border-radius:12px;
+      padding:1.5rem;margin-bottom:1.25rem;
+      position:relative;overflow:hidden;
+    }
+    .ticket-card::before{
+      content:'TANGO';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-25deg);
+      font-family:var(--serif);font-size:4rem;font-weight:600;color:rgba(201,168,76,.04);
+      pointer-events:none;white-space:nowrap;letter-spacing:.3em;
+    }
+    .ticket-num{
+      font-size:.75rem;font-weight:700;color:var(--gold-dim);letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:.875rem;
+    }
+    .ticket-data{display:grid;gap:.5rem;text-align:left}
+    .ticket-row{display:flex;justify-content:space-between;font-size:.875rem;align-items:center}
+    .ticket-label{color:var(--muted)}
+    .ticket-value{color:var(--text);font-weight:500}
+    .ticket-divider{height:1px;background:var(--b1);margin:.5rem 0}
+    .ticket-total{
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:.9375rem;font-weight:600;color:var(--gold);
+    }
+    .btn-download{
+      background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.08));
+      border:1px solid rgba(201,168,76,.3);color:var(--gold);
+      width:100%;padding:1rem;border-radius:8px;
+      font-family:var(--sans);font-size:.9375rem;font-weight:600;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:.5rem;
+      transition:all .2s ease;text-decoration:none;
+    }
+    .btn-download:hover{background:rgba(201,168,76,.18);border-color:var(--gold)}
+
+    /* ── Loading spinner ── */
+    .spinner{
+      width:20px;height:20px;border:2px solid rgba(255,255,255,.2);
+      border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── Alerts ── */
+    .alert{
+      border-radius:8px;padding:.875rem 1rem;font-size:.8125rem;
+      display:flex;gap:.625rem;align-items:flex-start;margin-bottom:1rem;
+    }
+    .alert-error{background:rgba(139,21,37,.15);border:1px solid rgba(139,21,37,.3);color:#e07070}
+    .alert-success{background:rgba(40,167,69,.1);border:1px solid rgba(40,167,69,.25);color:#6fcf97}
+    .alert i{flex-shrink:0;font-size:.875rem;margin-top:.0625rem}
+
+    /* ── Footer ── */
+    .site-footer{
+      border-top:1px solid var(--b1);padding:1.5rem 0;margin-top:auto;
+    }
+    .site-footer .inner{
+      max-width:720px;margin:0 auto;padding:0 1.25rem;
+      display:flex;flex-direction:column;gap:.5rem;text-align:center;
+    }
+    .footer-copy{font-size:.75rem;color:var(--muted2)}
+    .footer-disclaimer{font-size:.6875rem;color:var(--muted3);line-height:1.65}
+
+    /* ── Screen transitions ── */
+    .screen{display:none;opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
+    .screen.active{display:block}
+    .screen.visible{opacity:1;transform:translateY(0)}
+
+    /* ── Responsive ── */
+    @media(max-width:600px){
+      .panel{padding:1.25rem 1rem}
+      .stepper{padding:1.25rem 1rem .5rem}
+      .step-lbl{font-size:.5625rem}
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <div class="page">
+    <!-- HEADER -->
+    <header class="site-header">
+      <div class="inner">
+        <div class="header-logo">
+          <img src="https://res.cloudinary.com/dwgwbdtud/image/upload/v1780571332/qhp1rxgz7x8d1gv6cmwc.png" alt="TANGO" width="40" height="40" onerror="this.style.display='none'">
+        </div>
+        <div class="header-brand">TANGO <span>Recuperación Financiera</span></div>
+        <div class="header-sep"></div>
+        <div class="header-badge">Turnos online</div>
+      </div>
+    </header>
+
+    <!-- STEPPER -->
+    <div class="stepper" id="stepper">
+      <div class="step active" id="st-1">
+        <div class="step-dot">1</div>
+        <div class="step-lbl">Tus datos</div>
+      </div>
+      <div class="step" id="st-2">
+        <div class="step-dot">2</div>
+        <div class="step-lbl">Elegir turno</div>
+      </div>
+      <div class="step" id="st-3">
+        <div class="step-dot">3</div>
+        <div class="step-lbl">Pagar seña</div>
+      </div>
+      <div class="step" id="st-4">
+        <div class="step-dot"><i class="ti ti-check" style="font-size:.7rem"></i></div>
+        <div class="step-lbl">Confirmado</div>
+      </div>
+    </div>
+
+    <div class="container" style="flex:1;padding-bottom:2rem">
+
+      <!-- ══════ PASO 1: DATOS ══════ -->
+      <div class="screen active" id="screen-1">
+        <div class="panel">
+          <div class="panel-title"><i class="ti ti-user"></i> Tus datos personales</div>
+          <p class="panel-sub">Completá tus datos para reservar el turno. La seña de $10.000 es totalmente reembolsable si cancelás con al menos 24 horas de anticipación.</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="f-nombre">Apellido y nombre *</label>
+              <input class="form-input" id="f-nombre" type="text" placeholder="Ej: García, Juan Carlos" autocomplete="name">
+              <span class="form-error" id="e-nombre">Ingresá tu nombre completo</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-cuit">CUIT / CUIL *</label>
+              <input class="form-input" id="f-cuit" type="tel" inputmode="numeric" placeholder="Ej: 20123456789" maxlength="11" autocomplete="off">
+              <span class="form-error" id="e-cuit">Ingresá tu CUIT/CUIL (10 u 11 dígitos)</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-ws">WhatsApp *</label>
+              <input class="form-input" id="f-ws" type="tel" inputmode="numeric" placeholder="Ej: 1123456789 (sin 0 ni 15)" maxlength="15" autocomplete="tel">
+              <span class="form-error" id="e-ws">Ingresá tu WhatsApp</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="paso1Next()">
+          Elegir turno <i class="ti ti-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- ══════ PASO 2: CALENDARIO + HORA ══════ -->
+      <div class="screen" id="screen-2">
+        <div class="panel">
+          <div class="panel-title"><i class="ti ti-calendar"></i> Elegí fecha y horario</div>
+          <p class="panel-sub">Atención de lunes a viernes de 10:00 a 18:00hs. Turnos de 30 minutos.</p>
+
+          <div class="cal-header">
+            <button class="cal-nav" id="cal-prev" onclick="calNav(-1)" aria-label="Mes anterior"><i class="ti ti-chevron-left"></i></button>
+            <div class="cal-month" id="cal-month-label"></div>
+            <button class="cal-nav" id="cal-next" onclick="calNav(1)" aria-label="Mes siguiente"><i class="ti ti-chevron-right"></i></button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+
+        <div class="panel" id="slots-panel" style="display:none">
+          <div class="panel-title"><i class="ti ti-clock"></i> Horarios disponibles</div>
+          <p class="panel-sub" id="slots-date-label"></p>
+          <div class="slots-loading" id="slots-loading">Consultando disponibilidad...</div>
+          <div class="slots-grid" id="slots-grid" style="display:none"></div>
+        </div>
+
+        <div class="btn-row" id="paso2-btns" style="display:none">
+          <button class="btn btn-ghost" onclick="goScreen(1)"><i class="ti ti-arrow-left"></i> Volver</button>
+          <button class="btn btn-primary" id="btn-paso2-next" onclick="paso2Next()" disabled>
+            Continuar <i class="ti ti-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ══════ PASO 3: PAGO ══════ -->
+      <div class="screen" id="screen-3">
+        <div class="panel">
+          <div class="panel-title"><i class="ti ti-receipt"></i> Resumen del turno</div>
+
+          <div class="summary-box">
+            <div class="summary-row">
+              <span class="summary-key">Titular</span>
+              <span class="summary-val" id="sum-nombre">—</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-key">CUIT/CUIL</span>
+              <span class="summary-val" id="sum-cuit">—</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-key">Fecha y hora</span>
+              <span class="summary-val" id="sum-fecha">—</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-key">WhatsApp</span>
+              <span class="summary-val" id="sum-ws">—</span>
+            </div>
+            <div class="summary-row" style="padding-top:.5rem">
+              <span class="summary-key" style="font-weight:600;color:var(--text)">Seña reembolsable</span>
+              <span class="summary-val summary-highlight">$10.000</span>
+            </div>
+          </div>
+
+          <div class="senal-info">
+            <i class="ti ti-shield-check"></i>
+            <div class="senal-info-text">
+              <strong>Seña 100% reembolsable.</strong> Si cancelás con al menos 24 horas de anticipación, te devolvemos el importe completo sin cargo. El pago se realiza de forma segura a través de Mercado Pago.
+            </div>
+          </div>
+
+          <div id="pago-alert"></div>
+
+          <div class="mp-logo">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="16" fill="#009EE3"/>
+              <path d="M7 16.5C7 16.5 10.5 11 16 11C21.5 11 25 16.5 25 16.5C25 16.5 21.5 22 16 22C10.5 22 7 16.5 7 16.5Z" fill="white"/>
+              <circle cx="16" cy="16.5" r="3" fill="#009EE3"/>
+            </svg>
+            <div class="mp-logo-text">Pago seguro con <strong>Mercado Pago</strong></div>
+          </div>
+
+          <button class="btn btn-mp" id="btn-pagar" onclick="iniciarPago()">
+            <i class="ti ti-brand-mastercard"></i>
+            Pagar seña $10.000
+          </button>
+        </div>
+
+        <div class="btn-row" style="margin-top:.5rem">
+          <button class="btn btn-ghost" onclick="goScreen(2)"><i class="ti ti-arrow-left"></i> Volver</button>
+        </div>
+      </div>
+
+      <!-- ══════ PASO 4: CONFIRMACIÓN ══════ -->
+      <div class="screen" id="screen-4">
+        <div class="panel">
+          <div class="ticket-wrap">
+            <div class="ticket-icon"><i class="ti ti-check"></i></div>
+            <div class="ticket-title">¡Turno confirmado!</div>
+            <div class="ticket-sub">Tu seña fue procesada y tu turno quedó reservado.<br>Recibirás confirmación por WhatsApp.</div>
+
+            <div class="ticket-card">
+              <div class="ticket-num" id="tk-num">TURNO #000000</div>
+              <div class="ticket-data">
+                <div class="ticket-row">
+                  <span class="ticket-label">Titular</span>
+                  <span class="ticket-value" id="tk-nombre">—</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-label">CUIT/CUIL</span>
+                  <span class="ticket-value" id="tk-cuit">—</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-label">WhatsApp</span>
+                  <span class="ticket-value" id="tk-ws">—</span>
+                </div>
+                <div class="ticket-divider"></div>
+                <div class="ticket-row">
+                  <span class="ticket-label">Fecha</span>
+                  <span class="ticket-value" id="tk-fecha">—</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-label">Hora</span>
+                  <span class="ticket-value" id="tk-hora">—</span>
+                </div>
+                <div class="ticket-divider"></div>
+                <div class="ticket-total">
+                  <span>Seña pagada</span>
+                  <span>$10.000 ✓</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-download" id="btn-descargar" onclick="descargarTicket()">
+              <i class="ti ti-download"></i> Descargar comprobante PDF
+            </button>
+          </div>
+        </div>
+
+        <div style="text-align:center;padding-bottom:1rem">
+          <a href="https://wa.me/5491100000000" target="_blank" rel="noopener" class="btn btn-ghost" style="display:inline-flex;gap:.5rem;font-size:.875rem">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Consultar por WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /container -->
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="inner">
+        <p class="footer-copy">© <span id="year"></span> TANGO Recuperación Financiera</p>
+        <p class="footer-disclaimer">
+          La seña de $10.000 es reembolsable si se cancela con al menos 24 horas de anticipación al turno.<br>
+          Los datos son tratados con estricta confidencialidad conforme a la Ley 25.326 de Protección de Datos Personales.
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- jsPDF for ticket download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+  // ════════════════════════════════════════════════════
+  //  CONFIG — reemplazá estos valores
+  // ════════════════════════════════════════════════════
+  const CONFIG = {
+    // URL del Apps Script desplegado como Web App
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/TU_DEPLOYMENT_ID/exec',
+
+    // Número real de WhatsApp (código país sin +)
+    WS_NUMBER: '5491100000000',
+
+    // Preference ID de MP (se genera desde el backend)
+    // Dejalo vacío; se completa dinámicamente
+    MP_PUBLIC_KEY: 'TU_PUBLIC_KEY_MERCADO_PAGO',
+
+    SLOT_DURATION: 30,   // minutos por turno
+    START_HOUR: 10,      // apertura
+    END_HOUR: 18,        // cierre
+  };
+
+  // ════════════════════════════════════════════════════
+  //  STATE
+  // ════════════════════════════════════════════════════
+  const state = {
+    nombre: '', cuit: '', ws: '',
+    fecha: null, hora: null,
+    turnoId: null, pagoId: null,
+    calYear: null, calMonth: null,
+    ocupados: []
+  };
+
+  // ════════════════════════════════════════════════════
+  //  INIT
+  // ════════════════════════════════════════════════════
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const now = new Date();
+  state.calYear = now.getFullYear();
+  state.calMonth = now.getMonth();
+  renderCal();
+  initBg();
+
+  // Chequear retorno de Mercado Pago
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('estado') === 'ok' && params.get('turno_id')) {
+    confirmarPagoOk(params.get('turno_id'), params.get('preference_id'));
+  } else if (params.get('estado') === 'pendiente' || params.get('estado') === 'fallo') {
+    // Recargar sin params pero mostrar aviso
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  // ════════════════════════════════════════════════════
+  //  SCREENS
+  // ════════════════════════════════════════════════════
+  function goScreen(n) {
+    document.querySelectorAll('.screen').forEach(s => {
+      s.classList.remove('active','visible');
+    });
+    // Stepper
+    for (let i=1;i<=4;i++) {
+      const st = document.getElementById('st-'+i);
+      st.classList.remove('active','done');
+      if (i < n) st.classList.add('done');
+      if (i === n) st.classList.add('active');
+    }
+    const scr = document.getElementById('screen-'+n);
+    scr.classList.add('active');
+    requestAnimationFrame(() => requestAnimationFrame(() => scr.classList.add('visible')));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // ════════════════════════════════════════════════════
+  //  PASO 1 — Validación de datos
+  // ════════════════════════════════════════════════════
+  function paso1Next() {
+    let ok = true;
+    const nombre = document.getElementById('f-nombre').value.trim();
+    const cuit = document.getElementById('f-cuit').value.trim().replace(/\D/g,'');
+    const ws = document.getElementById('f-ws').value.trim().replace(/\D/g,'');
+
+    setErr('f-nombre','e-nombre', !nombre || nombre.length < 4);
+    setErr('f-cuit','e-cuit', cuit.length < 10 || cuit.length > 11);
+    setErr('f-ws','e-ws', ws.length < 8);
+
+    if (!nombre || nombre.length < 4) ok = false;
+    if (cuit.length < 10 || cuit.length > 11) ok = false;
+    if (ws.length < 8) ok = false;
+
+    if (ok) {
+      state.nombre = nombre;
+      state.cuit = cuit;
+      state.ws = ws;
+      goScreen(2);
+    }
+  }
+
+  function setErr(inputId, errId, show) {
+    document.getElementById(inputId).classList.toggle('error', show);
+    document.getElementById(errId).classList.toggle('show', show);
+  }
+
+  // ════════════════════════════════════════════════════
+  //  CALENDARIO
+  // ════════════════════════════════════════════════════
+  const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const DIAS  = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+
+  function renderCal() {
+    const y = state.calYear, m = state.calMonth;
+    document.getElementById('cal-month-label').textContent = MESES[m] + ' ' + y;
+
+    const firstDay = new Date(y, m, 1).getDay();
+    const daysInMonth = new Date(y, m+1, 0).getDate();
+    const today = new Date(); today.setHours(0,0,0,0);
+
+    let html = DIAS.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+    for (let i=0; i<firstDay; i++) html += `<div class="cal-day empty"></div>`;
+
+    for (let d=1; d<=daysInMonth; d++) {
+      const date = new Date(y, m, d);
+      const dow = date.getDay();
+      const isPast = date < today;
+      const isWeekend = dow === 0 || dow === 6;
+      const isSelected = state.fecha && state.fecha.getTime() === date.getTime();
+      let cls = 'cal-day';
+      if (isPast || isWeekend) cls += ' disabled past';
+      else cls += ' available';
+      if (isSelected) cls += ' selected';
+      const todayClass = date.getTime() === today.getTime() ? ' today' : '';
+      html += `<div class="${cls}${todayClass}" onclick="selectDay(${y},${m},${d})">${d}</div>`;
+    }
+    document.getElementById('cal-grid').innerHTML = html;
+
+    // Prev nav
+    const prevOk = new Date(y, m, 1) > today;
+    document.getElementById('cal-prev').style.opacity = prevOk ? '1' : '.3';
+    document.getElementById('cal-prev').style.pointerEvents = prevOk ? '' : 'none';
+  }
+
+  function calNav(dir) {
+    state.calMonth += dir;
+    if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
+    if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
+    renderCal();
+  }
+
+  async function selectDay(y, m, d) {
+    state.fecha = new Date(y, m, d);
+    state.hora = null;
+    document.getElementById('btn-paso2-next').disabled = true;
+    renderCal();
+
+    const panel = document.getElementById('slots-panel');
+    panel.style.display = 'block';
+    document.getElementById('paso2-btns').style.display = 'flex';
+    document.getElementById('slots-date-label').textContent =
+      DIAS[state.fecha.getDay()] + ' ' + d + ' de ' + MESES[m] + ' de ' + y;
+    document.getElementById('slots-loading').style.display = 'block';
+    document.getElementById('slots-grid').style.display = 'none';
+
+    try {
+      const fechaStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const res = await fetch(`${CONFIG.APPS_SCRIPT_URL}?action=slots&fecha=${fechaStr}`);
+      const data = await res.json();
+      state.ocupados = data.ocupados || [];
+    } catch(e) {
+      state.ocupados = [];
+    }
+    renderSlots();
+  }
+
+  function renderSlots() {
+    const slots = [];
+    for (let h = CONFIG.START_HOUR; h < CONFIG.END_HOUR; h++) {
+      for (let m = 0; m < 60; m += CONFIG.SLOT_DURATION) {
+        slots.push(`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
+      }
+    }
+    let html = '';
+    slots.forEach(s => {
+      const ocupado = state.ocupados.includes(s);
+      const selected = state.hora === s;
+      let cls = 'slot' + (ocupado ? ' occupied' : ' available') + (selected ? ' selected' : '');
+      html += `<div class="${cls}" onclick="${ocupado ? '' : `selectSlot('${s}')`}">${s}</div>`;
+    });
+    document.getElementById('slots-loading').style.display = 'none';
+    document.getElementById('slots-grid').innerHTML = html;
+    document.getElementById('slots-grid').style.display = 'grid';
+  }
+
+  function selectSlot(hora) {
+    state.hora = hora;
+    document.getElementById('btn-paso2-next').disabled = false;
+    renderSlots();
+  }
+
+  function paso2Next() {
+    if (!state.fecha || !state.hora) return;
+    // Llenar resumen
+    const fechaStr = DIAS[state.fecha.getDay()] + ' ' + state.fecha.getDate() + ' de ' + MESES[state.fecha.getMonth()] + ' de ' + state.fecha.getFullYear();
+    document.getElementById('sum-nombre').textContent = state.nombre;
+    document.getElementById('sum-cuit').textContent = state.cuit;
+    document.getElementById('sum-fecha').textContent = fechaStr + ' — ' + state.hora + 'hs';
+    document.getElementById('sum-ws').textContent = '+54 9 ' + state.ws;
+    goScreen(3);
+  }
+
+  // ════════════════════════════════════════════════════
+  //  PAGO — Mercado Pago
+  // ════════════════════════════════════════════════════
+  async function iniciarPago() {
+    const btn = document.getElementById('btn-pagar');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Generando enlace de pago...';
+    document.getElementById('pago-alert').innerHTML = '';
+
+    try {
+      const fechaStr = state.fecha.toISOString().split('T')[0];
+      const body = {
+        action: 'crearPago',
+        nombre: state.nombre,
+        cuit: state.cuit,
+        ws: state.ws,
+        fecha: fechaStr,
+        hora: state.hora
+      };
+
+      const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+
+      if (data.error) throw new Error(data.error);
+      if (data.init_point) {
+        // Redirigir a Mercado Pago
+        window.location.href = data.init_point;
+      } else {
+        throw new Error('No se pudo generar el enlace de pago');
+      }
+    } catch(err) {
+      document.getElementById('pago-alert').innerHTML = `
+        <div class="alert alert-error">
+          <i class="ti ti-alert-circle"></i>
+          ${err.message || 'Error al procesar. Intentá de nuevo.'}
+        </div>`;
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-brand-mastercard"></i> Pagar seña $10.000';
+    }
+  }
+
+  // ════════════════════════════════════════════════════
+  //  CONFIRMACIÓN POST-PAGO
+  // ════════════════════════════════════════════════════
+  async function confirmarPagoOk(turnoId, prefId) {
+    // Buscar datos del turno en el Apps Script
+    try {
+      const res = await fetch(`${CONFIG.APPS_SCRIPT_URL}?action=getTurno&id=${turnoId}`);
+      const data = await res.json();
+      if (data.turno) {
+        const t = data.turno;
+        state.nombre = t.nombre;
+        state.cuit = t.cuit;
+        state.ws = t.ws;
+        state.hora = t.hora;
+        const [y,m,d] = t.fecha.split('-');
+        state.fecha = new Date(parseInt(y), parseInt(m)-1, parseInt(d));
+        state.turnoId = turnoId;
+        mostrarConfirmacion(turnoId);
+      }
+    } catch(e) {
+      // fallback: mostrar pantalla igual con datos de session storage si los hay
+      const saved = sessionStorage.getItem('tango_pending');
+      if (saved) {
+        const p = JSON.parse(saved);
+        Object.assign(state, p);
+        mostrarConfirmacion(turnoId);
+      }
+    }
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  function mostrarConfirmacion(turnoId) {
+    const fechaStr = state.fecha
+      ? DIAS[state.fecha.getDay()] + ' ' + state.fecha.getDate() + ' de ' + MESES[state.fecha.getMonth()] + ' de ' + state.fecha.getFullYear()
+      : '—';
+
+    document.getElementById('tk-num').textContent = 'TURNO #' + turnoId;
+    document.getElementById('tk-nombre').textContent = state.nombre;
+    document.getElementById('tk-cuit').textContent = state.cuit;
+    document.getElementById('tk-ws').textContent = '+54 9 ' + state.ws;
+    document.getElementById('tk-fecha').textContent = fechaStr;
+    document.getElementById('tk-hora').textContent = state.hora + 'hs';
+
+    goScreen(4);
+  }
+
+  // ════════════════════════════════════════════════════
+  //  DESCARGA DE TICKET PDF
+  // ════════════════════════════════════════════════════
+  function descargarTicket() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: [90, 140] });
+
+    const fechaStr = state.fecha
+      ? DIAS[state.fecha.getDay()] + ' ' + state.fecha.getDate() + ' de ' + MESES[state.fecha.getMonth()] + ' de ' + state.fecha.getFullYear()
+      : '—';
+
+    // Fondo
+    doc.setFillColor(20, 16, 16);
+    doc.rect(0, 0, 90, 140, 'F');
+
+    // Borde dorado
+    doc.setDrawColor(201, 168, 76);
+    doc.setLineWidth(0.5);
+    doc.rect(4, 4, 82, 132);
+
+    // Header
+    doc.setFillColor(107, 15, 26);
+    doc.rect(4, 4, 82, 22, 'F');
+    doc.setTextColor(237, 233, 227);
+    doc.setFontSize(13);
+    doc.setFont('helvetica','bold');
+    doc.text('TANGO', 45, 14, { align:'center' });
+    doc.setFontSize(7);
+    doc.setFont('helvetica','normal');
+    doc.setTextColor(201, 168, 76);
+    doc.text('Recuperación Financiera', 45, 20, { align:'center' });
+
+    // Título
+    doc.setTextColor(237, 233, 227);
+    doc.setFontSize(9);
+    doc.setFont('helvetica','bold');
+    doc.text('COMPROBANTE DE TURNO', 45, 34, { align:'center' });
+
+    // N° de turno
+    doc.setFillColor(30, 22, 22);
+    doc.rect(8, 37, 74, 10, 'F');
+    doc.setTextColor(201, 168, 76);
+    doc.setFontSize(8);
+    doc.text('N° TURNO: ' + (state.turnoId || 'PENDIENTE'), 45, 44, { align:'center' });
+
+    // Datos
+    const rows = [
+      ['Titular', state.nombre],
+      ['CUIT/CUIL', state.cuit],
+      ['WhatsApp', '+54 9 ' + state.ws],
+      ['Fecha', fechaStr],
+      ['Hora', state.hora + 'hs'],
+    ];
+    let y = 56;
+    rows.forEach(([k,v]) => {
+      doc.setTextColor(120, 117, 112);
+      doc.setFontSize(6.5);
+      doc.setFont('helvetica','normal');
+      doc.text(k, 10, y);
+      doc.setTextColor(237, 233, 227);
+      doc.setFontSize(7);
+      doc.setFont('helvetica','bold');
+      doc.text(v || '—', 80, y, { align:'right', maxWidth: 45 });
+      doc.setDrawColor(46, 40, 40);
+      doc.setLineWidth(0.2);
+      doc.line(8, y+3, 82, y+3);
+      y += 10;
+    });
+
+    // Seña
+    y += 2;
+    doc.setFillColor(30, 22, 22);
+    doc.rect(8, y-4, 74, 12, 'F');
+    doc.setTextColor(120, 117, 112);
+    doc.setFontSize(7);
+    doc.setFont('helvetica','normal');
+    doc.text('Seña abonada (reembolsable)', 12, y+2);
+    doc.setTextColor(201, 168, 76);
+    doc.setFontSize(9);
+    doc.setFont('helvetica','bold');
+    doc.text('$10.000', 78, y+2, { align:'right' });
+
+    // Footer
+    doc.setTextColor(74, 71, 68);
+    doc.setFontSize(5.5);
+    doc.setFont('helvetica','normal');
+    doc.text('Seña reembolsable con 24hs de anticipación', 45, 125, { align:'center' });
+    doc.text('www.tango-financiera.com.ar', 45, 130, { align:'center' });
+
+    doc.save(`turno-tango-${state.turnoId || 'comprobante'}.pdf`);
+  }
+
+  // ════════════════════════════════════════════════════
+  //  BG CANVAS (mismo que TANGO principal)
+  // ════════════════════════════════════════════════════
+  function initBg() {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 35; i++) {
+      particles.push({
+        x: Math.random() * 1500,
+        y: Math.random() * 900,
+        vx: (Math.random() - .5) * .18,
+        vy: (Math.random() - .5) * .12,
+        r: Math.random() * 1.5 + .4,
+        a: Math.random() * .4 + .1,
+        gold: Math.random() > .65
+      });
+    }
+
+    function frame() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.gold
+          ? `rgba(201,168,76,${p.a})`
+          : `rgba(107,15,26,${p.a * .7})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(frame);
+    }
+    frame();
+  }
+
+  // Guardar estado antes de redirigir a MP
+  document.getElementById('btn-pagar')?.addEventListener('click', () => {
+    sessionStorage.setItem('tango_pending', JSON.stringify({
+      nombre: state.nombre, cuit: state.cuit, ws: state.ws,
+      hora: state.hora,
+      fecha: state.fecha ? state.fecha.toISOString() : null
+    }));
+  }, true);
+  </script>
+</body>
+</html>
