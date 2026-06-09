@@ -417,7 +417,7 @@ function renderizar(json) {
     + '<span class="btn-reservar-meta">30 min · Videollamada · Asesor especializado en tu tipo de caso</span>'
     + '</button>'
     + '<p class="cta-precio-nota">Inversión en la consulta: <strong>$19.900</strong><br>'
-    + '<span>Se descuenta del total si avanzás. Reembolsable si no encontramos ninguna alternativa viable para tu situación.*</span>'
+    + '<span>Se descuenta del total si avanzás. Reembolsable si lo cancelas 24hs antes (Incluye informe de VERAZ PLATINIUM).*</span>'
     + '</p>'
     + '<p class="cta-precio-legal"><a href="terminos.html" target="_blank" rel="noopener">*Ver condiciones de reembolso en términos y condiciones.</a></p>'
     + '</section>';
