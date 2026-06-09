@@ -13,7 +13,7 @@
   --gold-dim:#8B6F34;
   --gold-ghost:rgba(201,168,76,.08);
   --bg:#0A0808;
-  --s1:#580e0e;
+  --s1:#141010;
   --s2:#1C1616;
   --s3:#242020;
   --s4:#2E2828;
@@ -258,7 +258,7 @@ body{
    SEARCH CARD
 ═══════════════════════════════════════ */
 .search-card{
-  background:linear-gradient(135deg,var(--s1),rgba(22,16,16,.95));
+  background: linear-gradient(135deg, #580e0e, rgba(22,16,16,.95));
   border:.5px solid rgba(201,168,76,.14);
   border-radius:14px;padding:1.5rem 1.5rem 1.25rem;
   margin-bottom:1.5rem;
