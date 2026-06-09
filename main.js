@@ -416,7 +416,7 @@ function renderizar(json) {
     + '<span class="btn-reservar-label">Quiero saber qué opciones tengo</span>'
     + '<span class="btn-reservar-meta">30 min · Videollamada · Asesor especializado en tu tipo de caso</span>'
     + '</button>'
-    + '<p class="cta-precio-nota">Inversión en la consulta: <strong>$10.000</strong><br>'
+    + '<p class="cta-precio-nota">Inversión en la consulta: <strong>$19.900</strong><br>'
     + '<span>Se descuenta del total si avanzás. Reembolsable si no encontramos ninguna alternativa viable para tu situación.*</span>'
     + '</p>'
     + '<p class="cta-precio-legal"><a href="terminos.html" target="_blank" rel="noopener">*Ver condiciones de reembolso en términos y condiciones.</a></p>'
@@ -514,7 +514,7 @@ function renderizar(json) {
     + '<p>Ya sabés lo que muestra el BCRA. Lo que todavía no sabés es qué se puede hacer con eso. Eso es exactamente lo que resolvemos en <strong>30 minutos</strong>.</p>'
     + '<div class="cta-btns">'
     + '<button class="btn-primary" onclick="reservarTurno()">Quiero saber qué opciones tengo</button>'
-    + '<p class="cta-precio-nota">Inversión en la consulta: <strong>$10.000</strong><br>'
+    + '<p class="cta-precio-nota">Inversión en la consulta: <strong>$19.900</strong><br>'
     + '<span>Se descuenta del total si avanzás. Reembolsable si no encontramos ninguna alternativa viable para tu situación.*</span>'
     + '</p>'
     + '<p class="cta-precio-legal"><a href="terminos.html" target="_blank" rel="noopener">*Ver condiciones de reembolso en términos y condiciones.</a></p>'
@@ -691,11 +691,11 @@ function chatAppend(role, html, showCta) {
     cta.className = "chat-cta";
     cta.innerHTML =
       '<p>Para saber exactamente qué podés hacer con tu situación, el siguiente paso es una reunión de 30 minutos con uno de nuestros asesores. '
-      + 'Cuesta <strong>$10.000</strong> que se descuentan del total si avanzás — y se reintegran si no encontramos ninguna alternativa viable para tu caso.*</p>'
+      + 'Cuesta <strong>$19.900</strong> que se descuentan del total si avanzás — y se reintegran si no encontramos ninguna alternativa viable para tu caso.*</p>'
       + '<a href="' + (typeof RESERVA_URL !== "undefined" ? RESERVA_URL : "#") + '" class="chat-cta-btn" target="_blank" rel="noopener">'
       + '📅 Reservar consulta con un asesor'
       + '</a>'
-      + '<p class="chat-cta-note">$10.000 · Se descuenta de honorarios · *Ver condiciones en términos y condiciones.</p>';
+      + '<p class="chat-cta-note">$19.900 · Se descuenta de honorarios · *Ver condiciones en términos y condiciones.</p>';
     wrap.appendChild(cta);
   }
 
