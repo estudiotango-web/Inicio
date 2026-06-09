@@ -1226,7 +1226,15 @@
 
     goScreen(4);
   }
-
+// ── Conversión Google Ads ──
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-XXXXXXXXXX/YYYYYYYYYYY',
+      'value': 19900,
+      'currency': 'ARS'
+    });
+  }
+}
   // ════════════════════════════════════════════════════════════════
   //  PDF TICKET — incluye datos del asesor
   // ════════════════════════════════════════════════════════════════
