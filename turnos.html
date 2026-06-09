@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reservar Turno | TANGO Recuperación Financiera</title>
-  <meta name="description" content="Reservá tu turno con los asesores de TANGO. Seña reembolsable de $10.000 via Mercado Pago. Lunes a viernes 10 a 18hs.">
+  <meta name="description" content="Reservá tu turno con los asesores de TANGO. Seña reembolsable de $19.900 via Mercado Pago. Lunes a viernes 10 a 18hs.">
   <meta name="robots" content="noindex">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -510,7 +510,7 @@
       <div class="screen active" id="screen-1">
         <div class="panel">
           <div class="panel-title"><i class="ti ti-user-circle"></i> Tus datos personales</div>
-          <p class="panel-sub">Completá tus datos para reservar el turno. La seña de <strong style="color:var(--text)">$10.000</strong> es totalmente reembolsable si cancelás con al menos 24 horas de anticipación.</p>
+          <p class="panel-sub">Completá tus datos para reservar el turno. La seña de <strong style="color:var(--text)">$19.900</strong> es totalmente reembolsable si cancelás con al menos 24 horas de anticipación.</p>
 
           <div class="form-grid">
             <div class="form-group">
@@ -609,7 +609,7 @@
             </div>
             <div class="summary-row" style="padding-top:.375rem;margin-top:.125rem">
               <span class="summary-key" style="font-weight:700;color:var(--text)">Seña reembolsable</span>
-              <span class="summary-val summary-highlight">$10.000</span>
+              <span class="summary-val summary-highlight">$19.900</span>
             </div>
           </div>
 
@@ -636,7 +636,7 @@
 
           <button class="btn btn-mp" id="btn-pagar" onclick="iniciarPago()">
             <i class="ti ti-credit-card"></i>
-            Pagar seña $10.000
+            Pagar seña $19.900
           </button>
         </div>
 
@@ -685,7 +685,7 @@
                 <div class="ticket-divider"></div>
                 <div class="ticket-total">
                   <span>Seña abonada</span>
-                  <span>$10.000 ✓</span>
+                  <span>$19.900 ✓</span>
                 </div>
               </div>
 
@@ -737,7 +737,7 @@
       <div class="inner">
         <p class="footer-copy">© <span id="year"></span> TANGO Recuperación Financiera</p>
         <p class="footer-disclaimer">
-          La seña de $10.000 es reembolsable cancelando con al menos 24 horas de anticipación al turno.<br>
+          La seña de $19.900 es reembolsable cancelando con al menos 24 horas de anticipación al turno.<br>
           Datos tratados con estricta confidencialidad — Ley 25.326 de Protección de Datos Personales.
         </p>
       </div>
@@ -1158,7 +1158,7 @@
   function mostrarErrorPago(msg) {
     var btn = document.getElementById('btn-pagar');
     btn.disabled = false;
-    btn.innerHTML = '<i class="ti ti-credit-card"></i> Pagar seña $10.000';
+    btn.innerHTML = '<i class="ti ti-credit-card"></i> Pagar seña $19.900';
     document.getElementById('pago-alert').innerHTML =
       '<div class="alert alert-error"><i class="ti ti-alert-circle"></i>' +
       (msg || 'Error al procesar el pago. Intentá de nuevo.') + '</div>';
@@ -1328,7 +1328,7 @@
     doc.setFontSize(13);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(200, 165, 70);
-    doc.text('$10.000', W-9, yTotal + 10, { align: 'right' });
+    doc.text('$19.900', W-9, yTotal + 10, { align: 'right' });
 
     // ── Sección asesor ──
     var yAsesor = yTotal + 18;
