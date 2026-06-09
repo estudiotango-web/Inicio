@@ -2,7 +2,7 @@
    CONFIG
 ════════════════════════════════════════════ */
 // CAMBIO A: URL de reserva
-const RESERVA_URL = "https://estudiotango-web.github.io/Inicio/turnos.html";
+const RESERVA_URL = "https://estudiotango.com/turnos.html";
 
 const API = "https://script.google.com/macros/s/AKfycbw0HjM7_HzP3aX6Ye2AMGF21QtUyefO8CQf_hjiNHHBOp3e77-g5RjkZD9llRHheWTC/exec";
 const TURNO_URL = "#";
@@ -317,7 +317,7 @@ async function consultar() {
   API +
   "?cuit=" + encodeURIComponent(cuit) +
   "&callback=" + callbackName +
-  "&origen=" + encodeURIComponent("https://estudiotango-web.github.io/Inicio/");
+  "&origen=" + encodeURIComponent("https://estudiotango.com");
     script.onerror = function() {
       delete window[callbackName];
       reject(new Error("Error al conectar con el servidor."));
