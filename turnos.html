@@ -1224,17 +1224,15 @@
     document.getElementById('tk-fecha').textContent  = fechaStr;
     document.getElementById('tk-hora').textContent   = (state.hora || '—') + 'hs';
 
+    if (typeof gtag !== 'undefined') {
+    gtag('event', 'manual_event_BOOK_APPOINTMENT', {
+    value: 19900,
+    currency: 'ARS'
+       });
+      }
     goScreen(4);
   }
-// ── Conversión Google Ads ──
-  if (typeof gtag !== 'undefined') {
-    gtag('event', 'conversion', {
-      'send_to': 'AW-XXXXXXXXXX/YYYYYYYYYYY',
-      'value': 19900,
-      'currency': 'ARS'
-    });
-  }
-}
+
   // ════════════════════════════════════════════════════════════════
   //  PDF TICKET — incluye datos del asesor
   // ════════════════════════════════════════════════════════════════
