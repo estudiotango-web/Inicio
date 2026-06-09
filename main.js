@@ -691,7 +691,7 @@ function chatAppend(role, html, showCta) {
     cta.className = "chat-cta";
     cta.innerHTML =
       '<p>Para saber exactamente qué podés hacer con tu situación, el siguiente paso es una reunión de 30 minutos con uno de nuestros asesores. '
-      + 'Cuesta <strong>$19.900</strong> que se descuentan del total si avanzás — y se reintegran si no encontramos ninguna alternativa viable para tu caso.*</p>'
+      + 'Cuesta <strong>$19.900</strong> que se descuentan del total si avanzás — y se reintegran si cancelas 24hs antes el turno. INCLUYE INFORME DE VERAZ PLATINIUM.*</p>'
       + '<a href="' + (typeof RESERVA_URL !== "undefined" ? RESERVA_URL : "#") + '" class="chat-cta-btn" target="_blank" rel="noopener">'
       + '📅 Reservar consulta con un asesor'
       + '</a>'
