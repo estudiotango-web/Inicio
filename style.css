@@ -1261,3 +1261,17 @@ details.faq-item summary:hover{color:var(--gold2)}
     justify-content: center;
   }
 }
+
+.chat-sugg-wa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #e7f7ef;
+  border: 0.5px solid #4CAF50 !important;
+  color: #1b5e20 !important;
+  text-decoration: none;
+  font-weight: 500;
+}
+.chat-sugg-wa:hover {
+  background: #d0f0dc;
+}
