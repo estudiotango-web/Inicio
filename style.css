@@ -1275,3 +1275,28 @@ details.faq-item summary:hover{color:var(--gold2)}
 .chat-sugg-wa:hover {
   background: #d0f0dc;
 }
+.chat-wa-fixed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 0;
+  background: #e7f7ef;
+  border-top: 1px solid #c8ecd6;
+  color: #1b5e20;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0 0 12px 12px;
+}
+
+.chat-wa-fixed:hover {
+  background: #d0f0dc;
+}
+
+.chat-wa-fixed svg {
+  width: 15px;
+  height: 15px;
+  fill: #25D366;
+  flex-shrink: 0;
+}
