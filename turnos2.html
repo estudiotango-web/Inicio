@@ -968,27 +968,108 @@
   function pad(n) { return String(n).padStart(2, '0'); }
 
   function renderSlots() {
-    var slots = [];
-    for (var h = CONFIG.START_HOUR; h < CONFIG.END_HOUR; h++) {
-      for (var m = 0; m < 60; m += CONFIG.SLOT_DURATION) {
-        slots.push(pad(h) + ':' + pad(m));
+
+  var slots = [];
+
+  var ahora = new Date();
+
+  for (var h = CONFIG.START_HOUR; h < CONFIG.END_HOUR; h++) {
+
+    for (var m = 0; m < 60; m += CONFIG.SLOT_DURATION) {
+
+      var horaStr = pad(h) + ':' + pad(m);
+
+      var bloqueadoPorHora = false;
+
+
+      // si la fecha elegida es hoy
+      if(state.fecha){
+
+        var fechaSlot = new Date(
+          state.fecha.getFullYear(),
+          state.fecha.getMonth(),
+          state.fecha.getDate(),
+          h,
+          m
+        );
+
+
+        // si ya pasó la hora actual
+        if(fechaSlot <= ahora){
+
+          bloqueadoPorHora = true;
+
+        }
+
       }
+
+
+      slots.push({
+        hora: horaStr,
+        pasado: bloqueadoPorHora
+      });
+
     }
-
-    var html = '';
-    slots.forEach(function(s) {
-      var ocupado  = state.ocupados.indexOf(s) !== -1;
-      var selected = state.hora === s;
-      var cls = 'slot' + (ocupado ? ' occupied' : ' available') + (selected ? ' selected' : '');
-      var onclick = ocupado ? '' : 'onclick="selectSlot(\'' + s + '\')"';
-      html += '<div class="' + cls + '" ' + onclick + '>' + s + '</div>';
-    });
-
-    document.getElementById('slots-loading').style.display = 'none';
-    document.getElementById('slots-grid').innerHTML = html;
-    document.getElementById('slots-grid').style.display = 'grid';
   }
 
+
+
+  var html = '';
+
+  slots.forEach(function(item){
+
+    var s = item.hora;
+
+    var ocupado = state.ocupados.indexOf(s) !== -1;
+
+    var pasado = item.pasado;
+
+
+    var cls = 'slot';
+
+
+    if(ocupado || pasado){
+
+      cls += ' occupied';
+
+    }else{
+
+      cls += ' available';
+
+    }
+
+
+
+    if(state.hora === s){
+
+      cls += ' selected';
+
+    }
+
+
+
+    var onclick = (ocupado || pasado)
+      ? ''
+      : 'onclick="selectSlot(\''+s+'\')"';
+
+
+
+    html += 
+      '<div class="'+cls+'" '+onclick+'>'+
+      s+
+      '</div>';
+
+  });
+
+
+
+  document.getElementById('slots-loading').style.display='none';
+
+  document.getElementById('slots-grid').innerHTML=html;
+
+  document.getElementById('slots-grid').style.display='grid';
+
+}
   function selectSlot(hora) {
     state.hora = hora;
     document.getElementById('btn-paso1-next').disabled = false;
