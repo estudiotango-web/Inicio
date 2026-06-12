@@ -1,451 +1,628 @@
 <!DOCTYPE html>
-<html lang="es-AR">
+<html lang="es-AR" prefix="og: https://ogp.me/ns#">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eliminá tus deudas del Veraz — TANGO Recuperación Financiera</title>
-<meta name="description" content="Si tu deuda tiene más de 5 años, la ley te da el derecho de eliminarla del Veraz. Turno de diagnóstico gratis. TANGO — 15 años gestionando recuperación crediticia.">
-<meta name="robots" content="noindex">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Mismas fuentes e íconos que el sitio principal -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <title>Eliminá tus Deudas del Veraz | TANGO — Ley 25.326 · Sin Gastos Iniciales</title>
+  <meta name="description" content="Si tus deudas tienen más de 5 años, la Ley 25.326 te da el derecho a que sean eliminadas de Veraz y el BCRA. Consultá tu informe gratis y hablá con un asesor. Sin gastos iniciales. Gestionamos préstamos de hasta $6.000.000.">
+  <meta name="keywords" content="eliminar deudas veraz, ley 25326, deudas mas de 5 años, salir del veraz, informe BCRA, historial crediticio, recuperar crédito, regularizar deudas, desafectarse veraz, prestamo con deudas, mejorar perfil crediticio, veraz argentina">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="author" content="TANGO Recuperación Financiera">
+  <meta name="language" content="es-AR">
+  <meta name="geo.region" content="AR">
+  <meta name="geo.country" content="AR">
 
-<!-- CSS del sitio principal — hereda colores, botones, badges, todo -->
-<link rel="stylesheet" href="./style.css">
+  <link rel="canonical" href="https://www.estudiotango.com/">
+  <link rel="alternate" hreflang="es-ar" href="https://www.estudiotango.com/">
+  <link rel="alternate" hreflang="x-default" href="https://www.estudiotango.com/">
 
-<style>
-/* ── Solo lo específico de esta landing ── */
-.lp-wrap {
-  max-width: 660px;
-  margin: 0 auto;
-  padding: 0 20px 80px;
-}
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#160206">
 
-/* Nav simple */
-.lp-nav {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 0 30px;
-  border-bottom: .5px solid var(--b1);
-  margin-bottom: 48px;
-}
-.lp-nav-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px; font-weight: 600;
-  color: var(--gold);
-  letter-spacing: .04em;
-}
-.lp-nav-tag {
-  font-size: 11px; color: var(--muted);
-  border: .5px solid var(--b2); border-radius: 20px;
-  padding: 4px 12px;
-}
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="TANGO Recuperación Financiera">
+  <meta property="og:title" content="¿Tus deudas tienen más de 5 años? Podés pedir que las eliminen del Veraz">
+  <meta property="og:description" content="La Ley 25.326 te da ese derecho. Consultá gratis qué figura en el BCRA y hablá con un asesor hoy. Sin gastos iniciales. Préstamos de hasta $6.000.000 post-gestión.">
+  <meta property="og:url" content="https://www.estudiotango.com/">
+  <meta property="og:image" content="https://www.estudiotango.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Eliminá tus deudas del Veraz — TANGO Recuperación Financiera">
 
-/* Eyebrow */
-.lp-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 11px; font-weight: 500; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--gold);
-  border: .5px solid var(--b2); border-radius: 20px;
-  padding: 5px 14px; margin-bottom: 22px;
-}
-.lp-eyebrow-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--gold); flex-shrink: 0;
-  animation: lp-pulse 2s ease-in-out infinite;
-}
-@keyframes lp-pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@tangofinanciera">
+  <meta name="twitter:title" content="¿Tus deudas tienen más de 5 años? Podés eliminarlas del Veraz">
+  <meta name="twitter:description" content="La Ley 25.326 te da ese derecho. Consultá gratis en 30 segundos. Sin gastos iniciales. Préstamos hasta $6M post-gestión.">
+  <meta name="twitter:image" content="https://www.estudiotango.com/og-image.jpg">
 
-/* Hero */
-.lp-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 5.5vw, 44px);
-  font-weight: 600; line-height: 1.15;
-  color: var(--text); margin-bottom: 18px;
-}
-.lp-h1 em { font-style: italic; color: var(--gold); }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com">
+  <link rel="dns-prefetch" href="https://script.google.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
 
-.lp-hero-sub {
-  font-size: 15px; color: var(--muted); line-height: 1.75;
-  margin-bottom: 32px; max-width: 580px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.lp-hero-sub strong { color: var(--text); font-weight: 500; }
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"></noscript>
 
-/* Cita legal */
-.lp-ley {
-  background: rgba(201,168,76,.06);
-  border: .5px solid var(--b2);
-  border-left: 3px solid var(--gold);
-  border-radius: 10px; padding: 16px 18px;
-  margin-bottom: 36px;
-  font-size: 13px; color: var(--muted);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  line-height: 1.7;
-}
-.lp-ley strong { color: var(--gold); font-weight: 600; }
+  <!-- Icons -->
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"></noscript>
 
-/* Divisor */
-.lp-div { height: .5px; background: var(--b1); margin: 40px 0; }
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H006PB4H6S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H006PB4H6S');
+  </script>
 
-/* Título de sección */
-.lp-sec-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px; font-weight: 500;
-  color: var(--text); margin-bottom: 20px;
-}
+  <!-- Styles -->
+  <link rel="stylesheet" href="./style.css" />
 
-/* Pasos — reutiliza .paso del sitio si existe, sino define aquí */
-.lp-pasos { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
-.lp-paso {
-  display: flex; gap: 14px; align-items: flex-start;
-  background: var(--s2); border: .5px solid var(--b1);
-  border-radius: 12px; padding: 16px 18px;
-}
-.lp-paso-num {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(201,168,76,.08); border: .5px solid var(--b2);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif; font-weight: 600;
-  font-size: 13px; color: var(--gold); flex-shrink: 0;
-}
-.lp-paso h3 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px;
-}
-.lp-paso p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px; color: var(--muted); line-height: 1.6;
-}
-
-/* Bloque de diagnóstico */
-.lp-diag {
-  background: var(--s2); border: .5px solid var(--b1);
-  border-radius: 16px; padding: 26px 22px; margin-bottom: 20px;
-}
-.lp-diag-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px; font-weight: 500; margin-bottom: 5px; color: var(--text);
-}
-.lp-diag-sub {
-  font-size: 13px; color: var(--muted); margin-bottom: 18px; line-height: 1.6;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.lp-input-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.lp-input {
-  flex: 1; min-width: 170px;
-  background: var(--s3); border: .5px solid var(--b2);
-  border-radius: 10px; padding: 13px 15px;
-  font-size: 15px; color: var(--text);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  outline: none; transition: border-color .2s;
-}
-.lp-input::placeholder { color: var(--muted); }
-.lp-input:focus { border-color: var(--gold); }
-.lp-note { font-size: 11px; color: var(--muted); margin-top: 8px; font-family: 'Plus Jakarta Sans', sans-serif; }
-
-/* Resultado inline */
-#lp-resultado { margin-top: 16px; }
-.lp-prog-wrap { margin: 14px 0 6px; }
-.lp-prog-msg { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-family: 'Plus Jakarta Sans', sans-serif; }
-.lp-prog-bar { height: 2px; background: var(--s3); border-radius: 2px; }
-.lp-prog-fill { height: 100%; border-radius: 2px; background: var(--gold); width: 0%; transition: width .5s; }
-.lp-error { background: rgba(192,57,43,.1); border: .5px solid rgba(192,57,43,.3); border-radius: 10px; padding: 12px 15px; font-size: 13px; color: #E8705F; font-family: 'Plus Jakarta Sans', sans-serif; }
-.lp-result-nombre { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
-.lp-result-nombre strong { color: var(--text); }
-.lp-callout {
-  background: rgba(201,168,76,.06); border: .5px solid var(--b2);
-  border-left: 3px solid var(--gold); border-radius: 10px;
-  padding: 14px 16px; font-size: 13px; color: var(--muted);
-  line-height: 1.7; margin: 12px 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.lp-callout strong { color: var(--gold); }
-
-/* CTA turno */
-.lp-cta {
-  background: var(--s2); border: .5px solid var(--b2);
-  border-radius: 16px; padding: 28px 24px;
-  text-align: center; margin-bottom: 20px;
-}
-.lp-free-tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; color: #6DBF95;
-  background: rgba(74,155,111,.1); border: .5px solid rgba(74,155,111,.25);
-  border-radius: 20px; padding: 4px 12px; margin-bottom: 16px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.lp-cta h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px; font-weight: 500; margin-bottom: 10px; color: var(--text);
-}
-.lp-cta p {
-  font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 22px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.lp-cta p strong { color: var(--text); font-weight: 500; }
-.lp-btn-turno {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; text-decoration: none;
-  background: var(--gold); color: #0E0C0A;
-  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
-  font-size: 15px; border: none; border-radius: 10px;
-  padding: 16px 22px; cursor: pointer;
-  transition: opacity .2s; margin-bottom: 10px;
-}
-.lp-btn-turno:hover { opacity: .85; }
-.lp-btn-wa {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; text-decoration: none;
-  background: transparent; color: var(--text);
-  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;
-  font-size: 13px; border: .5px solid var(--b2); border-radius: 10px;
-  padding: 13px 22px; transition: border-color .2s, color .2s;
-}
-.lp-btn-wa:hover { border-color: #25D366; color: #25D366; }
-
-/* Garantías */
-.lp-garantias { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
-.lp-garantia {
-  display: flex; align-items: flex-start; gap: 12px;
-  font-size: 13px; color: var(--muted); line-height: 1.5;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.lp-garantia i { color: var(--gold); font-size: 15px; margin-top: 1px; flex-shrink: 0; }
-
-/* Footer simple */
-.lp-footer {
-  border-top: .5px solid var(--b1); padding-top: 24px; margin-top: 40px;
-  font-size: 11px; color: var(--muted); line-height: 1.7; text-align: center;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.lp-footer a { color: var(--muted); text-decoration: none; }
-
-/* Anim */
-.lp-fade { animation: lpFade .3s ease both; }
-@keyframes lpFade { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
-
-@media (max-width: 480px) {
-  .lp-wrap { padding: 0 16px 60px; }
-  .lp-nav  { margin-bottom: 30px; }
-  .lp-h1   { font-size: 26px; }
-  .lp-input-row { flex-direction: column; }
-  .lp-cta  { padding: 22px 16px; }
-}
-</style>
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "FinancialService",
+        "@id": "https://www.estudiotango.com/#financialservice",
+        "name": "TANGO Recuperación Financiera",
+        "alternateName": "TANGO",
+        "description": "Especialistas en eliminación de deudas del Veraz por Ley 25.326 y recuperación del perfil crediticio en Argentina. Más de 15 años de trayectoria. Sin gastos iniciales. Gestionamos préstamos de hasta $6.000.000.",
+        "url": "https://www.estudiotango.com/",
+        "logo": "https://res.cloudinary.com/dwgwbdtud/image/upload/v1780571332/qhp1rxgz7x8d1gv6cmwc.png",
+        "foundingDate": "2010",
+        "areaServed": { "@type": "Country", "name": "Argentina" },
+        "serviceType": [
+          "Eliminación de deudas Veraz Ley 25.326",
+          "Análisis crediticio",
+          "Recuperación financiera",
+          "Regularización de deudas",
+          "Gestión de préstamos post-saneamiento",
+          "Consulta informe BCRA"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.estudiotango.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Puedo eliminar mis deudas del Veraz si tienen más de 5 años?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí. La Ley 25.326 de Protección de Datos Personales establece que las deudas con más de 5 años de mora no pueden seguir figurando en las bases de riesgo crediticio como Veraz o el BCRA. Tenés el derecho a solicitar su eliminación. Nuestros asesores gestionan ese proceso por vos, sin gastos iniciales."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo consulto mi informe crediticio gratis?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ingresá tu CUIT o CUIL sin guiones y hacé clic en 'Ver mi informe'. En menos de 30 segundos ves lo que figura en el BCRA: deudas, situación crediticia e historial de los últimos 24 meses."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Puedo acceder a un préstamo después de limpiar mis antecedentes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "En la mayoría de los casos, sí. Una vez gestionada la eliminación de los registros negativos, trabajamos para que puedas acceder a préstamos de hasta $6.000.000. El proceso es sin gastos iniciales."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué significa la clasificación crediticia del BCRA del 1 al 6?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "El BCRA clasifica a los deudores del 1 al 6: Situación 1 es normal (al día), Situación 2 seguimiento especial, Situación 3 con problemas, Situación 4 alto riesgo, Situación 5 irrecuperable y Situación 6 en quiebra o concursado. Una situación elevada no significa que no haya alternativas — especialmente si la deuda supera los 5 años."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuánto tiempo lleva eliminar una deuda del Veraz?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Depende de cada caso. En muchas situaciones el proceso puede resolverse en 60 a 90 días. En la consulta gratuita con el asesor podés saber cuál es el plazo estimado para tu caso específico."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿La consulta del informe afecta mi score crediticio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Consultar tu propio informe crediticio no afecta tu score ni genera ningún registro negativo en el sistema financiero."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Ir al contenido principal</a>
 
-<div class="lp-wrap">
+  <canvas id="bg-canvas" role="presentation" aria-hidden="true"></canvas>
 
-  <nav class="lp-nav">
-    <div class="lp-nav-brand">TANGO</div>
-    <div class="lp-nav-tag">15 años · +5.000 casos</div>
-  </nav>
-
-  <!-- HERO -->
-  <div class="lp-eyebrow">
-    <span class="lp-eyebrow-dot"></span>
-    Ley 25.326 · Protección de Datos Personales
-  </div>
-
-  <h1 class="lp-h1">Tu deuda con más de 5 años puede <em>salir del Veraz</em></h1>
-
-  <p class="lp-hero-sub">
-    La ley argentina establece un plazo máximo de permanencia en las bases de riesgo crediticio.
-    Si tu deuda cumplió ese plazo, <strong>tenés derecho a solicitarlo</strong> — y nosotros gestionamos el proceso.
-    Una vez limpio el perfil, te acompañamos a acceder a financiamiento de hasta $10.000.000.
-  </p>
-
-  <div class="lp-ley">
-    <strong>Ley 25.326 — Art. 26:</strong> Los datos relativos al incumplimiento de obligaciones de contenido patrimonial solo pueden figurar en los registros por un plazo máximo de <strong>cinco años</strong> desde la fecha de la mora, independientemente de si la deuda fue cancelada o no.
-  </div>
-
-  <!-- PASOS -->
-  <p class="lp-sec-title">¿Cómo funciona?</p>
-  <ul class="lp-pasos">
-    <li class="lp-paso">
-      <div class="lp-paso-num">1</div>
-      <div>
-        <h3>Diagnóstico gratuito</h3>
-        <p>Consultamos tu situación en el BCRA y evaluamos si aplica la Ley 25.326 a tu caso. Sin costo, sin compromiso.</p>
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Cargando TANGO Recuperación Financiera">
+    <canvas id="loader-canvas" aria-hidden="true"></canvas>
+    <div class="loader-logo">
+      <div class="loader-logo-img">
+        <img src="https://res.cloudinary.com/dwgwbdtud/image/upload/v1780571332/qhp1rxgz7x8d1gv6cmwc.png"
+             alt="TANGO Recuperación Financiera"
+             width="200" height="200"
+             loading="eager"
+             onerror="this.parentElement.style.display='none';document.querySelector('.loader-logo-fallback').style.display='flex'">
       </div>
-    </li>
-    <li class="lp-paso">
-      <div class="lp-paso-num">2</div>
-      <div>
-        <h3>Estrategia personalizada</h3>
-        <p>Un asesor analiza tu caso en detalle y diseña el camino más eficiente para eliminar los registros negativos.</p>
-      </div>
-    </li>
-    <li class="lp-paso">
-      <div class="lp-paso-num">3</div>
-      <div>
-        <h3>Gestión y seguimiento</h3>
-        <p>Nos encargamos de las gestiones ante las entidades. Una vez limpio el perfil, te asistimos para acceder a créditos de hasta $10.000.000.</p>
-      </div>
-    </li>
-  </ul>
-
-  <div class="lp-div"></div>
-
-  <!-- DIAGNÓSTICO -->
-  <div class="lp-diag">
-    <div class="lp-diag-title">Verificá tu situación ahora</div>
-    <p class="lp-diag-sub">Ingresá tu CUIT o CUIL y en 30 segundos ves exactamente qué figura en el BCRA — gratis, sin registrarte.</p>
-    <div class="lp-input-row">
-      <input
-        id="cuit-lp"
-        class="lp-input"
-        type="tel"
-        inputmode="numeric"
-        placeholder="CUIT / CUIL (sin guiones)"
-        maxlength="11"
-        autocomplete="off"
-        onkeydown="if(event.key==='Enter') lpVerificar()"
-      >
-      <button class="btn-consultar" onclick="lpVerificar()">Ver situación</button>
+      <div class="loader-logo-fallback" style="display:none" aria-hidden="true">T</div>
     </div>
-    <p class="lp-note">No afecta tu score · Datos tratados con estricta confidencialidad (Ley 25.326)</p>
-    <div id="lp-resultado"></div>
+    <div class="loader-messages" aria-live="polite">
+      <div class="loader-msg active" id="lm0">Verificando tu situación crediticia...</div>
+      <div class="loader-msg" id="lm1">Preparando diagnóstico profesional...</div>
+      <div class="loader-msg" id="lm2">Identificando oportunidades legales...</div>
+    </div>
+    <div class="loader-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+      <div class="loader-bar-fill"></div>
+    </div>
   </div>
 
-  <div class="lp-div"></div>
+  <!-- STICKY SEARCH BAR (solo mobile) -->
+  <div class="sticky-search-bar" id="sticky-search-bar" aria-label="Consultar informe rápido" role="search">
+    <label for="cuit-sticky" class="sr-only">CUIT o CUIL sin guiones</label>
+    <input
+      id="cuit-sticky"
+      type="tel"
+      placeholder="CUIT / CUIL"
+      inputmode="numeric"
+      autocomplete="off"
+      maxlength="11"
+      pattern="[0-9]{10,11}"
+      aria-label="CUIT o CUIL para consulta rápida"
+    >
+    <button class="btn-consultar" onclick="consultarSticky()" aria-label="Ver informe crediticio">
+      <i class="ti ti-search" aria-hidden="true"></i> Ver informe
+    </button>
+  </div>
 
-  <!-- CTA TURNO -->
-  <div class="lp-cta">
-    <div class="lp-free-tag">
-      <i class="ti ti-circle-check"></i> Turno 100% gratuito
+  <!-- BARRA INFERIOR MODO RESULTADO (solo mobile) -->
+  <div class="bar-nueva-consulta" id="bar-nueva-consulta" role="toolbar" aria-label="Acciones sobre el informe" style="display:none">
+    <button class="btn-nueva-consulta" onclick="cerrarResultado()" aria-label="Nueva consulta">
+      <i class="ti ti-refresh" style="font-size:14px" aria-hidden="true"></i>
+      Nueva consulta
+    </button>
+    <button class="btn-asesor" onclick="reservarTurno()" aria-label="Quiero que me llamen">
+      <i class="ti ti-calendar" style="font-size:14px" aria-hidden="true"></i>
+      Turno gratis
+    </button>
+  </div>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar" aria-label="Información sobre TANGO">
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="https://res.cloudinary.com/dwgwbdtud/image/upload/v1780571332/qhp1rxgz7x8d1gv6cmwc.png"
+               alt="TANGO Recuperación Financiera — Logo"
+               width="220" height="220"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback" style="display:none" aria-hidden="true">T</div>
+        </div>
+      </div>
+
+      <h1 class="hero-title">
+        Si tu deuda tiene más de 5 años,<br>
+        <em>tenés derecho a que la eliminen.</em>
+      </h1>
+      <p class="hero-desc">
+        La Ley 25.326 lo establece claramente. Consultá gratis qué figura en el BCRA y hablá con un asesor que gestiona el proceso por vos — sin gastos iniciales. Luego te conseguimos un préstamo de hasta $6.000.000.
+      </p>
+
+      <div class="trust-badges" role="list" aria-label="Garantías del servicio">
+        <div class="trust-badge" role="listitem">
+          <i class="ti ti-shield-check" aria-hidden="true"></i>
+          <span>Ley 25.326 — eliminación legal de deudas con más de 5 años</span>
+        </div>
+        <div class="trust-badge" role="listitem">
+          <i class="ti ti-currency-dollar" aria-hidden="true"></i>
+          <span>Sin gastos iniciales — trabajamos contra resultado</span>
+        </div>
+        <div class="trust-badge" role="listitem">
+          <i class="ti ti-certificate" aria-hidden="true"></i>
+          <span>15 años de trayectoria en recuperación financiera</span>
+        </div>
+        <div class="trust-badge" role="listitem">
+          <i class="ti ti-chart-bar" aria-hidden="true"></i>
+          <span>Préstamos de hasta $6.000.000 post-saneamiento*</span>
+        </div>
+      </div>
+
+      <div class="features-rotator" id="features-rotator" aria-label="Beneficios del servicio">
+        <div class="feature-slide active" id="feat-0" role="region" aria-label="Beneficio 1 de 3">
+          <div class="feature-slide-num" aria-hidden="true">01 — Tu derecho legal</div>
+          <h2 class="feature-slide-title">Con más de 5 años de mora, la ley trabaja para vos</h2>
+          <p class="feature-slide-text">
+            La Ley 25.326 prohíbe que las bases de riesgo crediticio conserven registros de deudas con más de 5 años de antigüedad. No es un trámite opcional — es un derecho que podés ejercer hoy.
+          </p>
+        </div>
+        <div class="feature-slide" id="feat-1" role="region" aria-label="Beneficio 2 de 3">
+          <div class="feature-slide-num" aria-hidden="true">02 — Sin riesgos económicos</div>
+          <h2 class="feature-slide-title">Sin gastos iniciales. Trabajamos contra resultado.</h2>
+          <p class="feature-slide-text">
+            No cobramos honorarios por adelantado. Primero analizamos tu situación, confirmamos que aplica la ley y recién entonces avanzamos. Si no hay solución viable, no pagás nada.
+          </p>
+        </div>
+        <div class="feature-slide" id="feat-2" role="region" aria-label="Beneficio 3 de 3">
+          <div class="feature-slide-num" aria-hidden="true">03 — El paso siguiente</div>
+          <h2 class="feature-slide-title">Saneamiento crediticio + préstamo de hasta $6.000.000</h2>
+          <p class="feature-slide-text">
+            Una vez eliminados los registros negativos, te acompañamos en la gestión de crédito. El objetivo no es solo limpiar el historial — es que vuelvas a tener acceso real al sistema financiero.
+          </p>
+        </div>
+        <div class="feature-dots" id="feature-dots" role="tablist" aria-label="Navegación de beneficios">
+          <button class="feature-dot active" onclick="goFeat(0)" role="tab" aria-selected="true" aria-label="Ver beneficio 1"></button>
+          <button class="feature-dot" onclick="goFeat(1)" role="tab" aria-selected="false" aria-label="Ver beneficio 2"></button>
+          <button class="feature-dot" onclick="goFeat(2)" role="tab" aria-selected="false" aria-label="Ver beneficio 3"></button>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navegación de secciones">
+        <ul>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+          <li><a href="#quienes-somos">Quiénes somos</a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-foot">
+        Atención profesional sin costo inicial.<br>
+        Evaluación individual, confidencial y orientada a<br>
+        tu situación específica — no a una solución genérica.
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main" id="main-content" aria-label="Consulta de informe crediticio">
+
+      <p class="top-label" id="top-label-main" aria-hidden="true">Primer paso — consultá tu informe gratis</p>
+
+      <!-- SEARCH CARD -->
+      <section class="search-card" id="search-card" aria-label="Consultar informe crediticio">
+        <h2 class="search-heading">¿Qué figura en el BCRA sobre vos en este momento?</h2>
+        <p class="search-inner-lbl">
+          Ingresá tu CUIT. En 30 segundos sabés exactamente qué deudas figuran, con qué antigüedad — y si la Ley 25.326 aplica a tu caso.
+        </p>
+        <div class="input-row" role="search">
+          <label for="cuit" class="sr-only">CUIT o CUIL sin guiones</label>
+          <input
+            id="cuit"
+            type="tel"
+            placeholder="CUIT / CUIL (ej: 20123456789)"
+            inputmode="numeric"
+            autocomplete="off"
+            maxlength="11"
+            pattern="[0-9]{10,11}"
+            aria-label="Ingresá tu CUIT o CUIL sin guiones"
+            aria-describedby="cuit-hint"
+            aria-required="true"
+          >
+          <button
+            class="btn-consultar"
+            onclick="consultar()"
+            aria-label="Ver mi informe crediticio"
+          >
+            Ver mi informe
+          </button>
+        </div>
+        <p id="cuit-hint" class="sr-only">Ingresá los 10 u 11 dígitos de tu CUIT o CUIL sin guiones ni espacios.</p>
+
+        <!-- Panel de progreso -->
+        <div class="prog-wrap" id="prog-wrap" role="status" aria-live="polite" aria-label="Procesando consulta">
+          <div class="prog-panel">
+            <div class="prog-logo-mini" aria-hidden="true">
+              <div class="prog-logo-mini-img">
+                <img src="https://res.cloudinary.com/dwgwbdtud/image/upload/v1780571332/qhp1rxgz7x8d1gv6cmwc.png"
+                     alt="" width="48" height="48" loading="lazy">
+              </div>
+            </div>
+            <div class="prog-msg-wrap" id="prog-msg-wrap">
+              <div class="prog-msg" id="pm0">Consultando la Central de Deudores del BCRA...</div>
+              <div class="prog-msg" id="pm1">Identificando entidades con registros activos...</div>
+              <div class="prog-msg" id="pm2">Verificando antigüedad de los registros...</div>
+              <div class="prog-msg" id="pm3">Preparando tu diagnóstico personalizado...</div>
+            </div>
+            <div class="prog-bg" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+              <div class="prog-fill" id="prog-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sentinel para sticky bar -->
+      <div class="search-card-sentinel" id="search-card-sentinel"></div>
+
+      <!-- RESULTADO -->
+      <div id="resultado-wrapper">
+        <!-- Header mobile con botón cerrar -->
+        <div class="resultado-mobile-header" id="resultado-mobile-header" style="display:none" aria-label="Resultado de la consulta">
+          <span class="resultado-titulo">Tu informe crediticio</span>
+          <button class="btn-cerrar-resultado" onclick="cerrarResultado()" aria-label="Cerrar resultado y hacer nueva consulta">
+            <i class="ti ti-x" style="font-size:12px" aria-hidden="true"></i>
+            Cerrar
+          </button>
+        </div>
+        <div id="resultado" aria-live="polite" aria-atomic="false"></div>
+      </div>
+
+      <!-- STATS -->
+      <section aria-label="Estadísticas del servicio" style="margin-bottom:1rem" id="section-stats">
+        <div class="stats-strip">
+          <article class="stat-box">
+            <div class="stat-val">+5.000</div>
+            <p class="stat-lbl">Casos de deudas gestionados exitosamente</p>
+          </article>
+          <article class="stat-box">
+            <div class="stat-val">92%</div>
+            <p class="stat-lbl">De los casos con mejora verificable del perfil crediticio*</p>
+          </article>
+          <article class="stat-box">
+            <div class="stat-val">$0</div>
+            <p class="stat-lbl">Gastos iniciales para empezar la gestión</p>
+          </article>
+        </div>
+        <p style="font-size:.65rem;color:var(--muted);text-align:center;margin-top:.5rem;padding:0 1rem">
+          *Sobre casos activos con evaluación profesional completa realizada en los últimos 24 meses.
+        </p>
+      </section>
+
+      <!-- CÓMO FUNCIONA -->
+      <section id="como-funciona" class="como-funciona" aria-labelledby="como-funciona-heading" style="margin-bottom:1rem">
+        <h2 class="como-funciona-title" id="como-funciona-heading">
+          ¿Cómo funciona el proceso de eliminación de deudas?
+        </h2>
+        <ol class="pasos" aria-label="Pasos del proceso">
+          <li class="paso">
+            <div class="paso-num" aria-hidden="true">1</div>
+            <div class="paso-text">
+              <h3>Consultá tu informe BCRA gratis</h3>
+              <p>Ingresá tu CUIT o CUIL. En 30 segundos ves qué deudas figuran, con qué antigüedad y en qué situación. La consulta es gratuita y no afecta tu score.</p>
+            </div>
+          </li>
+          <li class="paso">
+            <div class="paso-num" aria-hidden="true">2</div>
+            <div class="paso-text">
+              <h3>Un asesor evalúa si aplica la Ley 25.326 a tu caso</h3>
+              <p>Revisamos la antigüedad de cada deuda y determinamos cuáles califican para ser eliminadas del Veraz y el BCRA. La consulta es completamente gratuita — sin turnos pagos, sin compromisos.</p>
+            </div>
+          </li>
+          <li class="paso">
+            <div class="paso-num" aria-hidden="true">3</div>
+            <div class="paso-text">
+              <h3>Gestionamos la eliminación y el acceso al crédito</h3>
+              <p>Nosotros hacemos el trámite. Sin gastos iniciales. Una vez saneado tu perfil crediticio, te acompañamos en la gestión de préstamos de hasta $6.000.000.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- FAQ -->
+      <section id="preguntas-frecuentes" class="faq-section anim-in" aria-labelledby="faq-heading" style="margin-bottom:1rem">
+        <div class="faq-header">
+          <i class="ti ti-help-circle" aria-hidden="true"></i>
+          <h2 class="faq-header-title" id="faq-heading">Preguntas Frecuentes</h2>
+        </div>
+        <div class="faq-body">
+
+          <details class="faq-item">
+            <summary>¿Puedo eliminar mis deudas del Veraz si tienen más de 5 años?</summary>
+            <div class="faq-answer">
+              <p>Sí. La Ley 25.326 de Protección de Datos Personales establece que las bases de riesgo crediticio no pueden conservar registros de deudas con más de 5 años de mora. Tenés derecho a solicitar la eliminación — y nuestros asesores gestionan ese proceso por vos, sin gastos iniciales.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Cuánto cuesta el trámite? ¿Hay algún gasto inicial?</summary>
+            <div class="faq-answer">
+              <p>No. El servicio no tiene gastos iniciales. La consulta de tu informe BCRA es gratuita, la evaluación con el asesor también es sin costo, y los honorarios solo se aplican cuando el proceso avanza y hay un resultado concreto. Si no encontramos una solución viable para tu caso, no pagás nada.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Puedo acceder a un préstamo después de eliminar mis deudas?</summary>
+            <div class="faq-answer">
+              <p>En la mayoría de los casos, sí. Una vez gestionada la eliminación de los registros negativos y saneado tu perfil crediticio, trabajamos para que puedas acceder a préstamos de hasta $6.000.000. El proceso completo — saneamiento más gestión de crédito — es parte del mismo servicio.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Cómo sé si mis deudas tienen más de 5 años?</summary>
+            <div class="faq-answer">
+              <p>Consultando tu informe del BCRA podés ver la antigüedad de cada registro. Ingresá tu CUIT o CUIL en el campo de búsqueda, hacé clic en "Ver mi informe" y en menos de 30 segundos tenés el detalle completo. Si tenés dudas sobre la interpretación, un asesor te lo explica sin costo.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Qué significa la situación crediticia BCRA del 1 al 6?</summary>
+            <div class="faq-answer">
+              <p>El BCRA clasifica a los deudores del 1 al 6: <strong>Situación 1</strong> es normal (al día), <strong>Situación 2</strong> seguimiento especial, <strong>Situación 3</strong> con problemas, <strong>Situación 4</strong> alto riesgo, <strong>Situación 5</strong> irrecuperable y <strong>Situación 6</strong> en quiebra o concursado. Una situación 4, 5 o 6 no significa que no haya alternativas — en muchos casos la antigüedad de la deuda habilita la gestión por Ley 25.326.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Cuánto tiempo lleva eliminar una deuda del Veraz?</summary>
+            <div class="faq-answer">
+              <p>Depende de cada caso. En muchas situaciones el proceso puede resolverse en 60 a 90 días. En la consulta gratuita con el asesor podés saber cuál es el plazo estimado para tu situación específica.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿La consulta del informe afecta mi score crediticio?</summary>
+            <div class="faq-answer">
+              <p>No. Consultar tu propio informe crediticio no afecta tu score ni genera ningún tipo de registro negativo en el sistema financiero.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- QUIÉNES SOMOS -->
+      <section id="quienes-somos" class="sec-wrap" style="margin-bottom:1rem" aria-labelledby="quienes-somos-heading">
+        <div class="sec-head">
+          <i class="ti ti-building" aria-hidden="true"></i>
+          <h2 class="sec-head-title" id="quienes-somos-heading">Quiénes Somos</h2>
+        </div>
+        <div class="sec-body">
+          <p style="font-size:.8125rem;color:var(--muted);line-height:1.8;margin-bottom:.75rem">
+            <strong style="color:var(--text);font-weight:600">TANGO Recuperación Financiera</strong> es un equipo especializado en la eliminación de antecedentes crediticios negativos y recuperación del acceso al sistema financiero, con más de 15 años de trayectoria en Argentina. Trabajamos directamente con los marcos legales vigentes — en particular la Ley 25.326 de Protección de Datos Personales — y coordinamos la gestión jurídica cuando el caso lo requiere.
+          </p>
+          <p style="font-size:.8125rem;color:var(--muted);line-height:1.8;margin-bottom:.75rem">
+            Analizamos cada caso individualmente: verificamos la antigüedad de las deudas, identificamos cuáles califican para eliminación, gestionamos el trámite ante las bases de datos y acompañamos al cliente en el acceso posterior al crédito. Sin gastos iniciales.
+          </p>
+          <p style="font-size:.8125rem;color:var(--muted);line-height:1.8">
+            Cada situación es evaluada de manera confidencial y con total transparencia sobre las posibilidades reales. No prometemos lo que no podemos cumplir — y cuando hay solución, la ejecutamos.
+          </p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="site-footer" aria-label="Pie de página TANGO Recuperación Financiera">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">TANGO</div>
+        <p class="footer-brand-desc">
+          Especialistas en eliminación de deudas del Veraz por Ley 25.326 y recuperación del perfil crediticio en Argentina. Sin gastos iniciales. Préstamos de hasta $6.000.000 post-saneamiento.
+        </p>
+      </div>
+      <div>
+        <div class="footer-col-title">Servicios</div>
+        <ul class="footer-links">
+          <li><a href="#main-content">Informe crediticio gratis</a></li>
+          <li><a href="#como-funciona">Eliminación de deudas Veraz</a></li>
+          <li><a href="#como-funciona">Gestión Ley 25.326</a></li>
+          <li><a href="#como-funciona">Préstamos post-saneamiento</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Información</div>
+        <ul class="footer-links">
+          <li><a href="#quienes-somos">Quiénes somos</a></li>
+          <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="privacidad.html">Política de privacidad</a></li>
+          <li><a href="terminos.html">Términos y condiciones</a></li>
+          <li><a href="aviso-legal.html">Aviso legal</a></li>
+        </ul>
+      </div>
     </div>
-    <h2>Hablá con un asesor</h2>
-    <p>
-      Evaluamos tu caso en detalle y te decimos exactamente qué se puede hacer.
-      <strong>Sin costo inicial. Sin compromisos.</strong>
+    <div class="footer-bottom">
+      <p class="footer-copy">© <span id="year"></span> TANGO Recuperación Financiera. Todos los derechos reservados.</p>
+      <nav class="footer-legal-links" aria-label="Links legales">
+        <a href="privacidad.html">Privacidad</a>
+        <a href="terminos.html">Términos</a>
+        <a href="aviso-legal.html">Aviso Legal</a>
+      </nav>
+    </div>
+    <p class="disclaimer">
+      La información crediticia se obtiene de la Central de Deudores del Sistema Financiero del Banco Central de la República Argentina (BCRA), de acceso público. TANGO no es una entidad financiera ni otorga créditos directamente. El servicio incluye asesoramiento profesional, gestión de eliminación de registros conforme a la Ley 25.326 y acompañamiento en gestión de crédito. Sin gastos iniciales — los honorarios se aplican contra resultado. *Préstamos de hasta $6.000.000 sujetos a aprobación según perfil crediticio post-saneamiento. *Estadística sobre casos activos con evaluación profesional completa realizada en los últimos 24 meses.
     </p>
-    <a href="/turnos.html" class="lp-btn-turno">
-      <i class="ti ti-calendar"></i>
-      Reservar turno gratuito
-    </a>
-    <a href="https://wa.me/5493435020970?text=Hola%2C%20quiero%20consultar%20si%20mi%20deuda%20puede%20salir%20del%20Veraz" target="_blank" rel="noopener" class="lp-btn-wa">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Consultá por WhatsApp
-    </a>
-  </div>
-
-  <!-- GARANTÍAS -->
-  <div class="lp-garantias">
-    <div class="lp-garantia">
-      <i class="ti ti-shield-check"></i>
-      <span>Gestión basada en la Ley 25.326 de Protección de Datos Personales — marco legal vigente en Argentina.</span>
-    </div>
-    <div class="lp-garantia">
-      <i class="ti ti-lock"></i>
-      <span>Consulta 100% confidencial. Tus datos no se comparten con terceros.</span>
-    </div>
-    <div class="lp-garantia">
-      <i class="ti ti-users"></i>
-      <span>Más de 15 años gestionando recuperación crediticia. +5.000 casos evaluados.</span>
-    </div>
-    <div class="lp-garantia">
-      <i class="ti ti-trending-up"></i>
-      <span>Una vez limpio el perfil, te acompañamos en la gestión de financiamiento de hasta $10.000.000.</span>
-    </div>
-  </div>
-
-  <footer class="lp-footer">
-    <p>© <span id="lp-yr"></span> TANGO Recuperación Financiera · <a href="/privacidad.html">Privacidad</a> · <a href="/terminos.html">Términos</a></p>
-    <p style="margin-top:8px">La información crediticia se obtiene de la Central de Deudores del BCRA (datos públicos). TANGO no es una entidad financiera ni otorga créditos. El resultado de cada gestión depende de la situación particular de cada caso.</p>
   </footer>
 
-</div><!-- /lp-wrap -->
+  <!-- CHAT WIDGET TANGO -->
 
-<script>
-document.getElementById('lp-yr').textContent = new Date().getFullYear();
+  <!-- Botón flotante -->
+  <button
+    id="btn-chat-flotante"
+    onclick="chatToggle()"
+    aria-label="Abrir consulta rápida"
+    aria-expanded="false"
+    aria-controls="chat-window"
+  >
+    <span id="chat-btn-icon-open">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </span>
+    <span id="chat-btn-icon-close" style="display:none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </span>
+    <span id="chat-btn-label">Consulta rápida</span>
+    <span id="chat-badge" style="display:none" aria-label="1 mensaje nuevo">1</span>
+  </button>
 
-var API = "https://script.google.com/macros/s/AKfycbw0HjM7_HzP3aX6Ye2AMGF21QtUyefO8CQf_hjiNHHBOp3e77-g5RjkZD9llRHheWTC/exec";
+  <!-- Ventana del chat -->
+  <div id="chat-window" role="dialog" aria-modal="true" aria-label="Chat de consulta TANGO" style="display:none">
 
-var SITS = {
-  1:{lbl:'Al día',          dot:'#4A9B6F', cls:'s1c'},
-  2:{lbl:'Seg. especial',   dot:'#C9A84C', cls:'s2c'},
-  3:{lbl:'Con problemas',   dot:'#BA7517', cls:'s3c'},
-  4:{lbl:'Alto riesgo',     dot:'#C0392B', cls:'s4c'},
-  5:{lbl:'Irrecuperable',   dot:'#A32D2D', cls:'s5c'},
-  6:{lbl:'En quiebra',      dot:'#5A5552', cls:'s6c'}
-};
-function si(n){ return SITS[n]||{lbl:'Situación '+n,dot:'#5A5552',cls:'s6c'}; }
-function fmt(n){ return '$'+Math.round(n*1000).toLocaleString('es-AR'); }
+    <div class="chat-header">
+      <div class="chat-avatar" aria-hidden="true">T</div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">TANGO Asistente</div>
+        <div class="chat-header-status">
+          <span class="chat-status-dot"></span> En línea
+        </div>
+      </div>
+      <button class="chat-close-btn" onclick="chatToggle()" aria-label="Cerrar chat">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
 
-function lpVerificar() {
-  var cuit = document.getElementById('cuit-lp').value.replace(/\D/g,'').slice(0,11);
-  var out  = document.getElementById('lp-resultado');
-  if (!cuit || cuit.length < 10) {
-    out.innerHTML = '<p class="lp-error" style="margin-top:12px">Ingresá un CUIT o CUIL válido (10 u 11 dígitos).</p>';
-    return;
-  }
-  out.innerHTML = '<div class="lp-prog-wrap"><p class="lp-prog-msg">Consultando el BCRA...</p><div class="lp-prog-bar"><div class="lp-prog-fill" id="lp-fill"></div></div></div>';
-  var fill = document.getElementById('lp-fill');
-  var pct  = 5;
-  var iv   = setInterval(function(){ pct = Math.min(pct+12,85); fill.style.width=pct+'%'; }, 700);
+    <div class="chat-messages" id="chat-messages" role="log" aria-live="polite"></div>
 
-  var cb = 'lpCb_'+Date.now();
-  window[cb] = function(data) {
-    delete window[cb];
-    var s=document.getElementById('lp-scr'); if(s) s.remove();
-    clearInterval(iv); fill.style.width='100%';
-    setTimeout(function(){ lpRender(data,out); }, 400);
-  };
-  var s = document.createElement('script');
-  s.id  = 'lp-scr';
-  s.src = API+'?cuit='+encodeURIComponent(cuit)+'&callback='+cb+'&origen='+encodeURIComponent('https://estudiotango.com/veraz');
-  s.onerror = function(){ clearInterval(iv); out.innerHTML='<p class="lp-error" style="margin-top:12px">No se pudo conectar. Intentá de nuevo.</p>'; };
-  document.body.appendChild(s);
-}
+    <div class="chat-input-area">
+      <textarea
+        id="chat-input"
+        class="chat-input"
+        placeholder="Escribí tu consulta..."
+        rows="1"
+        maxlength="500"
+        aria-label="Escribir mensaje"
+        onkeydown="chatKeyDown(event)"
+        oninput="chatResizeInput(this)"
+      ></textarea>
+      <button class="chat-send-btn" id="chat-send-btn" onclick="chatSend()" aria-label="Enviar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </div>
+    <!-- BOTÓN WHATSAPP FIJO -->
+    <a
+      href="https://wa.me/5493435020970?text=Hola%2C%20quiero%20saber%20si%20puedo%20eliminar%20mis%20deudas%20del%20Veraz"
+      target="_blank"
+      rel="noopener"
+      class="chat-wa-fixed"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Hablar con un asesor humano
+    </a>
+  </div>
 
-function lpRender(json, out) {
-  if (!json.ok) {
-    out.innerHTML = '<p class="lp-error" style="margin-top:12px">'+(json.error||'Error al consultar. Intentá de nuevo.')+'</p>';
-    return;
-  }
-  var d    = json.actual.results;
-  var allE = (d.periodos||[]).flatMap(function(p){ return p.entidades; });
-  var peor = allE.reduce(function(m,e){ return Math.max(m,e.situacion); },1);
-  var total= allE.reduce(function(s,e){ return s+e.monto; },0);
-  var cant = allE.length;
-  var info = si(peor);
-
-  var hPer = (json.historica&&json.historica.results&&json.historica.results.periodos)||[];
-  var pers  = hPer.map(function(p){ return String(p.periodo); }).sort();
-  var masAntiguo = pers[0]||'';
-  var anioAnt    = masAntiguo ? parseInt(masAntiguo.slice(0,4)) : null;
-  var posibleLey = anioAnt && ((new Date().getFullYear()) - anioAnt) >= 5;
-
-  var html = '<div class="lp-fade" style="margin-top:14px">';
-  html += '<p class="lp-result-nombre"><strong>'+d.denominacion+'</strong> · CUIT '+d.identificacion+'</p>';
-  html += '<span class="badge '+info.cls+'" style="margin-bottom:12px;display:inline-flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:'+info.dot+';display:inline-block"></span>Situación '+peor+' — '+info.lbl+'</span>';
-
-  if (cant > 0) {
-    html += '<div class="score-strip" style="margin-bottom:12px">';
-    html += '<div class="score-box"><div class="score-val" style="color:'+info.dot+'">'+peor+'</div><div class="score-lbl">Situación BCRA</div></div>';
-    html += '<div class="score-box"><div class="score-val" style="color:var(--gold)">'+fmt(total)+'</div><div class="score-lbl">Exposición total</div><div class="score-sub">'+cant+' entidad'+(cant!==1?'es':'')+'</div></div>';
-    if (anioAnt) html += '<div class="score-box"><div class="score-val" style="font-size:1.1rem">'+anioAnt+'</div><div class="score-lbl">Registro más antiguo</div></div>';
-    html += '</div>';
-  }
-
-  if (peor === 1 && cant === 0) {
-    html += '<div class="lp-callout">Tu perfil en el BCRA aparece <strong>sin deudas activas</strong>. Igualmente, los bancos cruzan otras bases antes de aprobar. Un asesor puede revisar el cuadro completo y ayudarte a acceder a financiamiento.</div>';
-  } else if (posibleLey) {
-    html += '<div class="lp-callout"><strong>Tu caso podría aplicar a la Ley 25.326.</strong> Tenés registros con más de 5 años de antigüedad — eso es exactamente lo que gestionamos. Reservá un turno gratuito para confirmarlo.</div>';
-  } else {
-    html += '<div class="lp-callout">Tu perfil tiene registros activos. Dependiendo de la fecha y el tipo de deuda, pueden existir opciones legales. Reservá un turno gratuito para que un asesor evalúe tu caso.</div>';
-  }
-
-  html += '<a href="/turnos.html" class="lp-btn-turno" style="text-decoration:none;margin-top:4px"><i class="ti ti-calendar"></i> Reservar turno gratuito</a>';
-  html += '</div>';
-  out.innerHTML = html;
-  out.scrollIntoView({ behavior:'smooth', block:'nearest' });
-}
-</script>
+  <script src="./main.js"></script>
 </body>
 </html>
