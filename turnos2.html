@@ -13,9 +13,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
   <style>
-    /* ═══════════════════════════════════════
-       RESET & VARIABLES
-    ═══════════════════════════════════════ */
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
       color-scheme: dark;
@@ -57,14 +54,11 @@
     }
     :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
 
-    /* ── Canvas background ── */
     #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
 
-    /* ── Layout ── */
     .page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
     .container{max-width:640px;margin:0 auto;padding:0 1rem}
 
-    /* ── Header ── */
     .site-header{
       padding:0;
       border-bottom:1px solid rgba(201,168,76,.2);
@@ -74,53 +68,43 @@
       min-height:72px;
     }
     .site-header::before{
-      content:'';
-      position:absolute;inset:0;
+      content:'';position:absolute;inset:0;
       background:linear-gradient(180deg,rgba(201,168,76,.08) 0%,transparent 100%);
       pointer-events:none;
     }
     .header-logo-wrap{
       display:flex;align-items:center;justify-content:center;
-      padding:.75rem 1rem;
-      position:relative;z-index:1;
+      padding:.75rem 1rem;position:relative;z-index:1;
     }
     .header-logo-wrap img{
-      height:48px;
-      width:auto;
-      object-fit:contain;
+      height:48px;width:auto;object-fit:contain;
       filter:brightness(1.1) drop-shadow(0 2px 8px rgba(0,0,0,.4));
     }
     .header-logo-text{
-      font-family:var(--serif);
-      font-size:1.5rem;
-      font-weight:600;
-      color:var(--gold);
-      letter-spacing:.12em;
-      text-shadow:0 2px 8px rgba(0,0,0,.4);
+      font-family:var(--serif);font-size:1.5rem;font-weight:600;
+      color:var(--gold);letter-spacing:.12em;text-shadow:0 2px 8px rgba(0,0,0,.4);
     }
 
-    /* ── Progress stepper ── */
+    /* ── Stepper mejorado ── */
     .stepper{
-      display:flex;align-items:flex-start;
-      padding:1.5rem 1rem 1rem;
+      display:flex;align-items:center;
+      padding:1.25rem 1rem .875rem;
       max-width:640px;margin:0 auto;
-      gap:.25rem;
     }
     .step{
-      display:flex;flex-direction:column;align-items:center;gap:.45rem;
-      flex:1;position:relative;
-      min-width:0;
+      display:flex;align-items:center;gap:.5rem;
+      flex-shrink:0;
     }
-    .step:not(:last-child)::after{
-      content:'';position:absolute;top:13px;left:calc(50% + 16px);
-      right:calc(-50% + 16px);height:1px;background:var(--muted3);z-index:0;
+    .step-connector{
+      flex:1;height:1px;background:var(--muted3);
       transition:background .4s ease;
+      min-width:12px;
     }
-    .step.done:not(:last-child)::after{background:var(--gold-dim)}
+    .step-connector.done{background:var(--gold-dim)}
     .step-dot{
       width:28px;height:28px;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      font-size:.75rem;font-weight:700;z-index:1;
+      font-size:.75rem;font-weight:700;
       border:1.5px solid var(--muted3);
       background:var(--s1);color:var(--muted2);
       transition:all .3s ease;flex-shrink:0;
@@ -131,21 +115,22 @@
     }
     .step.done .step-dot{background:var(--gold-dim);border-color:var(--gold);color:var(--bordo-deep)}
     .step-lbl{
-      font-size:.625rem;font-weight:600;color:var(--muted2);
-      text-transform:uppercase;letter-spacing:.04em;text-align:center;
-      line-height:1.35;word-break:break-word;
-      max-width:56px;
+      font-size:.6875rem;font-weight:600;color:var(--muted2);
+      text-transform:uppercase;letter-spacing:.04em;
+      white-space:nowrap;
     }
     .step.active .step-lbl{color:var(--text)}
     .step.done .step-lbl{color:var(--gold-dim)}
 
+    @media(max-width:440px){
+      .step-lbl{display:none}
+      .stepper{padding:1rem .75rem .75rem}
+    }
+
     /* ── Cards / Panels ── */
     .panel{
-      background:var(--s1);
-      border:1px solid var(--b1);
-      border-radius:var(--radius);
-      padding:1.5rem 1.25rem;
-      margin-bottom:1rem;
+      background:var(--s1);border:1px solid var(--b1);
+      border-radius:var(--radius);padding:1.5rem 1.25rem;margin-bottom:1rem;
     }
     .panel-title{
       font-family:var(--serif);font-size:1.1875rem;font-weight:500;
@@ -158,130 +143,69 @@
     /* ── Form ── */
     .form-grid{display:grid;gap:1.125rem}
     .form-group{display:flex;flex-direction:column;gap:.45rem}
-    .form-label{
-      font-size:.75rem;font-weight:700;color:var(--muted);
-      text-transform:uppercase;letter-spacing:.06em;
-    }
+    .form-label{font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
     .form-input{
-      background:#242020;
-      border:1.5px solid rgba(255,255,255,.13);
-      border-radius:9px;
-      padding:.875rem 1rem;
-      font-size:1rem;
-      color:#EDE9E3;
-      font-family:var(--sans);
-      outline:none;
-      transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;
-      -webkit-appearance:none;
-      appearance:none;
+      background:#242020;border:1.5px solid rgba(255,255,255,.13);border-radius:9px;
+      padding:.875rem 1rem;font-size:1rem;color:#EDE9E3;font-family:var(--sans);
+      outline:none;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;
+      -webkit-appearance:none;appearance:none;
     }
     .form-input::placeholder{color:var(--muted3)}
-    .form-input:focus{
-      border-color:var(--gold-dim);
-      box-shadow:0 0 0 3px rgba(201,168,76,.12);
-      background:var(--s2);
-    }
-    .form-input.error{
-      border-color:var(--bordo2);
-      box-shadow:0 0 0 3px rgba(139,21,37,.15);
-    }
+    .form-input:focus{border-color:var(--gold-dim);box-shadow:0 0 0 3px rgba(201,168,76,.12);background:var(--s2)}
+    .form-input.error{border-color:var(--bordo2);box-shadow:0 0 0 3px rgba(139,21,37,.15)}
     .form-error{font-size:.8125rem;color:#e07070;display:none;margin-top:.125rem}
     .form-error.show{display:block}
 
     /* ── Calendar ── */
-    .cal-header{
-      display:flex;align-items:center;justify-content:space-between;
-      margin-bottom:.875rem;
-    }
+    .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
     .cal-month{font-family:var(--serif);font-size:1rem;color:var(--text);font-weight:500}
     .cal-nav{
       background:var(--s3);border:1px solid var(--b2);color:var(--muted);
       width:34px;height:34px;border-radius:7px;cursor:pointer;
       display:flex;align-items:center;justify-content:center;font-size:.875rem;
-      transition:color .2s,border-color .2s,background .2s;
-      -webkit-tap-highlight-color:transparent;
+      transition:color .2s,border-color .2s,background .2s;-webkit-tap-highlight-color:transparent;
     }
     .cal-nav:hover{color:var(--gold);border-color:var(--gold-dim);background:var(--s4)}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-    .cal-day-name{
-      text-align:center;font-size:.625rem;font-weight:700;
-      color:var(--muted2);text-transform:uppercase;padding:.35rem 0;letter-spacing:.04em;
-    }
+    .cal-day-name{text-align:center;font-size:.625rem;font-weight:700;color:var(--muted2);text-transform:uppercase;padding:.35rem 0;letter-spacing:.04em}
     .cal-day{
       aspect-ratio:1;display:flex;align-items:center;justify-content:center;
-      font-size:.875rem;border-radius:8px;cursor:pointer;
-      border:1px solid transparent;transition:all .15s ease;
-      color:var(--muted);-webkit-tap-highlight-color:transparent;
-      user-select:none;
+      font-size:.875rem;border-radius:8px;cursor:pointer;border:1px solid transparent;
+      transition:all .15s ease;color:var(--muted);-webkit-tap-highlight-color:transparent;user-select:none;
     }
     .cal-day.available{color:var(--text);cursor:pointer}
     .cal-day.available:hover{background:var(--s3);border-color:var(--b2);color:var(--gold)}
     .cal-day.available:active{background:var(--s4)}
-    .cal-day.selected{
-      background:var(--bordo);border-color:var(--bordo2);
-      color:#fff;font-weight:700;
-      box-shadow:0 2px 8px rgba(107,15,26,.4);
-    }
+    .cal-day.selected{background:var(--bordo);border-color:var(--bordo2);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(107,15,26,.4)}
     .cal-day.today{border-color:var(--gold-dim)}
     .cal-day.empty,.cal-day.disabled{color:var(--muted3);pointer-events:none}
     .cal-day.past{color:var(--muted3);pointer-events:none;opacity:.4}
 
     /* ── Time slots ── */
-    .slots-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(78px,1fr));
-      gap:.5rem;margin-top:.75rem;
-    }
+    .slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:.5rem;margin-top:.75rem}
     .slot{
       padding:.625rem .25rem;text-align:center;border-radius:8px;
       border:1.5px solid rgba(255,255,255,.09);background:var(--s2);
       font-size:.875rem;color:var(--muted);cursor:pointer;
-      transition:all .15s ease;font-weight:500;
-      -webkit-tap-highlight-color:transparent;
-      user-select:none;
+      transition:all .15s ease;font-weight:500;-webkit-tap-highlight-color:transparent;user-select:none;
     }
     .slot.available{color:var(--text)}
-    .slot.available:hover{
-      border-color:var(--gold-dim);color:var(--gold);
-      background:var(--gold-ghost);
-    }
+    .slot.available:hover{border-color:var(--gold-dim);color:var(--gold);background:var(--gold-ghost)}
     .slot.available:active{background:rgba(201,168,76,.15)}
-    .slot.selected{
-      border-color:var(--bordo2);background:var(--bordo);
-      color:#fff;font-weight:700;
-      box-shadow:0 2px 8px rgba(107,15,26,.4);
-    }
-    .slot.occupied{
-      color:var(--muted3);pointer-events:none;
-      text-decoration:line-through;opacity:.35;
-    }
-    .slots-loading{
-      text-align:center;color:var(--muted);
-      font-size:.875rem;padding:1.25rem 0;
-      display:flex;align-items:center;justify-content:center;gap:.5rem;
-    }
+    .slot.selected{border-color:var(--bordo2);background:var(--bordo);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(107,15,26,.4)}
+    .slot.occupied{color:var(--muted3);pointer-events:none;text-decoration:line-through;opacity:.35}
+    .slots-loading{text-align:center;color:var(--muted);font-size:.875rem;padding:1.25rem 0;display:flex;align-items:center;justify-content:center;gap:.5rem}
 
-    /* ── Summary box ── */
-    .summary-box{
-      background:var(--s2);border:1px solid var(--b2);border-radius:9px;
-      padding:1rem 1.125rem;margin-bottom:1rem;
-    }
-    .summary-row{
-      display:flex;align-items:flex-start;justify-content:space-between;
-      padding:.45rem 0;border-bottom:1px solid var(--b1);font-size:.9375rem;gap:.75rem;
-    }
+    /* ── Summary ── */
+    .summary-box{background:var(--s2);border:1px solid var(--b2);border-radius:9px;padding:1rem 1.125rem;margin-bottom:1rem}
+    .summary-row{display:flex;align-items:flex-start;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--b1);font-size:.9375rem;gap:.75rem}
     .summary-row:last-child{border-bottom:none}
     .summary-key{color:var(--muted);white-space:nowrap;flex-shrink:0}
     .summary-val{color:var(--text);font-weight:500;text-align:right;word-break:break-word}
     .summary-highlight{color:var(--gold);font-weight:700;font-size:1rem}
 
     /* ── Info box ── */
-    .senal-info{
-      background:rgba(201,168,76,.07);
-      border:1px solid rgba(201,168,76,.2);
-      border-radius:9px;padding:1rem 1.125rem;margin-bottom:1rem;
-      display:flex;gap:.75rem;align-items:flex-start;
-    }
+    .senal-info{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);border-radius:9px;padding:1rem 1.125rem;margin-bottom:1rem;display:flex;gap:.75rem;align-items:flex-start}
     .senal-info i{color:var(--gold);font-size:1rem;margin-top:.125rem;flex-shrink:0}
     .senal-info-text{font-size:.875rem;color:var(--muted);line-height:1.7}
     .senal-info-text strong{color:var(--text)}
@@ -291,131 +215,95 @@
       display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
       padding:.9375rem 1.375rem;border-radius:9px;font-size:1rem;font-weight:600;
       font-family:var(--sans);cursor:pointer;border:none;
-      transition:all .18s ease;text-decoration:none;
-      -webkit-tap-highlight-color:transparent;
-      user-select:none;
+      transition:all .18s ease;text-decoration:none;-webkit-tap-highlight-color:transparent;user-select:none;
     }
-    .btn-primary{
-      background:linear-gradient(135deg,var(--bordo),var(--bordo2));
-      color:#fff;box-shadow:0 4px 16px rgba(107,15,26,.4);width:100%;
-    }
+    .btn-primary{background:linear-gradient(135deg,var(--bordo),var(--bordo2));color:#fff;box-shadow:0 4px 16px rgba(107,15,26,.4);width:100%}
     .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(107,15,26,.55)}
     .btn-primary:active{transform:translateY(0);box-shadow:0 2px 10px rgba(107,15,26,.4)}
     .btn-primary:disabled{opacity:.45;pointer-events:none}
-    .btn-ghost{
-      background:transparent;color:var(--muted);
-      border:1.5px solid var(--b2);font-size:.9375rem;
-      padding:.75rem 1rem;
-    }
+    .btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--b2);font-size:.9375rem;padding:.75rem 1rem}
     .btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
     .btn-row{display:flex;gap:.75rem;align-items:center}
     .btn-row .btn-ghost{flex:0 0 auto}
     .btn-row .btn-primary{flex:1}
 
-    /* ── Ticket / Confirmación ── */
+    /* ── Ticket ── */
     .ticket-wrap{text-align:center;padding:.25rem 0 1.5rem}
     .ticket-icon{
       width:64px;height:64px;
       background:radial-gradient(circle,rgba(201,168,76,.2),rgba(201,168,76,.06));
       border:1.5px solid rgba(201,168,76,.35);border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      font-size:1.75rem;color:var(--gold);
-      margin:0 auto 1.125rem;
+      font-size:1.75rem;color:var(--gold);margin:0 auto 1.125rem;
       box-shadow:0 0 24px rgba(201,168,76,.15);
     }
     .ticket-title{font-family:var(--serif);font-size:1.625rem;color:var(--text);margin-bottom:.5rem}
     .ticket-sub{font-size:.9375rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem}
+
+    /* El ticket-card necesita id para captura */
     .ticket-card{
-      background:var(--s2);
-      border:1px solid rgba(201,168,76,.2);border-radius:12px;
-      padding:1.375rem;margin-bottom:1.125rem;
-      position:relative;overflow:hidden;text-align:left;
+      background:var(--s2);border:1px solid rgba(201,168,76,.2);border-radius:12px;
+      padding:1.375rem;margin-bottom:1.125rem;position:relative;overflow:hidden;text-align:left;
     }
     .ticket-card::before{
       content:'TANGO';position:absolute;top:50%;left:50%;
       transform:translate(-50%,-50%) rotate(-22deg);
       font-family:var(--serif);font-size:3.5rem;font-weight:600;
-      color:rgba(201,168,76,.035);pointer-events:none;white-space:nowrap;
-      letter-spacing:.3em;
+      color:rgba(201,168,76,.035);pointer-events:none;white-space:nowrap;letter-spacing:.3em;
     }
-    .ticket-num{
-      font-size:.75rem;font-weight:700;color:var(--gold-dim);
-      letter-spacing:.12em;text-transform:uppercase;margin-bottom:.875rem;
-    }
+    .ticket-num{font-size:.75rem;font-weight:700;color:var(--gold-dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.875rem}
     .ticket-data{display:grid;gap:.5rem}
     .ticket-row{display:flex;justify-content:space-between;font-size:.9375rem;align-items:center;gap:.5rem}
     .ticket-label{color:var(--muted);flex-shrink:0}
     .ticket-value{color:var(--text);font-weight:500;text-align:right;word-break:break-word}
     .ticket-divider{height:1px;background:var(--b1);margin:.375rem 0}
-    .ticket-total{
-      display:flex;justify-content:space-between;align-items:center;
-      font-size:1rem;font-weight:700;color:var(--gold);
-    }
+    .ticket-total{display:flex;justify-content:space-between;align-items:center;font-size:1rem;font-weight:700;color:var(--gold)}
 
-    /* ── Asesor card en ticket ── */
-    .asesor-card{
-      background:rgba(107,15,26,.15);
-      border:1px solid rgba(201,168,76,.18);
-      border-radius:10px;
-      padding:.875rem 1rem;
-      margin-top:.875rem;
-      display:flex;align-items:center;gap:.875rem;
-    }
-    .asesor-foto{
-      width:52px;height:52px;border-radius:50%;
-      overflow:hidden;flex-shrink:0;
-      border:2px solid rgba(201,168,76,.35);
-      background:var(--s3);
-    }
+    /* ── Asesor card ── */
+    .asesor-card{background:rgba(107,15,26,.15);border:1px solid rgba(201,168,76,.18);border-radius:10px;padding:.875rem 1rem;margin-top:.875rem;display:flex;align-items:center;gap:.875rem}
+    .asesor-foto{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(201,168,76,.35);background:var(--s3)}
     .asesor-foto img{width:100%;height:100%;object-fit:cover}
-    .asesor-foto-placeholder{
-      width:100%;height:100%;
-      display:flex;align-items:center;justify-content:center;
-      font-family:var(--serif);font-size:1.25rem;color:var(--gold);
-    }
-    .asesor-info{}
+    .asesor-foto-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.25rem;color:var(--gold)}
     .asesor-label{font-size:.625rem;font-weight:700;color:var(--gold-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem}
     .asesor-nombre{font-size:.9375rem;font-weight:600;color:var(--text)}
     .asesor-cargo{font-size:.8125rem;color:var(--muted)}
 
+    /* ── Botones descarga ── */
+    .download-btns{display:grid;gap:.625rem;margin-bottom:1rem}
     .btn-download{
       background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.07));
       border:1.5px solid rgba(201,168,76,.3);color:var(--gold);
       width:100%;padding:1rem;border-radius:9px;
       font-family:var(--sans);font-size:1rem;font-weight:600;cursor:pointer;
       display:flex;align-items:center;justify-content:center;gap:.5rem;
-      transition:all .18s ease;text-decoration:none;
-      -webkit-tap-highlight-color:transparent;
+      transition:all .18s ease;text-decoration:none;-webkit-tap-highlight-color:transparent;
     }
     .btn-download:hover{background:rgba(201,168,76,.2);border-color:var(--gold)}
-
-    /* ── Loading spinner ── */
-    .spinner{
-      width:18px;height:18px;border:2px solid rgba(255,255,255,.2);
-      border-top-color:currentColor;border-radius:50%;
-      animation:spin .7s linear infinite;display:inline-block;flex-shrink:0;
+    .btn-download:disabled{opacity:.45;pointer-events:none}
+    .btn-download-jpg{
+      background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+      border:1.5px solid var(--b2);color:var(--muted);
+      width:100%;padding:.875rem;border-radius:9px;
+      font-family:var(--sans);font-size:.9375rem;font-weight:600;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:.5rem;
+      transition:all .18s ease;text-decoration:none;-webkit-tap-highlight-color:transparent;
     }
+    .btn-download-jpg:hover{color:var(--text);border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.07)}
+    .btn-download-jpg:disabled{opacity:.45;pointer-events:none}
+
+    /* ── Spinner ── */
+    .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.2);border-top-color:currentColor;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;flex-shrink:0}
     @keyframes spin{to{transform:rotate(360deg)}}
 
     /* ── Alerts ── */
-    .alert{
-      border-radius:9px;padding:.9375rem 1rem;font-size:.875rem;
-      display:flex;gap:.625rem;align-items:flex-start;margin-bottom:.875rem;
-    }
+    .alert{border-radius:9px;padding:.9375rem 1rem;font-size:.875rem;display:flex;gap:.625rem;align-items:flex-start;margin-bottom:.875rem}
     .alert-error{background:rgba(139,21,37,.15);border:1px solid rgba(139,21,37,.3);color:#e07070}
     .alert-success{background:rgba(40,167,69,.1);border:1px solid rgba(40,167,69,.25);color:#6fcf97}
     .alert i{flex-shrink:0;font-size:.9375rem;margin-top:.0625rem}
 
     /* ── Footer ── */
-    .site-footer{
-      border-top:1px solid rgba(255,255,255,.1);
-      padding:1.75rem 0;margin-top:auto;
-      background:rgba(10,8,8,.6);
-    }
-    .site-footer .inner{
-      max-width:640px;margin:0 auto;padding:0 1rem;
-      display:flex;flex-direction:column;gap:.625rem;text-align:center;
-    }
+    .site-footer{border-top:1px solid rgba(255,255,255,.1);padding:1.75rem 0;margin-top:auto;background:rgba(10,8,8,.6)}
+    .site-footer .inner{max-width:640px;margin:0 auto;padding:0 1rem;display:flex;flex-direction:column;gap:.625rem;text-align:center}
     .footer-copy{font-size:.8125rem;color:var(--muted2);font-weight:500}
     .footer-disclaimer{font-size:.75rem;color:#6B6560;line-height:1.75}
 
@@ -424,31 +312,20 @@
     .screen.active{display:block}
     .screen.visible{opacity:1;transform:translateY(0)}
 
-    /* ── Loading overlay ── */
-    .loading-overlay{
-      position:fixed;inset:0;background:rgba(10,8,8,.8);
-      backdrop-filter:blur(4px);z-index:999;
-      display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem;
-    }
+    .loading-overlay{position:fixed;inset:0;background:rgba(10,8,8,.8);backdrop-filter:blur(4px);z-index:999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem}
     .loading-overlay.show{display:flex}
     .loading-overlay-text{color:var(--muted);font-size:.9375rem;letter-spacing:.03em}
 
-    /* ── Responsive ── */
     @media(max-width:480px){
       .panel{padding:1.125rem .9375rem}
-      .step-lbl{font-size:.5625rem;max-width:48px}
       .cal-day{font-size:.8125rem}
       .slots-grid{grid-template-columns:repeat(auto-fill,minmax(70px,1fr))}
-    }
-    @media(max-width:360px){
-      .stepper{padding:1.25rem .5rem .75rem}
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Loading overlay -->
   <div class="loading-overlay" id="loading-overlay">
     <div class="spinner" style="width:36px;height:36px;border-width:3px;color:var(--gold)"></div>
     <div class="loading-overlay-text" id="loading-text">Procesando...</div>
@@ -457,7 +334,6 @@
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
   <div class="page">
-    <!-- HEADER -->
     <header class="site-header">
       <div class="header-logo-wrap">
         <img
@@ -469,20 +345,23 @@
       </div>
     </header>
 
-    <!-- STEPPER: 1=Turno, 2=Datos, 3=Confirmar, 4=Listo -->
+    <!-- STEPPER MEJORADO: dot + label + connector inline -->
     <div class="stepper" id="stepper">
       <div class="step active" id="st-1">
         <div class="step-dot">1</div>
-        <div class="step-lbl">Elegir<br>turno</div>
+        <div class="step-lbl">Elegir turno</div>
       </div>
+      <div class="step-connector" id="conn-1"></div>
       <div class="step" id="st-2">
         <div class="step-dot">2</div>
-        <div class="step-lbl">Tus<br>datos</div>
+        <div class="step-lbl">Tus datos</div>
       </div>
+      <div class="step-connector" id="conn-2"></div>
       <div class="step" id="st-3">
         <div class="step-dot">3</div>
-        <div class="step-lbl">Con-<br>firmar</div>
+        <div class="step-lbl">Confirmar</div>
       </div>
+      <div class="step-connector" id="conn-3"></div>
       <div class="step" id="st-4">
         <div class="step-dot"><i class="ti ti-check" style="font-size:.75rem"></i></div>
         <div class="step-lbl">Listo</div>
@@ -491,20 +370,15 @@
 
     <div class="container" style="flex:1;padding-bottom:2.5rem">
 
-      <!-- ══════ PASO 1: CALENDARIO + HORA ══════ -->
+      <!-- PASO 1 -->
       <div class="screen active" id="screen-1">
         <div class="panel">
           <div class="panel-title"><i class="ti ti-calendar-month"></i> Elegí fecha y horario</div>
           <p class="panel-sub">Atención de lunes a viernes de 10:00 a 18:00hs. Turnos de 30 minutos. Los fines de semana no hay atención.</p>
-
           <div class="cal-header">
-            <button class="cal-nav" id="cal-prev" onclick="calNav(-1)" aria-label="Mes anterior">
-              <i class="ti ti-chevron-left"></i>
-            </button>
+            <button class="cal-nav" id="cal-prev" onclick="calNav(-1)" aria-label="Mes anterior"><i class="ti ti-chevron-left"></i></button>
             <div class="cal-month" id="cal-month-label"></div>
-            <button class="cal-nav" id="cal-next" onclick="calNav(1)" aria-label="Mes siguiente">
-              <i class="ti ti-chevron-right"></i>
-            </button>
+            <button class="cal-nav" id="cal-next" onclick="calNav(1)" aria-label="Mes siguiente"><i class="ti ti-chevron-right"></i></button>
           </div>
           <div class="cal-grid" id="cal-grid"></div>
         </div>
@@ -526,153 +400,86 @@
         </div>
       </div>
 
-      <!-- ══════ PASO 2: DATOS ══════ -->
+      <!-- PASO 2 -->
       <div class="screen" id="screen-2">
         <div class="panel">
           <div class="panel-title"><i class="ti ti-user-circle"></i> Tus datos personales</div>
           <p class="panel-sub">Completá tus datos para confirmar el turno. La consulta inicial es sin costo.</p>
-
           <div class="form-grid">
             <div class="form-group">
               <label class="form-label" for="f-nombre">Apellido y nombre *</label>
-              <input
-                class="form-input" id="f-nombre" type="text"
-                placeholder="Ej: García Juan Carlos"
-                autocomplete="name" enterkeyhint="next"
-              >
+              <input class="form-input" id="f-nombre" type="text" placeholder="Ej: García Juan Carlos" autocomplete="name" enterkeyhint="next">
               <span class="form-error" id="e-nombre">Ingresá tu nombre completo (mínimo 4 caracteres)</span>
             </div>
             <div class="form-group">
               <label class="form-label" for="f-cuit">CUIT / CUIL *</label>
-              <input
-                class="form-input" id="f-cuit" type="tel"
-                inputmode="numeric" placeholder="Ej: 20123456789"
-                maxlength="13" autocomplete="off" enterkeyhint="next"
-              >
+              <input class="form-input" id="f-cuit" type="tel" inputmode="numeric" placeholder="Ej: 20123456789" maxlength="13" autocomplete="off" enterkeyhint="next">
               <span class="form-error" id="e-cuit">Ingresá tu CUIT/CUIL (10 u 11 dígitos sin guiones)</span>
             </div>
             <div class="form-group">
               <label class="form-label" for="f-ws">WhatsApp *</label>
-              <input
-                class="form-input" id="f-ws" type="tel"
-                inputmode="numeric" placeholder="Ej: 1123456789 (sin 0 ni 15)"
-                maxlength="15" autocomplete="tel" enterkeyhint="done"
-              >
+              <input class="form-input" id="f-ws" type="tel" inputmode="numeric" placeholder="Ej: 1123456789 (sin 0 ni 15)" maxlength="15" autocomplete="tel" enterkeyhint="done">
               <span class="form-error" id="e-ws">Ingresá tu número de WhatsApp (sin 0, sin 15)</span>
             </div>
           </div>
         </div>
         <div class="btn-row">
-          <button class="btn btn-ghost" onclick="goScreen(1)">
-            <i class="ti ti-arrow-left"></i> Volver
-          </button>
-          <button class="btn btn-primary" onclick="paso2Next()">
-            Continuar <i class="ti ti-arrow-right"></i>
-          </button>
+          <button class="btn btn-ghost" onclick="goScreen(1)"><i class="ti ti-arrow-left"></i> Volver</button>
+          <button class="btn btn-primary" onclick="paso2Next()">Continuar <i class="ti ti-arrow-right"></i></button>
         </div>
       </div>
 
-      <!-- ══════ PASO 3: CONFIRMAR ══════ -->
+      <!-- PASO 3 -->
       <div class="screen" id="screen-3">
         <div class="panel">
           <div class="panel-title"><i class="ti ti-calendar-check"></i> Confirmá tu turno</div>
-
           <div class="summary-box">
-            <div class="summary-row">
-              <span class="summary-key">Titular</span>
-              <span class="summary-val" id="sum-nombre">—</span>
-            </div>
-            <div class="summary-row">
-              <span class="summary-key">CUIT/CUIL</span>
-              <span class="summary-val" id="sum-cuit">—</span>
-            </div>
-            <div class="summary-row">
-              <span class="summary-key">Fecha y hora</span>
-              <span class="summary-val" id="sum-fecha">—</span>
-            </div>
-            <div class="summary-row">
-              <span class="summary-key">WhatsApp</span>
-              <span class="summary-val" id="sum-ws">—</span>
-            </div>
+            <div class="summary-row"><span class="summary-key">Titular</span><span class="summary-val" id="sum-nombre">—</span></div>
+            <div class="summary-row"><span class="summary-key">CUIT/CUIL</span><span class="summary-val" id="sum-cuit">—</span></div>
+            <div class="summary-row"><span class="summary-key">Fecha y hora</span><span class="summary-val" id="sum-fecha">—</span></div>
+            <div class="summary-row"><span class="summary-key">WhatsApp</span><span class="summary-val" id="sum-ws">—</span></div>
             <div class="summary-row" style="padding-top:.375rem;margin-top:.125rem">
               <span class="summary-key" style="font-weight:700;color:var(--text)">Costo</span>
               <span class="summary-val summary-highlight">Sin cargo</span>
             </div>
           </div>
-
           <div class="senal-info">
             <i class="ti ti-info-circle"></i>
-            <div class="senal-info-text">
-              <strong>Turno sin costo.</strong> Si no podés asistir, cancelá con al menos 24 horas de anticipación para liberar el horario.
-            </div>
+            <div class="senal-info-text"><strong>Turno sin costo.</strong> Si no podés asistir, cancelá con al menos 24 horas de anticipación para liberar el horario.</div>
           </div>
-
           <div id="pago-alert"></div>
-
           <button class="btn btn-primary" id="btn-confirmar" onclick="confirmarTurnoDirecto()">
-            <i class="ti ti-calendar-check"></i>
-            Confirmar turno
+            <i class="ti ti-calendar-check"></i> Confirmar turno
           </button>
         </div>
-
         <div class="btn-row" style="margin-top:.25rem">
-          <button class="btn btn-ghost" onclick="goScreen(2)">
-            <i class="ti ti-arrow-left"></i> Volver
-          </button>
+          <button class="btn btn-ghost" onclick="goScreen(2)"><i class="ti ti-arrow-left"></i> Volver</button>
         </div>
       </div>
 
-      <!-- ══════ PASO 4: CONFIRMACIÓN ══════ -->
+      <!-- PASO 4 -->
       <div class="screen" id="screen-4">
         <div class="panel">
           <div class="ticket-wrap">
             <div class="ticket-icon"><i class="ti ti-check"></i></div>
             <div class="ticket-title">¡Turno confirmado!</div>
-            <div class="ticket-sub">
-              Tu turno fue registrado exitosamente.<br>
-              Recibirás la confirmación por WhatsApp a la brevedad.
-            </div>
+            <div class="ticket-sub">Tu turno fue registrado exitosamente.<br>Recibirás la confirmación por WhatsApp a la brevedad.</div>
 
-            <div class="ticket-card">
+            <div class="ticket-card" id="ticket-card-capture">
               <div class="ticket-num" id="tk-num">TURNO #000000</div>
               <div class="ticket-data">
-                <div class="ticket-row">
-                  <span class="ticket-label">Titular</span>
-                  <span class="ticket-value" id="tk-nombre">—</span>
-                </div>
-                <div class="ticket-row">
-                  <span class="ticket-label">CUIT/CUIL</span>
-                  <span class="ticket-value" id="tk-cuit">—</span>
-                </div>
-                <div class="ticket-row">
-                  <span class="ticket-label">WhatsApp</span>
-                  <span class="ticket-value" id="tk-ws">—</span>
-                </div>
+                <div class="ticket-row"><span class="ticket-label">Titular</span><span class="ticket-value" id="tk-nombre">—</span></div>
+                <div class="ticket-row"><span class="ticket-label">CUIT/CUIL</span><span class="ticket-value" id="tk-cuit">—</span></div>
+                <div class="ticket-row"><span class="ticket-label">WhatsApp</span><span class="ticket-value" id="tk-ws">—</span></div>
                 <div class="ticket-divider"></div>
-                <div class="ticket-row">
-                  <span class="ticket-label">Fecha</span>
-                  <span class="ticket-value" id="tk-fecha">—</span>
-                </div>
-                <div class="ticket-row">
-                  <span class="ticket-label">Hora</span>
-                  <span class="ticket-value" id="tk-hora">—</span>
-                </div>
+                <div class="ticket-row"><span class="ticket-label">Fecha</span><span class="ticket-value" id="tk-fecha">—</span></div>
+                <div class="ticket-row"><span class="ticket-label">Hora</span><span class="ticket-value" id="tk-hora">—</span></div>
                 <div class="ticket-divider"></div>
-                <div class="ticket-total">
-                  <span>Costo</span>
-                  <span>Sin cargo ✓</span>
-                </div>
+                <div class="ticket-total"><span>Costo</span><span>Sin cargo ✓</span></div>
               </div>
-
-              <!-- Asesor asignado -->
               <div class="asesor-card">
                 <div class="asesor-foto">
-                  <img
-                    src="https://res.cloudinary.com/dwgwbdtud/image/upload/v1780571332/qhp1rxgz7x8d1gv6cmwc.png"
-                    alt="Asesor"
-                    id="asesor-img"
-                    onerror="this.style.display='none';document.getElementById('asesor-placeholder').style.display='flex'"
-                  >
+                  <img src="https://res.cloudinary.com/dwgwbdtud/image/upload/v1780571332/qhp1rxgz7x8d1gv6cmwc.png" alt="Asesor" id="asesor-img" onerror="this.style.display='none';document.getElementById('asesor-placeholder').style.display='flex'">
                   <div class="asesor-foto-placeholder" id="asesor-placeholder" style="display:none">M</div>
                 </div>
                 <div class="asesor-info">
@@ -683,20 +490,21 @@
               </div>
             </div>
 
-            <button class="btn-download" id="btn-descargar" onclick="descargarTicket()">
-              <i class="ti ti-download"></i> Descargar comprobante PDF
-            </button>
+            <!-- Botones descarga -->
+            <div class="download-btns">
+              <button class="btn-download" id="btn-descargar-pdf" onclick="descargarTicketPDF()">
+                <i class="ti ti-file-type-pdf"></i> Descargar comprobante PDF
+              </button>
+              <button class="btn-download-jpg" id="btn-descargar-jpg" onclick="descargarTicketJPG()">
+                <i class="ti ti-photo-down"></i> Guardar como imagen JPG
+              </button>
+            </div>
           </div>
         </div>
 
         <div style="text-align:center;padding-bottom:.5rem">
-          <a
-            id="link-whatsapp"
-            href="https://wa.me/5493435020970"
-            target="_blank" rel="noopener"
-            class="btn btn-ghost"
-            style="display:inline-flex;gap:.5rem;font-size:.9375rem"
-          >
+          <a id="link-whatsapp" href="https://wa.me/5493435020970" target="_blank" rel="noopener"
+            class="btn btn-ghost" style="display:inline-flex;gap:.5rem;font-size:.9375rem">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
@@ -705,9 +513,8 @@
         </div>
       </div>
 
-    </div><!-- /container -->
+    </div>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
       <div class="inner">
         <p class="footer-copy">© <span id="year"></span> TANGO Recuperación Financiera</p>
@@ -717,15 +524,13 @@
         </p>
       </div>
     </footer>
-  </div><!-- /page -->
+  </div>
 
-  <!-- jsPDF -->
+  <!-- jsPDF + html2canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
-  // ════════════════════════════════════════════════════════════════
-  //  ASESOR
-  // ════════════════════════════════════════════════════════════════
   var ASESOR = {
     nombre: 'Alejandro Martínez',
     cargo:  'Asesor en Recuperación Financiera',
@@ -733,9 +538,6 @@
     inicial: 'AM'
   };
 
-  // ════════════════════════════════════════════════════════════════
-  //  CONFIG
-  // ════════════════════════════════════════════════════════════════
   var CONFIG = {
     APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbz5FuvAt87098tevZWS6oZ8W_RAWugRNv1tPf9irQ5t7EC6p1KMEgG3qBXQYcnN3Q0R/exec',
     WS_NUMBER: '5493435020970',
@@ -744,23 +546,17 @@
     END_HOUR: 18,
   };
 
-  // ════════════════════════════════════════════════════════════════
-  //  STATE
-  // ════════════════════════════════════════════════════════════════
   var state = {
-    nombre: '', cuit: '', ws: '',
-    fecha: null, hora: null,
-    turnoId: null,
-    calYear: 0, calMonth: 0,
-    ocupados: []
+    nombre:'',cuit:'',ws:'',
+    fecha:null,hora:null,
+    turnoId:null,
+    calYear:0,calMonth:0,
+    ocupados:[]
   };
 
   var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   var DIAS  = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
 
-  // ════════════════════════════════════════════════════════════════
-  //  INIT
-  // ════════════════════════════════════════════════════════════════
   document.getElementById('year').textContent = new Date().getFullYear();
   var _now = new Date();
   state.calYear  = _now.getFullYear();
@@ -768,16 +564,12 @@
   renderCal();
   initBg();
 
-  // Logo fallback
   document.getElementById('header-img').onerror = function() {
     this.style.display = 'none';
     document.getElementById('header-fallback').style.display = 'block';
   };
 
-  // WhatsApp link dinámico
   document.getElementById('link-whatsapp').href = 'https://wa.me/' + CONFIG.WS_NUMBER;
-
-  // Datos del asesor en el ticket
   document.getElementById('asesor-nombre').textContent = ASESOR.nombre;
   document.getElementById('asesor-cargo').textContent  = ASESOR.cargo;
   document.getElementById('asesor-placeholder').textContent = ASESOR.inicial;
@@ -788,9 +580,7 @@
     document.getElementById('asesor-placeholder').style.display = 'flex';
   };
 
-  // ════════════════════════════════════════════════════════════════
-  //  SCREENS
-  // ════════════════════════════════════════════════════════════════
+  // ── SCREENS ──
   function goScreen(n) {
     document.querySelectorAll('.screen').forEach(function(s) {
       s.classList.remove('active','visible');
@@ -800,6 +590,9 @@
       st.classList.remove('active','done');
       if (i < n) st.classList.add('done');
       if (i === n) st.classList.add('active');
+      // conectores
+      var conn = document.getElementById('conn-' + i);
+      if (conn) conn.classList.toggle('done', i < n);
     }
     var scr = document.getElementById('screen-' + n);
     scr.classList.add('active');
@@ -811,9 +604,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ════════════════════════════════════════════════════════════════
-  //  UTILS
-  // ════════════════════════════════════════════════════════════════
   function setErr(inputId, errId, show) {
     document.getElementById(inputId).classList.toggle('error', show);
     document.getElementById(errId).classList.toggle('show', show);
@@ -823,554 +613,329 @@
     document.getElementById('loading-text').textContent = text || 'Procesando...';
     document.getElementById('loading-overlay').classList.add('show');
   }
-
   function hideLoading() {
     document.getElementById('loading-overlay').classList.remove('show');
   }
 
-  // JSONP helper
   var _jsonpCount = 0;
   function jsonp(url, callback) {
     var fnName = '_jsonpCb' + (++_jsonpCount) + '_' + Date.now();
     var script = document.createElement('script');
     var done = false;
-
-    window[fnName] = function(data) {
-      if (done) return;
-      done = true;
-      cleanup();
-      callback(null, data);
-    };
-
-    var sep = url.indexOf('?') === -1 ? '?' : '&';
+    window[fnName] = function(data) { if(done)return; done=true; cleanup(); callback(null,data); };
+    var sep = url.indexOf('?')===-1?'?':'&';
     script.src = url + sep + 'callback=' + fnName;
-    script.onerror = function() {
-      if (done) return;
-      done = true;
-      cleanup();
-      callback(new Error('Error de red al contactar el servidor'));
-    };
-
-    function cleanup() {
-      if (script.parentNode) script.parentNode.removeChild(script);
-      delete window[fnName];
-    }
-
-    var timer = setTimeout(function() {
-      if (!done) {
-        done = true;
-        cleanup();
-        callback(new Error('Tiempo de espera agotado. Verificá tu conexión.'));
-      }
-    }, 20000);
-
+    script.onerror = function() { if(done)return; done=true; cleanup(); callback(new Error('Error de red al contactar el servidor')); };
+    function cleanup() { if(script.parentNode)script.parentNode.removeChild(script); delete window[fnName]; }
+    var timer = setTimeout(function() { if(!done){done=true;cleanup();callback(new Error('Tiempo de espera agotado. Verificá tu conexión.'));} }, 20000);
     var origCb = window[fnName];
-    window[fnName] = function(data) {
-      clearTimeout(timer);
-      origCb(data);
-    };
-
+    window[fnName] = function(data) { clearTimeout(timer); origCb(data); };
     document.head.appendChild(script);
   }
 
-  // ════════════════════════════════════════════════════════════════
-  //  PASO 1 — CALENDARIO
-  // ════════════════════════════════════════════════════════════════
+  // ── CALENDARIO ──
   function renderCal() {
-    var y = state.calYear, m = state.calMonth;
-    document.getElementById('cal-month-label').textContent = MESES[m] + ' ' + y;
-
-    var firstDow    = new Date(y, m, 1).getDay();
-    var daysInMonth = new Date(y, m + 1, 0).getDate();
-    var today       = new Date(); today.setHours(0, 0, 0, 0);
-
-    var html = DIAS.map(function(d) {
-      return '<div class="cal-day-name">' + d + '</div>';
-    }).join('');
-
-    for (var emp = 0; emp < firstDow; emp++) {
-      html += '<div class="cal-day empty"></div>';
+    var y=state.calYear, m=state.calMonth;
+    document.getElementById('cal-month-label').textContent = MESES[m]+' '+y;
+    var firstDow    = new Date(y,m,1).getDay();
+    var daysInMonth = new Date(y,m+1,0).getDate();
+    var today       = new Date(); today.setHours(0,0,0,0);
+    var html = DIAS.map(function(d){ return '<div class="cal-day-name">'+d+'</div>'; }).join('');
+    for(var emp=0;emp<firstDow;emp++) html+='<div class="cal-day empty"></div>';
+    for(var dia=1;dia<=daysInMonth;dia++){
+      var date=new Date(y,m,dia), dow=date.getDay();
+      var isPast=date<today, isWeekend=(dow===0||dow===6);
+      var isSelected=state.fecha&&state.fecha.getTime()===date.getTime();
+      var isToday=date.getTime()===today.getTime();
+      var cls='cal-day';
+      if(isPast||isWeekend){cls+=' disabled past';}else{cls+=' available';}
+      if(isSelected)cls+=' selected';
+      if(isToday)cls+=' today';
+      var onclick=(!isPast&&!isWeekend)?'onclick="selectDay('+y+','+m+','+dia+')"':'';
+      html+='<div class="'+cls+'" '+onclick+'>'+dia+'</div>';
     }
-
-    for (var dia = 1; dia <= daysInMonth; dia++) {
-      var date      = new Date(y, m, dia);
-      var dow       = date.getDay();
-      var isPast    = date < today;
-      var isWeekend = (dow === 0 || dow === 6);
-      var isSelected = state.fecha && state.fecha.getTime() === date.getTime();
-      var isToday    = date.getTime() === today.getTime();
-
-      var cls = 'cal-day';
-      if (isPast || isWeekend) {
-        cls += ' disabled past';
-      } else {
-        cls += ' available';
-      }
-      if (isSelected) cls += ' selected';
-      if (isToday)    cls += ' today';
-
-      var onclick = (!isPast && !isWeekend)
-        ? 'onclick="selectDay(' + y + ',' + m + ',' + dia + ')"'
-        : '';
-
-      html += '<div class="' + cls + '" ' + onclick + '>' + dia + '</div>';
-    }
-
-    document.getElementById('cal-grid').innerHTML = html;
-
-    var prevOk = !(y === today.getFullYear() && m === today.getMonth());
-    var prevBtn = document.getElementById('cal-prev');
-    prevBtn.style.opacity       = prevOk ? '1' : '.3';
-    prevBtn.style.pointerEvents = prevOk ? '' : 'none';
+    document.getElementById('cal-grid').innerHTML=html;
+    var prevOk=!(y===today.getFullYear()&&m===today.getMonth());
+    var prevBtn=document.getElementById('cal-prev');
+    prevBtn.style.opacity=prevOk?'1':'.3';
+    prevBtn.style.pointerEvents=prevOk?'':'none';
   }
 
   function calNav(dir) {
-    state.calMonth += dir;
-    if (state.calMonth < 0)  { state.calMonth = 11; state.calYear--; }
-    if (state.calMonth > 11) { state.calMonth = 0;  state.calYear++; }
+    state.calMonth+=dir;
+    if(state.calMonth<0){state.calMonth=11;state.calYear--;}
+    if(state.calMonth>11){state.calMonth=0;state.calYear++;}
     renderCal();
   }
 
-  function selectDay(y, m, d) {
-    state.fecha = new Date(y, m, d);
-    state.hora  = null;
-    document.getElementById('btn-paso1-next').disabled = true;
+  function selectDay(y,m,d) {
+    state.fecha=new Date(y,m,d);
+    state.hora=null;
+    document.getElementById('btn-paso1-next').disabled=true;
     renderCal();
 
-    var panel = document.getElementById('slots-panel');
-    panel.style.display = 'block';
-    document.getElementById('paso1-btns').style.display = 'flex';
+    var panel=document.getElementById('slots-panel');
+    panel.style.display='block';
+    document.getElementById('paso1-btns').style.display='flex';
 
-    var dow = state.fecha.getDay();
-    document.getElementById('slots-date-label').textContent =
-      DIAS[dow] + ' ' + d + ' de ' + MESES[m] + ' de ' + y;
+    var dow=state.fecha.getDay();
+    document.getElementById('slots-date-label').textContent=
+      DIAS[dow]+' '+d+' de '+MESES[m]+' de '+y;
 
-    document.getElementById('slots-loading').style.display = 'flex';
-    document.getElementById('slots-grid').style.display   = 'none';
+    document.getElementById('slots-loading').style.display='flex';
+    document.getElementById('slots-grid').style.display='none';
 
-    var fechaStr = y + '-' + pad(m + 1) + '-' + pad(d);
-    var url = CONFIG.APPS_SCRIPT_URL + '?action=slots&fecha=' + fechaStr;
+    // ── AUTO-SCROLL al panel de slots ──
+    setTimeout(function(){
+      panel.scrollIntoView({ behavior:'smooth', block:'start' });
+    }, 80);
 
-    jsonp(url, function(err, data) {
-      if (err || !data) {
-        state.ocupados = [];
-      } else {
-        state.ocupados = (data.ocupados || []).map(function(h) {
-          if (typeof h !== 'string') return h;
-          var match = h.match(/(\d{2}):(\d{2})/);
-          return match ? match[1] + ':' + match[2] : h;
+    var fechaStr=y+'-'+pad(m+1)+'-'+pad(d);
+    var url=CONFIG.APPS_SCRIPT_URL+'?action=slots&fecha='+fechaStr;
+    jsonp(url,function(err,data){
+      if(err||!data){ state.ocupados=[]; }
+      else{
+        state.ocupados=(data.ocupados||[]).map(function(h){
+          if(typeof h!=='string')return h;
+          var match=h.match(/(\d{2}):(\d{2})/);
+          return match?match[1]+':'+match[2]:h;
         });
       }
       renderSlots();
     });
   }
 
-  function pad(n) { return String(n).padStart(2, '0'); }
+  function pad(n){ return String(n).padStart(2,'0'); }
 
   function renderSlots() {
-
-  var slots = [];
-
-  var ahora = new Date();
-
-  for (var h = CONFIG.START_HOUR; h < CONFIG.END_HOUR; h++) {
-
-    for (var m = 0; m < 60; m += CONFIG.SLOT_DURATION) {
-
-      var horaStr = pad(h) + ':' + pad(m);
-
-      var bloqueadoPorHora = false;
-
-
-      // si la fecha elegida es hoy
-      if(state.fecha){
-
-        var fechaSlot = new Date(
-          state.fecha.getFullYear(),
-          state.fecha.getMonth(),
-          state.fecha.getDate(),
-          h,
-          m
-        );
-
-
-        // si ya pasó la hora actual
-        if(fechaSlot <= ahora){
-
-          bloqueadoPorHora = true;
-
+    var slots=[], ahora=new Date();
+    for(var h=CONFIG.START_HOUR;h<CONFIG.END_HOUR;h++){
+      for(var m=0;m<60;m+=CONFIG.SLOT_DURATION){
+        var horaStr=pad(h)+':'+pad(m);
+        var bloqueadoPorHora=false;
+        if(state.fecha){
+          var fechaSlot=new Date(state.fecha.getFullYear(),state.fecha.getMonth(),state.fecha.getDate(),h,m);
+          if(fechaSlot<=ahora) bloqueadoPorHora=true;
         }
-
+        slots.push({ hora:horaStr, pasado:bloqueadoPorHora });
       }
-
-
-      slots.push({
-        hora: horaStr,
-        pasado: bloqueadoPorHora
-      });
-
     }
+    var html='';
+    slots.forEach(function(item){
+      var s=item.hora;
+      var ocupado=state.ocupados.indexOf(s)!==-1;
+      var pasado=item.pasado;
+      var cls='slot';
+      if(ocupado||pasado){cls+=' occupied';}else{cls+=' available';}
+      if(state.hora===s) cls+=' selected';
+      var onclick=(ocupado||pasado)?'':'onclick="selectSlot(\''+s+'\')"';
+      html+='<div class="'+cls+'" '+onclick+'>'+s+'</div>';
+    });
+    document.getElementById('slots-loading').style.display='none';
+    document.getElementById('slots-grid').innerHTML=html;
+    document.getElementById('slots-grid').style.display='grid';
   }
 
-
-
-  var html = '';
-
-  slots.forEach(function(item){
-
-    var s = item.hora;
-
-    var ocupado = state.ocupados.indexOf(s) !== -1;
-
-    var pasado = item.pasado;
-
-
-    var cls = 'slot';
-
-
-    if(ocupado || pasado){
-
-      cls += ' occupied';
-
-    }else{
-
-      cls += ' available';
-
-    }
-
-
-
-    if(state.hora === s){
-
-      cls += ' selected';
-
-    }
-
-
-
-    var onclick = (ocupado || pasado)
-      ? ''
-      : 'onclick="selectSlot(\''+s+'\')"';
-
-
-
-    html += 
-      '<div class="'+cls+'" '+onclick+'>'+
-      s+
-      '</div>';
-
-  });
-
-
-
-  document.getElementById('slots-loading').style.display='none';
-
-  document.getElementById('slots-grid').innerHTML=html;
-
-  document.getElementById('slots-grid').style.display='grid';
-
-}
   function selectSlot(hora) {
-    state.hora = hora;
-    document.getElementById('btn-paso1-next').disabled = false;
+    state.hora=hora;
+    document.getElementById('btn-paso1-next').disabled=false;
     renderSlots();
   }
 
-  // Avanzar desde paso 1 (fecha+hora elegidas) → paso 2 (datos)
   function paso1Next() {
-    if (!state.fecha || !state.hora) return;
+    if(!state.fecha||!state.hora)return;
     goScreen(2);
   }
 
-  // ════════════════════════════════════════════════════════════════
-  //  PASO 2 — VALIDACIÓN DE DATOS
-  // ════════════════════════════════════════════════════════════════
+  // ── PASO 2 ──
   function paso2Next() {
-    var nombre = document.getElementById('f-nombre').value.trim();
-    var cuit   = document.getElementById('f-cuit').value.trim().replace(/\D/g, '');
-    var ws     = document.getElementById('f-ws').value.trim().replace(/\D/g, '');
-
-    var errNombre = !nombre || nombre.length < 4;
-    var errCuit   = cuit.length < 10 || cuit.length > 11;
-    var errWs     = ws.length < 8 || ws.length > 12;
-
-    setErr('f-nombre', 'e-nombre', errNombre);
-    setErr('f-cuit',   'e-cuit',   errCuit);
-    setErr('f-ws',     'e-ws',     errWs);
-
-    if (errNombre || errCuit || errWs) return;
-
-    state.nombre = nombre;
-    state.cuit   = cuit;
-    state.ws     = ws;
-
-    var fechaStr = DIAS[state.fecha.getDay()] + ' ' + state.fecha.getDate() +
-      ' de ' + MESES[state.fecha.getMonth()] + ' de ' + state.fecha.getFullYear();
-
-    document.getElementById('sum-nombre').textContent = state.nombre;
-    document.getElementById('sum-cuit').textContent   = state.cuit;
-    document.getElementById('sum-fecha').textContent  = fechaStr + ' — ' + state.hora + 'hs';
-    document.getElementById('sum-ws').textContent     = '+54 9 ' + state.ws;
-
+    var nombre=document.getElementById('f-nombre').value.trim();
+    var cuit=document.getElementById('f-cuit').value.trim().replace(/\D/g,'');
+    var ws=document.getElementById('f-ws').value.trim().replace(/\D/g,'');
+    var errNombre=!nombre||nombre.length<4;
+    var errCuit=cuit.length<10||cuit.length>11;
+    var errWs=ws.length<8||ws.length>12;
+    setErr('f-nombre','e-nombre',errNombre);
+    setErr('f-cuit','e-cuit',errCuit);
+    setErr('f-ws','e-ws',errWs);
+    if(errNombre||errCuit||errWs)return;
+    state.nombre=nombre; state.cuit=cuit; state.ws=ws;
+    var fechaStr=DIAS[state.fecha.getDay()]+' '+state.fecha.getDate()+' de '+MESES[state.fecha.getMonth()]+' de '+state.fecha.getFullYear();
+    document.getElementById('sum-nombre').textContent=state.nombre;
+    document.getElementById('sum-cuit').textContent=state.cuit;
+    document.getElementById('sum-fecha').textContent=fechaStr+' — '+state.hora+'hs';
+    document.getElementById('sum-ws').textContent='+54 9 '+state.ws;
     goScreen(3);
   }
 
-  document.getElementById('f-ws').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') paso2Next();
-  });
+  document.getElementById('f-ws').addEventListener('keydown',function(e){ if(e.key==='Enter')paso2Next(); });
 
-  // ════════════════════════════════════════════════════════════════
-  //  PASO 3 — CONFIRMAR TURNO (sin pago)
-  // ════════════════════════════════════════════════════════════════
+  // ── PASO 3 ──
   function confirmarTurnoDirecto() {
-    var btn = document.getElementById('btn-confirmar');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> Confirmando...';
-    document.getElementById('pago-alert').innerHTML = '';
-
-    var fechaStr = state.fecha.getFullYear() + '-' +
-      pad(state.fecha.getMonth() + 1) + '-' +
-      pad(state.fecha.getDate());
-
-    var url = CONFIG.APPS_SCRIPT_URL +
-      '?action=reservarTurno' +
-      '&nombre=' + encodeURIComponent(state.nombre) +
-      '&cuit='   + encodeURIComponent(state.cuit) +
-      '&ws='     + encodeURIComponent(state.ws) +
-      '&fecha='  + encodeURIComponent(fechaStr) +
-      '&hora='   + encodeURIComponent(state.hora);
-
-    jsonp(url, function(err, data) {
-      if (err || (data && data.error)) {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="ti ti-calendar-check"></i> Confirmar turno';
-        document.getElementById('pago-alert').innerHTML =
-          '<div class="alert alert-error"><i class="ti ti-alert-circle"></i>' +
-          (err ? err.message : data.error) + '</div>';
+    var btn=document.getElementById('btn-confirmar');
+    btn.disabled=true;
+    btn.innerHTML='<span class="spinner"></span> Confirmando...';
+    document.getElementById('pago-alert').innerHTML='';
+    var fechaStr=state.fecha.getFullYear()+'-'+pad(state.fecha.getMonth()+1)+'-'+pad(state.fecha.getDate());
+    var url=CONFIG.APPS_SCRIPT_URL+
+      '?action=reservarTurno'+
+      '&nombre='+encodeURIComponent(state.nombre)+
+      '&cuit='+encodeURIComponent(state.cuit)+
+      '&ws='+encodeURIComponent(state.ws)+
+      '&fecha='+encodeURIComponent(fechaStr)+
+      '&hora='+encodeURIComponent(state.hora);
+    jsonp(url,function(err,data){
+      if(err||(data&&data.error)){
+        btn.disabled=false;
+        btn.innerHTML='<i class="ti ti-calendar-check"></i> Confirmar turno';
+        document.getElementById('pago-alert').innerHTML=
+          '<div class="alert alert-error"><i class="ti ti-alert-circle"></i>'+(err?err.message:data.error)+'</div>';
         return;
       }
-      var turnoId = (data && data.turno_id) ? data.turno_id : Math.floor(Math.random() * 900000 + 100000);
-      state.turnoId = turnoId;
+      var turnoId=(data&&data.turno_id)?data.turno_id:Math.floor(Math.random()*900000+100000);
+      state.turnoId=turnoId;
       mostrarConfirmacion(turnoId);
     });
   }
 
-  // ════════════════════════════════════════════════════════════════
-  //  MOSTRAR CONFIRMACIÓN (paso 4)
-  // ════════════════════════════════════════════════════════════════
   function mostrarConfirmacion(turnoId) {
-    var fechaStr = state.fecha
-      ? DIAS[state.fecha.getDay()] + ' ' + state.fecha.getDate() +
-        ' de ' + MESES[state.fecha.getMonth()] + ' de ' + state.fecha.getFullYear()
-      : '—';
-
-    document.getElementById('tk-num').textContent    = 'TURNO #' + turnoId;
-    document.getElementById('tk-nombre').textContent = state.nombre;
-    document.getElementById('tk-cuit').textContent   = state.cuit;
-    document.getElementById('tk-ws').textContent     = '+54 9 ' + state.ws;
-    document.getElementById('tk-fecha').textContent  = fechaStr;
-    document.getElementById('tk-hora').textContent   = (state.hora || '—') + 'hs';
-
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'manual_event_BOOK_APPOINTMENT', {
-        value: 0,
-        currency: 'ARS'
-      });
+    var fechaStr=state.fecha
+      ?DIAS[state.fecha.getDay()]+' '+state.fecha.getDate()+' de '+MESES[state.fecha.getMonth()]+' de '+state.fecha.getFullYear()
+      :'—';
+    document.getElementById('tk-num').textContent='TURNO #'+turnoId;
+    document.getElementById('tk-nombre').textContent=state.nombre;
+    document.getElementById('tk-cuit').textContent=state.cuit;
+    document.getElementById('tk-ws').textContent='+54 9 '+state.ws;
+    document.getElementById('tk-fecha').textContent=fechaStr;
+    document.getElementById('tk-hora').textContent=(state.hora||'—')+'hs';
+    if(typeof gtag!=='undefined'){
+      gtag('event','manual_event_BOOK_APPOINTMENT',{value:0,currency:'ARS'});
     }
     goScreen(4);
   }
 
-  // ════════════════════════════════════════════════════════════════
-  //  PDF TICKET
-  // ════════════════════════════════════════════════════════════════
-  function descargarTicket() {
-    var jsPDF = window.jspdf.jsPDF;
-    var doc = new jsPDF({ unit: 'mm', format: [85, 170], orientation: 'portrait' });
-    var W = 85, H = 170;
+  // ── DESCARGA PDF ──
+  function descargarTicketPDF() {
+    var btn = document.getElementById('btn-descargar-pdf');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" style="color:var(--gold)"></span> Generando PDF...';
 
-    var fechaStr = state.fecha
-      ? DIAS[state.fecha.getDay()] + ' ' + state.fecha.getDate() +
-        ' de ' + MESES[state.fecha.getMonth()] + ' de ' + state.fecha.getFullYear()
-      : '—';
+    var jsPDF=window.jspdf.jsPDF;
+    var doc=new jsPDF({unit:'mm',format:[85,170],orientation:'portrait'});
+    var W=85,H=170;
+    var fechaStr=state.fecha?DIAS[state.fecha.getDay()]+' '+state.fecha.getDate()+' de '+MESES[state.fecha.getMonth()]+' de '+state.fecha.getFullYear():'—';
+    var horaDisplay=(state.hora||'—')+'hs';
 
-    var horaDisplay = (state.hora || '—') + 'hs';
-
-    // Fondo total
-    doc.setFillColor(14, 10, 10);
-    doc.rect(0, 0, W, H, 'F');
-
-    // Header bordo
-    doc.setFillColor(90, 12, 22);
-    doc.rect(0, 0, W, 28, 'F');
-
-    // Línea dorada bajo header
-    doc.setDrawColor(180, 140, 55);
-    doc.setLineWidth(0.5);
-    doc.line(0, 28, W, 28);
-
-    // Título TANGO
-    doc.setTextColor(237, 220, 180);
-    doc.setFontSize(20);
-    doc.setFont('helvetica', 'bold');
-    doc.text('TANGO', W/2, 12, { align: 'center' });
-
-    doc.setFontSize(6.5);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(180, 140, 55);
-    doc.text('RECUPERACIÓN FINANCIERA', W/2, 18.5, { align: 'center' });
-
-    doc.setFontSize(5.5);
-    doc.setTextColor(160, 150, 135);
-    doc.text('COMPROBANTE DE TURNO', W/2, 24, { align: 'center' });
-
-    // Número de turno
-    doc.setFillColor(30, 22, 22);
-    doc.roundedRect(5, 31, W-10, 12, 2, 2, 'F');
-    doc.setDrawColor(70, 55, 30);
-    doc.setLineWidth(0.3);
-    doc.roundedRect(5, 31, W-10, 12, 2, 2, 'S');
-
-    doc.setTextColor(180, 140, 55);
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Nº ' + (state.turnoId || '—'), W/2, 39.5, { align: 'center' });
-
-    // Helper fila de datos
-    function dataRow(label, value, y) {
-      doc.setFillColor(22, 17, 17);
-      doc.rect(5, y, W-10, 10, 'F');
-
-      doc.setFontSize(6);
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(120, 110, 100);
-      doc.text(label, 9, y + 6.5);
-
-      doc.setFontSize(7.5);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(225, 215, 200);
-      doc.text(String(value), W-9, y + 6.5, { align: 'right', maxWidth: 48 });
-
-      doc.setDrawColor(35, 28, 28);
-      doc.setLineWidth(0.2);
-      doc.line(5, y+10, W-5, y+10);
+    doc.setFillColor(14,10,10); doc.rect(0,0,W,H,'F');
+    doc.setFillColor(90,12,22); doc.rect(0,0,W,28,'F');
+    doc.setDrawColor(180,140,55); doc.setLineWidth(0.5); doc.line(0,28,W,28);
+    doc.setTextColor(237,220,180); doc.setFontSize(20); doc.setFont('helvetica','bold');
+    doc.text('TANGO',W/2,12,{align:'center'});
+    doc.setFontSize(6.5); doc.setFont('helvetica','normal'); doc.setTextColor(180,140,55);
+    doc.text('RECUPERACIÓN FINANCIERA',W/2,18.5,{align:'center'});
+    doc.setFontSize(5.5); doc.setTextColor(160,150,135);
+    doc.text('COMPROBANTE DE TURNO',W/2,24,{align:'center'});
+    doc.setFillColor(30,22,22); doc.roundedRect(5,31,W-10,12,2,2,'F');
+    doc.setDrawColor(70,55,30); doc.setLineWidth(0.3); doc.roundedRect(5,31,W-10,12,2,2,'S');
+    doc.setTextColor(180,140,55); doc.setFontSize(10); doc.setFont('helvetica','bold');
+    doc.text('Nº '+(state.turnoId||'—'),W/2,39.5,{align:'center'});
+    function dataRow(label,value,y){
+      doc.setFillColor(22,17,17); doc.rect(5,y,W-10,10,'F');
+      doc.setFontSize(6); doc.setFont('helvetica','normal'); doc.setTextColor(120,110,100); doc.text(label,9,y+6.5);
+      doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(225,215,200);
+      doc.text(String(value),W-9,y+6.5,{align:'right',maxWidth:48});
+      doc.setDrawColor(35,28,28); doc.setLineWidth(0.2); doc.line(5,y+10,W-5,y+10);
     }
+    var yStart=46;
+    dataRow('Titular',state.nombre||'—',yStart);
+    dataRow('CUIT/CUIL',state.cuit||'—',yStart+10);
+    dataRow('WhatsApp','+54 9 '+(state.ws||'—'),yStart+20);
+    dataRow('Fecha',fechaStr,yStart+30);
+    dataRow('Hora',horaDisplay,yStart+40);
+    var yTotal=yStart+53;
+    doc.setFillColor(25,18,10); doc.roundedRect(5,yTotal,W-10,14,2,2,'F');
+    doc.setDrawColor(160,120,40); doc.setLineWidth(0.4); doc.roundedRect(5,yTotal,W-10,14,2,2,'S');
+    doc.setFontSize(6.5); doc.setFont('helvetica','normal'); doc.setTextColor(140,125,100);
+    doc.text('Costo de la consulta',10,yTotal+9);
+    doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(200,165,70);
+    doc.text('Sin cargo',W-9,yTotal+10,{align:'right'});
+    var yAsesor=yTotal+18;
+    doc.setDrawColor(45,35,35); doc.setLineWidth(0.3); doc.line(10,yAsesor,W-10,yAsesor);
+    doc.setFontSize(6); doc.setFont('helvetica','bold'); doc.setTextColor(140,105,40);
+    doc.text('TU ASESOR ASIGNADO',W/2,yAsesor+5,{align:'center'});
+    var cx=18,cy=yAsesor+16;
+    doc.setFillColor(55,35,15); doc.setDrawColor(160,120,40); doc.setLineWidth(0.5); doc.circle(cx,cy,7,'FD');
+    doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(200,165,70); doc.text(ASESOR.inicial,cx,cy+3,{align:'center'});
+    doc.setFontSize(8.5); doc.setFont('helvetica','bold'); doc.setTextColor(225,215,200); doc.text(ASESOR.nombre,28,yAsesor+13);
+    doc.setFontSize(6.5); doc.setFont('helvetica','normal'); doc.setTextColor(140,130,115);
+    doc.text(doc.splitTextToSize(ASESOR.cargo,50),28,yAsesor+19);
+    var yPie=H-14;
+    doc.setDrawColor(40,32,32); doc.setLineWidth(0.2); doc.line(10,yPie,W-10,yPie);
+    doc.setFontSize(5.5); doc.setFont('helvetica','normal'); doc.setTextColor(80,72,65);
+    doc.text('Cancelaciones con al menos 24hs de anticipación',W/2,yPie+4,{align:'center'});
+    doc.text('Conservá este comprobante hasta el día del turno',W/2,yPie+8,{align:'center'});
+    doc.setTextColor(130,100,40); doc.setFontSize(6);
+    doc.text('tango-financiera.com.ar',W/2,yPie+12.5,{align:'center'});
+    doc.save('turno-tango-'+(state.turnoId||'comprobante')+'.pdf');
 
-    var yStart = 46;
-    dataRow('Titular',   state.nombre || '—',        yStart);
-    dataRow('CUIT/CUIL', state.cuit   || '—',        yStart + 10);
-    dataRow('WhatsApp',  '+54 9 ' + (state.ws||'—'), yStart + 20);
-    dataRow('Fecha',     fechaStr,                    yStart + 30);
-    dataRow('Hora',      horaDisplay,                 yStart + 40);
-
-    // Caja costo
-    var yTotal = yStart + 53;
-    doc.setFillColor(25, 18, 10);
-    doc.roundedRect(5, yTotal, W-10, 14, 2, 2, 'F');
-    doc.setDrawColor(160, 120, 40);
-    doc.setLineWidth(0.4);
-    doc.roundedRect(5, yTotal, W-10, 14, 2, 2, 'S');
-
-    doc.setFontSize(6.5);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(140, 125, 100);
-    doc.text('Costo de la consulta', 10, yTotal + 9);
-
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(200, 165, 70);
-    doc.text('Sin cargo', W-9, yTotal + 10, { align: 'right' });
-
-    // Sección asesor
-    var yAsesor = yTotal + 18;
-
-    doc.setDrawColor(45, 35, 35);
-    doc.setLineWidth(0.3);
-    doc.line(10, yAsesor, W-10, yAsesor);
-
-    doc.setFontSize(6);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(140, 105, 40);
-    doc.text('TU ASESOR ASIGNADO', W/2, yAsesor + 5, { align: 'center' });
-
-    var cx = 18, cy = yAsesor + 16;
-    doc.setFillColor(55, 35, 15);
-    doc.setDrawColor(160, 120, 40);
-    doc.setLineWidth(0.5);
-    doc.circle(cx, cy, 7, 'FD');
-
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(200, 165, 70);
-    doc.text(ASESOR.inicial, cx, cy + 3, { align: 'center' });
-
-    doc.setFontSize(8.5);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(225, 215, 200);
-    doc.text(ASESOR.nombre, 28, yAsesor + 13);
-
-    doc.setFontSize(6.5);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(140, 130, 115);
-    var cargoLines = doc.splitTextToSize(ASESOR.cargo, 50);
-    doc.text(cargoLines, 28, yAsesor + 19);
-
-    // Pie de página
-    var yPie = H - 14;
-    doc.setDrawColor(40, 32, 32);
-    doc.setLineWidth(0.2);
-    doc.line(10, yPie, W-10, yPie);
-
-    doc.setFontSize(5.5);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(80, 72, 65);
-    doc.text('Cancelaciones con al menos 24hs de anticipación', W/2, yPie + 4, { align: 'center' });
-    doc.text('Conservá este comprobante hasta el día del turno', W/2, yPie + 8, { align: 'center' });
-
-    doc.setTextColor(130, 100, 40);
-    doc.setFontSize(6);
-    doc.text('tango-financiera.com.ar', W/2, yPie + 12.5, { align: 'center' });
-
-    doc.save('turno-tango-' + (state.turnoId || 'comprobante') + '.pdf');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-file-type-pdf"></i> Descargar comprobante PDF';
   }
 
-  // ════════════════════════════════════════════════════════════════
-  //  BG CANVAS
-  // ════════════════════════════════════════════════════════════════
+  // ── DESCARGA JPG (captura del ticket visible) ──
+  function descargarTicketJPG() {
+    var btn = document.getElementById('btn-descargar-jpg');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Capturando imagen...';
+
+    var el = document.getElementById('ticket-card-capture');
+
+    html2canvas(el, {
+      scale: 2,
+      backgroundColor: '#1C1616',
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+      onclone: function(clonedDoc) {
+        // aseguramos que el fondo sea visible en la captura
+        var card = clonedDoc.getElementById('ticket-card-capture');
+        if(card){
+          card.style.borderRadius = '0';
+          card.style.margin = '0';
+        }
+      }
+    }).then(function(canvas){
+      var link = document.createElement('a');
+      link.download = 'turno-tango-' + (state.turnoId||'comprobante') + '.jpg';
+      link.href = canvas.toDataURL('image/jpeg', 0.93);
+      link.click();
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-photo-down"></i> Guardar como imagen JPG';
+    }).catch(function(err){
+      console.error(err);
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-photo-down"></i> Guardar como imagen JPG';
+      alert('No se pudo generar la imagen. Probá con el PDF.');
+    });
+  }
+
+  // ── BG CANVAS ──
   function initBg() {
-    var canvas = document.getElementById('bg-canvas');
-    var ctx = canvas.getContext('2d');
-    var W, H, particles = [];
-
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
+    var canvas=document.getElementById('bg-canvas');
+    var ctx=canvas.getContext('2d');
+    var W,H,particles=[];
+    function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+    resize(); window.addEventListener('resize',resize);
+    for(var i=0;i<40;i++){
+      particles.push({x:Math.random()*1600,y:Math.random()*900,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.13,r:Math.random()*1.6+.3,a:Math.random()*.45+.08,gold:Math.random()>.6});
     }
-    resize();
-    window.addEventListener('resize', resize);
-
-    for (var i = 0; i < 40; i++) {
-      particles.push({
-        x:    Math.random() * 1600,
-        y:    Math.random() * 900,
-        vx:   (Math.random() - .5) * .2,
-        vy:   (Math.random() - .5) * .13,
-        r:    Math.random() * 1.6 + .3,
-        a:    Math.random() * .45 + .08,
-        gold: Math.random() > .6
-      });
-    }
-
-    function frame() {
-      ctx.clearRect(0, 0, W, H);
-      particles.forEach(function(p) {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.gold
-          ? 'rgba(201,168,76,' + p.a + ')'
-          : 'rgba(107,15,26,'  + (p.a * .6) + ')';
+    function frame(){
+      ctx.clearRect(0,0,W,H);
+      particles.forEach(function(p){
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=p.gold?'rgba(201,168,76,'+p.a+')':'rgba(107,15,26,'+(p.a*.6)+')';
         ctx.fill();
       });
       requestAnimationFrame(frame);
