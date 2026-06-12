@@ -491,14 +491,9 @@
             </div>
 
             <!-- Botones descarga -->
-            <div class="download-btns">
-              <button class="btn-download" id="btn-descargar-pdf" onclick="descargarTicketPDF()">
-                <i class="ti ti-file-type-pdf"></i> Descargar comprobante PDF
-              </button>
-              <button class="btn-download-jpg" id="btn-descargar-jpg" onclick="descargarTicketJPG()">
-                <i class="ti ti-photo-down"></i> Guardar como imagen JPG
-              </button>
-            </div>
+            <button class="btn-download" id="btn-descargar-jpg" onclick="descargarTicketJPG()">
+            <i class="ti ti-photo-down"></i> Guardar comprobante
+            </button>
           </div>
         </div>
 
@@ -527,7 +522,7 @@
   </div>
 
   <!-- jsPDF + html2canvas -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
