@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliminá tus deudas del Veraz — TANGO Recuperación Financiera</title>
+<meta name="description" content="Si tu deuda tiene más de 5 años, la ley te da el derecho de eliminarla del Veraz. Turno de diagnóstico gratis. TANGO — 15 años gestionando recuperación crediticia.">
+<meta name="robots" content="noindex">
+
+<!-- Mismas fuentes e íconos que el sitio principal -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<!-- CSS del sitio principal — hereda colores, botones, badges, todo -->
+<link rel="stylesheet" href="./style.css">
+
+<style>
+/* ── Solo lo específico de esta landing ── */
+.lp-wrap {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* Nav simple */
+.lp-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0 30px;
+  border-bottom: .5px solid var(--b1);
+  margin-bottom: 48px;
+}
+.lp-nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .04em;
+}
+.lp-nav-tag {
+  font-size: 11px; color: var(--muted);
+  border: .5px solid var(--b2); border-radius: 20px;
+  padding: 4px 12px;
+}
+
+/* Eyebrow */
+.lp-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gold);
+  border: .5px solid var(--b2); border-radius: 20px;
+  padding: 5px 14px; margin-bottom: 22px;
+}
+.lp-eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0;
+  animation: lp-pulse 2s ease-in-out infinite;
+}
+@keyframes lp-pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* Hero */
+.lp-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 5.5vw, 44px);
+  font-weight: 600; line-height: 1.15;
+  color: var(--text); margin-bottom: 18px;
+}
+.lp-h1 em { font-style: italic; color: var(--gold); }
+
+.lp-hero-sub {
+  font-size: 15px; color: var(--muted); line-height: 1.75;
+  margin-bottom: 32px; max-width: 580px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.lp-hero-sub strong { color: var(--text); font-weight: 500; }
+
+/* Cita legal */
+.lp-ley {
+  background: rgba(201,168,76,.06);
+  border: .5px solid var(--b2);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px; padding: 16px 18px;
+  margin-bottom: 36px;
+  font-size: 13px; color: var(--muted);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.7;
+}
+.lp-ley strong { color: var(--gold); font-weight: 600; }
+
+/* Divisor */
+.lp-div { height: .5px; background: var(--b1); margin: 40px 0; }
+
+/* Título de sección */
+.lp-sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 500;
+  color: var(--text); margin-bottom: 20px;
+}
+
+/* Pasos — reutiliza .paso del sitio si existe, sino define aquí */
+.lp-pasos { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+.lp-paso {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: var(--s2); border: .5px solid var(--b1);
+  border-radius: 12px; padding: 16px 18px;
+}
+.lp-paso-num {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(201,168,76,.08); border: .5px solid var(--b2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: 13px; color: var(--gold); flex-shrink: 0;
+}
+.lp-paso h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px;
+}
+.lp-paso p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; color: var(--muted); line-height: 1.6;
+}
+
+/* Bloque de diagnóstico */
+.lp-diag {
+  background: var(--s2); border: .5px solid var(--b1);
+  border-radius: 16px; padding: 26px 22px; margin-bottom: 20px;
+}
+.lp-diag-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 500; margin-bottom: 5px; color: var(--text);
+}
+.lp-diag-sub {
+  font-size: 13px; color: var(--muted); margin-bottom: 18px; line-height: 1.6;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.lp-input-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.lp-input {
+  flex: 1; min-width: 170px;
+  background: var(--s3); border: .5px solid var(--b2);
+  border-radius: 10px; padding: 13px 15px;
+  font-size: 15px; color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none; transition: border-color .2s;
+}
+.lp-input::placeholder { color: var(--muted); }
+.lp-input:focus { border-color: var(--gold); }
+.lp-note { font-size: 11px; color: var(--muted); margin-top: 8px; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+/* Resultado inline */
+#lp-resultado { margin-top: 16px; }
+.lp-prog-wrap { margin: 14px 0 6px; }
+.lp-prog-msg { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.lp-prog-bar { height: 2px; background: var(--s3); border-radius: 2px; }
+.lp-prog-fill { height: 100%; border-radius: 2px; background: var(--gold); width: 0%; transition: width .5s; }
+.lp-error { background: rgba(192,57,43,.1); border: .5px solid rgba(192,57,43,.3); border-radius: 10px; padding: 12px 15px; font-size: 13px; color: #E8705F; font-family: 'Plus Jakarta Sans', sans-serif; }
+.lp-result-nombre { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.lp-result-nombre strong { color: var(--text); }
+.lp-callout {
+  background: rgba(201,168,76,.06); border: .5px solid var(--b2);
+  border-left: 3px solid var(--gold); border-radius: 10px;
+  padding: 14px 16px; font-size: 13px; color: var(--muted);
+  line-height: 1.7; margin: 12px 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.lp-callout strong { color: var(--gold); }
+
+/* CTA turno */
+.lp-cta {
+  background: var(--s2); border: .5px solid var(--b2);
+  border-radius: 16px; padding: 28px 24px;
+  text-align: center; margin-bottom: 20px;
+}
+.lp-free-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; color: #6DBF95;
+  background: rgba(74,155,111,.1); border: .5px solid rgba(74,155,111,.25);
+  border-radius: 20px; padding: 4px 12px; margin-bottom: 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.lp-cta h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 500; margin-bottom: 10px; color: var(--text);
+}
+.lp-cta p {
+  font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 22px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.lp-cta p strong { color: var(--text); font-weight: 500; }
+.lp-btn-turno {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; text-decoration: none;
+  background: var(--gold); color: #0E0C0A;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+  font-size: 15px; border: none; border-radius: 10px;
+  padding: 16px 22px; cursor: pointer;
+  transition: opacity .2s; margin-bottom: 10px;
+}
+.lp-btn-turno:hover { opacity: .85; }
+.lp-btn-wa {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; text-decoration: none;
+  background: transparent; color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;
+  font-size: 13px; border: .5px solid var(--b2); border-radius: 10px;
+  padding: 13px 22px; transition: border-color .2s, color .2s;
+}
+.lp-btn-wa:hover { border-color: #25D366; color: #25D366; }
+
+/* Garantías */
+.lp-garantias { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+.lp-garantia {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 13px; color: var(--muted); line-height: 1.5;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.lp-garantia i { color: var(--gold); font-size: 15px; margin-top: 1px; flex-shrink: 0; }
+
+/* Footer simple */
+.lp-footer {
+  border-top: .5px solid var(--b1); padding-top: 24px; margin-top: 40px;
+  font-size: 11px; color: var(--muted); line-height: 1.7; text-align: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.lp-footer a { color: var(--muted); text-decoration: none; }
+
+/* Anim */
+.lp-fade { animation: lpFade .3s ease both; }
+@keyframes lpFade { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+
+@media (max-width: 480px) {
+  .lp-wrap { padding: 0 16px 60px; }
+  .lp-nav  { margin-bottom: 30px; }
+  .lp-h1   { font-size: 26px; }
+  .lp-input-row { flex-direction: column; }
+  .lp-cta  { padding: 22px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="lp-wrap">
+
+  <nav class="lp-nav">
+    <div class="lp-nav-brand">TANGO</div>
+    <div class="lp-nav-tag">15 años · +5.000 casos</div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lp-eyebrow">
+    <span class="lp-eyebrow-dot"></span>
+    Ley 25.326 · Protección de Datos Personales
+  </div>
+
+  <h1 class="lp-h1">Tu deuda con más de 5 años puede <em>salir del Veraz</em></h1>
+
+  <p class="lp-hero-sub">
+    La ley argentina establece un plazo máximo de permanencia en las bases de riesgo crediticio.
+    Si tu deuda cumplió ese plazo, <strong>tenés derecho a solicitarlo</strong> — y nosotros gestionamos el proceso.
+    Una vez limpio el perfil, te acompañamos a acceder a financiamiento de hasta $10.000.000.
+  </p>
+
+  <div class="lp-ley">
+    <strong>Ley 25.326 — Art. 26:</strong> Los datos relativos al incumplimiento de obligaciones de contenido patrimonial solo pueden figurar en los registros por un plazo máximo de <strong>cinco años</strong> desde la fecha de la mora, independientemente de si la deuda fue cancelada o no.
+  </div>
+
+  <!-- PASOS -->
+  <p class="lp-sec-title">¿Cómo funciona?</p>
+  <ul class="lp-pasos">
+    <li class="lp-paso">
+      <div class="lp-paso-num">1</div>
+      <div>
+        <h3>Diagnóstico gratuito</h3>
+        <p>Consultamos tu situación en el BCRA y evaluamos si aplica la Ley 25.326 a tu caso. Sin costo, sin compromiso.</p>
+      </div>
+    </li>
+    <li class="lp-paso">
+      <div class="lp-paso-num">2</div>
+      <div>
+        <h3>Estrategia personalizada</h3>
+        <p>Un asesor analiza tu caso en detalle y diseña el camino más eficiente para eliminar los registros negativos.</p>
+      </div>
+    </li>
+    <li class="lp-paso">
+      <div class="lp-paso-num">3</div>
+      <div>
+        <h3>Gestión y seguimiento</h3>
+        <p>Nos encargamos de las gestiones ante las entidades. Una vez limpio el perfil, te asistimos para acceder a créditos de hasta $10.000.000.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="lp-div"></div>
+
+  <!-- DIAGNÓSTICO -->
+  <div class="lp-diag">
+    <div class="lp-diag-title">Verificá tu situación ahora</div>
+    <p class="lp-diag-sub">Ingresá tu CUIT o CUIL y en 30 segundos ves exactamente qué figura en el BCRA — gratis, sin registrarte.</p>
+    <div class="lp-input-row">
+      <input
+        id="cuit-lp"
+        class="lp-input"
+        type="tel"
+        inputmode="numeric"
+        placeholder="CUIT / CUIL (sin guiones)"
+        maxlength="11"
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter') lpVerificar()"
+      >
+      <button class="btn-consultar" onclick="lpVerificar()">Ver situación</button>
+    </div>
+    <p class="lp-note">No afecta tu score · Datos tratados con estricta confidencialidad (Ley 25.326)</p>
+    <div id="lp-resultado"></div>
+  </div>
+
+  <div class="lp-div"></div>
+
+  <!-- CTA TURNO -->
+  <div class="lp-cta">
+    <div class="lp-free-tag">
+      <i class="ti ti-circle-check"></i> Turno 100% gratuito
+    </div>
+    <h2>Hablá con un asesor</h2>
+    <p>
+      Evaluamos tu caso en detalle y te decimos exactamente qué se puede hacer.
+      <strong>Sin costo inicial. Sin compromisos.</strong>
+    </p>
+    <a href="/turnos.html" class="lp-btn-turno">
+      <i class="ti ti-calendar"></i>
+      Reservar turno gratuito
+    </a>
+    <a href="https://wa.me/5493435020970?text=Hola%2C%20quiero%20consultar%20si%20mi%20deuda%20puede%20salir%20del%20Veraz" target="_blank" rel="noopener" class="lp-btn-wa">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Consultá por WhatsApp
+    </a>
+  </div>
+
+  <!-- GARANTÍAS -->
+  <div class="lp-garantias">
+    <div class="lp-garantia">
+      <i class="ti ti-shield-check"></i>
+      <span>Gestión basada en la Ley 25.326 de Protección de Datos Personales — marco legal vigente en Argentina.</span>
+    </div>
+    <div class="lp-garantia">
+      <i class="ti ti-lock"></i>
+      <span>Consulta 100% confidencial. Tus datos no se comparten con terceros.</span>
+    </div>
+    <div class="lp-garantia">
+      <i class="ti ti-users"></i>
+      <span>Más de 15 años gestionando recuperación crediticia. +5.000 casos evaluados.</span>
+    </div>
+    <div class="lp-garantia">
+      <i class="ti ti-trending-up"></i>
+      <span>Una vez limpio el perfil, te acompañamos en la gestión de financiamiento de hasta $10.000.000.</span>
+    </div>
+  </div>
+
+  <footer class="lp-footer">
+    <p>© <span id="lp-yr"></span> TANGO Recuperación Financiera · <a href="/privacidad.html">Privacidad</a> · <a href="/terminos.html">Términos</a></p>
+    <p style="margin-top:8px">La información crediticia se obtiene de la Central de Deudores del BCRA (datos públicos). TANGO no es una entidad financiera ni otorga créditos. El resultado de cada gestión depende de la situación particular de cada caso.</p>
+  </footer>
+
+</div><!-- /lp-wrap -->
+
+<script>
+document.getElementById('lp-yr').textContent = new Date().getFullYear();
+
+var API = "https://script.google.com/macros/s/AKfycbw0HjM7_HzP3aX6Ye2AMGF21QtUyefO8CQf_hjiNHHBOp3e77-g5RjkZD9llRHheWTC/exec";
+
+var SITS = {
+  1:{lbl:'Al día',          dot:'#4A9B6F', cls:'s1c'},
+  2:{lbl:'Seg. especial',   dot:'#C9A84C', cls:'s2c'},
+  3:{lbl:'Con problemas',   dot:'#BA7517', cls:'s3c'},
+  4:{lbl:'Alto riesgo',     dot:'#C0392B', cls:'s4c'},
+  5:{lbl:'Irrecuperable',   dot:'#A32D2D', cls:'s5c'},
+  6:{lbl:'En quiebra',      dot:'#5A5552', cls:'s6c'}
+};
+function si(n){ return SITS[n]||{lbl:'Situación '+n,dot:'#5A5552',cls:'s6c'}; }
+function fmt(n){ return '$'+Math.round(n*1000).toLocaleString('es-AR'); }
+
+function lpVerificar() {
+  var cuit = document.getElementById('cuit-lp').value.replace(/\D/g,'').slice(0,11);
+  var out  = document.getElementById('lp-resultado');
+  if (!cuit || cuit.length < 10) {
+    out.innerHTML = '<p class="lp-error" style="margin-top:12px">Ingresá un CUIT o CUIL válido (10 u 11 dígitos).</p>';
+    return;
+  }
+  out.innerHTML = '<div class="lp-prog-wrap"><p class="lp-prog-msg">Consultando el BCRA...</p><div class="lp-prog-bar"><div class="lp-prog-fill" id="lp-fill"></div></div></div>';
+  var fill = document.getElementById('lp-fill');
+  var pct  = 5;
+  var iv   = setInterval(function(){ pct = Math.min(pct+12,85); fill.style.width=pct+'%'; }, 700);
+
+  var cb = 'lpCb_'+Date.now();
+  window[cb] = function(data) {
+    delete window[cb];
+    var s=document.getElementById('lp-scr'); if(s) s.remove();
+    clearInterval(iv); fill.style.width='100%';
+    setTimeout(function(){ lpRender(data,out); }, 400);
+  };
+  var s = document.createElement('script');
+  s.id  = 'lp-scr';
+  s.src = API+'?cuit='+encodeURIComponent(cuit)+'&callback='+cb+'&origen='+encodeURIComponent('https://estudiotango.com/veraz');
+  s.onerror = function(){ clearInterval(iv); out.innerHTML='<p class="lp-error" style="margin-top:12px">No se pudo conectar. Intentá de nuevo.</p>'; };
+  document.body.appendChild(s);
+}
+
+function lpRender(json, out) {
+  if (!json.ok) {
+    out.innerHTML = '<p class="lp-error" style="margin-top:12px">'+(json.error||'Error al consultar. Intentá de nuevo.')+'</p>';
+    return;
+  }
+  var d    = json.actual.results;
+  var allE = (d.periodos||[]).flatMap(function(p){ return p.entidades; });
+  var peor = allE.reduce(function(m,e){ return Math.max(m,e.situacion); },1);
+  var total= allE.reduce(function(s,e){ return s+e.monto; },0);
+  var cant = allE.length;
+  var info = si(peor);
+
+  var hPer = (json.historica&&json.historica.results&&json.historica.results.periodos)||[];
+  var pers  = hPer.map(function(p){ return String(p.periodo); }).sort();
+  var masAntiguo = pers[0]||'';
+  var anioAnt    = masAntiguo ? parseInt(masAntiguo.slice(0,4)) : null;
+  var posibleLey = anioAnt && ((new Date().getFullYear()) - anioAnt) >= 5;
+
+  var html = '<div class="lp-fade" style="margin-top:14px">';
+  html += '<p class="lp-result-nombre"><strong>'+d.denominacion+'</strong> · CUIT '+d.identificacion+'</p>';
+  html += '<span class="badge '+info.cls+'" style="margin-bottom:12px;display:inline-flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:'+info.dot+';display:inline-block"></span>Situación '+peor+' — '+info.lbl+'</span>';
+
+  if (cant > 0) {
+    html += '<div class="score-strip" style="margin-bottom:12px">';
+    html += '<div class="score-box"><div class="score-val" style="color:'+info.dot+'">'+peor+'</div><div class="score-lbl">Situación BCRA</div></div>';
+    html += '<div class="score-box"><div class="score-val" style="color:var(--gold)">'+fmt(total)+'</div><div class="score-lbl">Exposición total</div><div class="score-sub">'+cant+' entidad'+(cant!==1?'es':'')+'</div></div>';
+    if (anioAnt) html += '<div class="score-box"><div class="score-val" style="font-size:1.1rem">'+anioAnt+'</div><div class="score-lbl">Registro más antiguo</div></div>';
+    html += '</div>';
+  }
+
+  if (peor === 1 && cant === 0) {
+    html += '<div class="lp-callout">Tu perfil en el BCRA aparece <strong>sin deudas activas</strong>. Igualmente, los bancos cruzan otras bases antes de aprobar. Un asesor puede revisar el cuadro completo y ayudarte a acceder a financiamiento.</div>';
+  } else if (posibleLey) {
+    html += '<div class="lp-callout"><strong>Tu caso podría aplicar a la Ley 25.326.</strong> Tenés registros con más de 5 años de antigüedad — eso es exactamente lo que gestionamos. Reservá un turno gratuito para confirmarlo.</div>';
+  } else {
+    html += '<div class="lp-callout">Tu perfil tiene registros activos. Dependiendo de la fecha y el tipo de deuda, pueden existir opciones legales. Reservá un turno gratuito para que un asesor evalúe tu caso.</div>';
+  }
+
+  html += '<a href="/turnos.html" class="lp-btn-turno" style="text-decoration:none;margin-top:4px"><i class="ti ti-calendar"></i> Reservar turno gratuito</a>';
+  html += '</div>';
+  out.innerHTML = html;
+  out.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+</script>
+</body>
+</html>
