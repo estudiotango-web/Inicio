@@ -377,28 +377,29 @@ function renderizar(json) {
   var diagClass, diagIcon, diagRating, diagDesc, urgMsg, urgSub;
 
   if (peor <= 2) {
-    diagClass  = "alto";
-    diagIcon   = '<i class="ti ti-trending-up" style="color:#6DBF95" aria-hidden="true"></i>';
-    diagRating = "TU BCRA NO MUESTRA ALERTAS ACTIVAS — IGUAL PODEMOS OPTIMIZAR TU PERFIL";
-    diagDesc   = "Un resultado limpio en el BCRA es una buena señal, pero los bancos cruzan hasta seis bases distintas antes de aprobar un crédito. Si te rechazaron o querés mejorar las condiciones de acceso, un asesor puede identificar exactamente dónde está la oportunidad.";
-    urgMsg     = 'Un informe sin alertas <em>no garantiza acceso al crédito ni las mejores condiciones.</em>';
-    urgSub     = 'Veraz, Nosis, Equifax y el historial interno de cada entidad también cuentan. Si querés saber cómo estás en el cuadro completo — o ya tenés en mente acceder a un préstamo de hasta $6.000.000 — un asesor puede orientarte sin costo.';
-  } else if (peor <= 4) {
-    diagClass  = "moderado";
-    diagIcon   = '<i class="ti ti-chart-line" style="color:#E2C16A" aria-hidden="true"></i>';
-    diagRating = "TU PERFIL TIENE REGISTROS NEGATIVOS — VERIFICÁ SI YA PUEDEN ELIMINARSE";
-    diagDesc   = "Estos registros aparecen cuando un banco o financiera te evalúa. Si tienen más de 5 años de antigüedad, la Ley 25.326 te da el derecho a solicitar su eliminación. En muchos casos el trámite se resuelve en 60 a 90 días — sin gastos iniciales.";
-    urgMsg     = 'Cada mes que pasa sin gestionar <em>puede ser un mes más que espera tu acceso al crédito.</em>';
-    urgSub     = 'Un asesor verifica si la antigüedad de tus registros habilita la eliminación por Ley 25.326, diseña la estrategia y gestiona el trámite por vos. La consulta es gratuita y sin compromisos. Si aplica la ley, avanzamos — sin gastos iniciales.';
-  } else {
-    diagClass  = "requiere";
-    diagIcon   = '<i class="ti ti-eye" style="color:#E8705F" aria-hidden="true"></i>';
-    diagRating = "TU PERFIL REQUIERE ATENCIÓN PROFESIONAL — LA LEY 25.326 PUEDE APLICAR";
-    diagDesc   = "Una situación como la tuya tiene más variables de las que muestra este informe. Si las deudas superan los 5 años de mora, la Ley 25.326 te da el derecho a que sean eliminadas del Veraz y el BCRA. Lo que determina qué opciones tenés es un análisis profesional de tu caso específico.";
-    urgMsg     = 'Esperar no mejora este tipo de situación. <em>La ley tiene plazos y conviene actuar.</em>';
-    urgSub     = 'Con el tiempo algunos registros se agravan, se acumulan intereses o se generan nuevos antecedentes. Cuanto antes se evalúa, más opciones hay. La consulta es gratuita — en 30 minutos sabés si podés eliminar tus deudas y acceder a un préstamo de hasta $6.000.000.';
-  }
+  diagClass  = "alto";
+  diagIcon   = '<i class="ti ti-trending-up" style="color:#6DBF95" aria-hidden="true"></i>';
+  diagRating = "TU BCRA NO MUESTRA ALERTAS — PERO HAY OTRAS BASES QUE LOS BANCOS REVISAN";
+  diagDesc   = "Un resultado limpio en el BCRA es una buena señal, pero Veraz, Nosis, Fidelitas, Riesgo Online y los informes provinciales también se consultan al evaluarte. Incluso una deuda ya pagada puede seguir figurando ahí por error. Un asesor puede revisar el cuadro completo.";
+  urgMsg     = 'Un BCRA limpio <em>no garantiza que estés limpio en todas las bases.</em>';
+  urgSub     = 'Si te rechazaron un crédito o te ofrecieron condiciones peores a las esperadas, puede haber algo en Veraz, Nosis u otra base que el BCRA no muestra. La consulta es gratuita — en 30 minutos un asesor te dice si hay algo para corregir y cómo acceder a un préstamo de hasta $6.000.000.';
+} else if (peor <= 4) {
+  diagClass  = "moderado";
+  diagIcon   = '<i class="ti ti-chart-line" style="color:#E2C16A" aria-hidden="true"></i>';
+  diagRating = "TU PERFIL TIENE REGISTROS NEGATIVOS — PUEDEN SER ELIMINABLES";
+  diagDesc   = "Si estos registros tienen más de 5 años de antigüedad, la Ley 25.326 te da el derecho a que se eliminen de Veraz, Nosis, BCRA y otras bases. Y si ya pagaste alguna de estas deudas, no debería seguir informada después de 2 años. En ambos casos, el trámite es sin gastos iniciales.";
+  urgMsg     = 'Cada mes que pasa sin gestionar <em>puede ser un mes más esperando tu acceso al crédito.</em>';
+  urgSub     = 'Un asesor revisa la antigüedad de cada registro, si corresponde a una deuda paga o impaga, y en qué bases figura. Si es eliminable, lo gestionamos. Si no, conseguimos la certificación para un préstamo unificador. La consulta es gratuita y sin compromisos.';
+} else {
+  diagClass  = "requiere";
+  diagIcon   = '<i class="ti ti-eye" style="color:#E8705F" aria-hidden="true"></i>';
+  diagRating = "TU PERFIL REQUIERE ATENCIÓN PROFESIONAL — HAY VARIAS VÍAS POSIBLES";
+  diagDesc   = "Una situación como la tuya tiene más variables de las que muestra este informe. Puede haber registros con más de 5 años, deudas pagas que siguen figurando, o información en Veraz, Nosis u otras bases que no aparece acá. Sea cual sea tu caso, hay un camino — eliminación legal o certificación para préstamo unificador.";
+  urgMsg     = 'Esperar no mejora este tipo de situación. <em>Cuanto antes se evalúa, más opciones hay sobre la mesa.</em>';
+  urgSub     = 'Con el tiempo algunos registros se agravan, se acumulan intereses o se generan nuevos antecedentes. La consulta es gratuita — en 30 minutos un asesor revisa tu caso completo y te dice exactamente qué se puede hacer, incluyendo el acceso a un préstamo de hasta $6.000.000.';
+}
 
+   
   var html = "";
 
   /* ── Diagnóstico ── */
