@@ -373,6 +373,58 @@ a { color: var(--accent); }
 .empty-state p { margin: 0 0 16px; }
 
 /* ============================================================================
+   EMBEBIDO DEL SITIO OFICIAL
+   ============================================================================ */
+.oficial-embed {
+  margin: 24px 0;
+}
+
+.oficial-embed-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.oficial-embed-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  max-width: 460px;
+}
+
+.oficial-iframe-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+#iframe-oficial {
+  width: 100%;
+  height: 70vh;
+  min-height: 480px;
+  border: 0;
+  display: block;
+  background: #fff;
+}
+
+.oficial-embed-fallback-hint {
+  margin: 12px 0 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+#btn-nueva-consulta {
+  display: block;
+  margin: 16px auto 0;
+}
+
+/* ============================================================================
    RESULTADOS
    ============================================================================ */
 .resultados-header {
@@ -616,36 +668,34 @@ a { color: var(--accent); }
 
   <section id="mensaje-error" class="alert alert-error is-hidden" role="alert" aria-live="assertive"></section>
 
-  <section id="loading" class="loading-state is-hidden" aria-live="polite">
-    <span class="loading-dot"></span>
-    <span class="loading-dot"></span>
-    <span class="loading-dot"></span>
-    <span class="loading-text">Buscando infracciones…</span>
-  </section>
+  <section id="oficial-embed" class="oficial-embed is-hidden" aria-live="polite">
 
-  <section id="resultados" class="resultados is-hidden" aria-live="polite">
-
-    <div class="resultados-header">
-      <div>
-        <p class="resultados-consulta" id="resultados-consulta"></p>
-        <p class="resultados-total" id="resultados-total"></p>
-      </div>
-      <button type="button" class="btn-secondary" id="btn-nueva-consulta">Nueva consulta</button>
+    <div class="oficial-embed-bar">
+      <p class="oficial-embed-note">
+        La consulta se hace directamente en el sitio oficial. Completá el
+        reCAPTCHA ahí abajo para ver el resultado.
+      </p>
+      <a id="link-oficial" class="btn-secondary" href="https://monitoreovialentrerios.info/#/consulta-infracciones" target="_blank" rel="noopener noreferrer">
+        Abrir en pestaña nueva ↗
+      </a>
     </div>
 
-    <div id="lista-infracciones" class="lista-infracciones"></div>
-
-    <div class="paginacion is-hidden" id="paginacion">
-      <button type="button" class="btn-page" id="btn-anterior">← Anterior</button>
-      <span class="paginacion-info" id="paginacion-info"></span>
-      <button type="button" class="btn-page" id="btn-siguiente">Siguiente →</button>
+    <div class="oficial-iframe-wrap">
+      <iframe
+        id="iframe-oficial"
+        title="Consulta oficial — Monitoreo Vial Entre Ríos"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
     </div>
 
-  </section>
+    <p class="oficial-embed-fallback-hint">
+      ¿No ves el formulario cargado arriba? El sitio oficial no permite ser
+      embebido en otras páginas — usá el botón "Abrir en pestaña nueva".
+    </p>
 
-  <section id="sin-resultados" class="empty-state is-hidden" aria-live="polite">
-    <p>No se encontraron infracciones para la consulta realizada.</p>
-    <button type="button" class="btn-secondary" id="btn-nueva-consulta-vacio">Nueva consulta</button>
+    <button type="button" class="btn-secondary" id="btn-nueva-consulta">Nueva consulta</button>
+
   </section>
 
 </main>
@@ -665,15 +715,24 @@ a { color: var(--accent); }
 /**
  * ============================================================================
  * CONSULTA DE INFRACCIONES VIALES - ENTRE RÍOS
- * Frontend (vanilla JS) — se comunica exclusivamente con el Web App de
- * Google Apps Script. NUNCA llama directamente a la API de Monitoreo Vial.
+ * Frontend (vanilla JS).
  * ============================================================================
+ *
+ * IMPORTANTE — POR QUÉ NO HAY BACKEND ACÁ:
+ * La API de Monitoreo Vial ER solo acepta peticiones que declaren venir de
+ * su propio frontend (valida Origin/Referer). No existe una API pública
+ * alternativa (se investigó el portal nacional SINAI y el portal de datos
+ * abiertos; ninguno cubre esta consulta puntual por patente/acta). Por eso
+ * este sitio NO hace de proxy automático: valida el formato del dato
+ * ingresado y ayuda a hacer la consulta directamente contra el sitio
+ * oficial, embebido en un iframe cuando es posible, con un link de
+ * respaldo siempre visible por si el sitio oficial no permite ser
+ * embebido (X-Frame-Options). Todo el reCAPTCHA y la consulta en sí los
+ * resuelve el propio usuario, con su navegador, contra el sitio oficial.
  */
 
 const CONFIG = {
-  // Pegá acá la URL /exec de tu Web App de Google Apps Script.
-  // Ejemplo: 'https://script.google.com/macros/s/AKfycb.../exec'
-  API_URL: 'https://script.google.com/macros/s/AKfycbyIGZX8NIojtmuu33lwYWjRmfLXNTTfq-I9NAcNHxXP_Qfq24vPYCsGYO6SubfOMwIy/exec'
+  URL_OFICIAL: 'https://monitoreovialentrerios.info/#/consulta-infracciones'
 };
 
 // ============================================================================
@@ -681,10 +740,7 @@ const CONFIG = {
 // ============================================================================
 
 const state = {
-  tipo: 'dominio',
-  valorActual: '',
-  paginaActual: 1,
-  ultimaRespuesta: null
+  tipo: 'dominio'
 };
 
 // ============================================================================
@@ -701,18 +757,10 @@ const el = {
   form: document.getElementById('consulta-form'),
   btnConsultar: document.getElementById('btn-consultar'),
   mensajeError: document.getElementById('mensaje-error'),
-  loading: document.getElementById('loading'),
-  resultados: document.getElementById('resultados'),
-  resultadosConsulta: document.getElementById('resultados-consulta'),
-  resultadosTotal: document.getElementById('resultados-total'),
-  listaInfracciones: document.getElementById('lista-infracciones'),
-  sinResultados: document.getElementById('sin-resultados'),
-  paginacion: document.getElementById('paginacion'),
-  paginacionInfo: document.getElementById('paginacion-info'),
-  btnAnterior: document.getElementById('btn-anterior'),
-  btnSiguiente: document.getElementById('btn-siguiente'),
-  btnNuevaConsulta: document.getElementById('btn-nueva-consulta'),
-  btnNuevaConsultaVacio: document.getElementById('btn-nueva-consulta-vacio')
+  oficialEmbed: document.getElementById('oficial-embed'),
+  iframeOficial: document.getElementById('iframe-oficial'),
+  linkOficial: document.getElementById('link-oficial'),
+  btnNuevaConsulta: document.getElementById('btn-nueva-consulta')
 };
 
 // ============================================================================
@@ -765,6 +813,12 @@ function validarActa(valor) {
 // ============================================================================
 // ENVÍO DEL FORMULARIO
 // ============================================================================
+//
+// Este sitio NO consulta la API de Monitoreo Vial por sí mismo. Solo valida
+// el formato de lo que el usuario ingresó (para avisarle antes de un typo
+// evidente) y después carga la consulta oficial embebida, o lista para
+// abrir en pestaña nueva. Quien resuelve el reCAPTCHA y hace la consulta
+// real es el propio usuario, contra el sitio oficial.
 
 el.form.addEventListener('submit', (ev) => {
   ev.preventDefault();
@@ -775,7 +829,7 @@ el.form.addEventListener('submit', (ev) => {
     : el.inputActa.value.trim();
 
   if (!valor) {
-    mostrarError('Ingresá un valor para poder consultar.');
+    mostrarError('Ingresá un valor para continuar.');
     return;
   }
 
@@ -789,250 +843,21 @@ el.form.addEventListener('submit', (ev) => {
     return;
   }
 
-  if (CONFIG.API_URL.indexOf('PEGAR_AQUI') !== -1) {
-    mostrarError('Falta configurar la URL del backend en app.js (CONFIG.API_URL).');
-    return;
-  }
-
-  state.valorActual = valor;
-  state.paginaActual = 1;
-  ejecutarConsulta();
+  mostrarConsultaOficial();
 });
-
-// ============================================================================
-// LLAMADA AL BACKEND (Google Apps Script) — JSONP
-// ============================================================================
-//
-// Estrategia de CORS elegida: JSONP.
-// Un Web App de Apps Script no garantiza el header
-// "Access-Control-Allow-Origin" en su respuesta, así que un fetch() común
-// entre orígenes distintos (por ejemplo GitHub Pages o un dominio propio
-// llamando a script.google.com) puede ser bloqueado por el navegador,
-// incluso siendo un GET simple. JSONP evita el problema por completo: en
-// vez de pedir el dato con fetch/XHR, se inserta un <script src="..."> que
-// apunta al Web App con un parámetro "callback". El navegador carga y
-// ejecuta ese script como JavaScript normal —sin ninguna restricción de
-// CORS, porque no es una petición fetch/XHR— y el backend responde con
-// "callback(JSON_DE_DATOS)" en vez de JSON puro.
-//
-// Limitaciones de JSONP (por eso solo se usa así):
-// - Solo sirve para lectura de datos NO sensibles (acá no hay cookies,
-//   sesión ni credenciales de por medio).
-// - El nombre de función de callback se genera del lado del cliente y se
-//   valida estrictamente en el backend (solo letras/números/guion bajo)
-//   para evitar inyección de código.
-// - No admite POST: por eso todo el flujo usa GET.
-
-async function ejecutarConsulta() {
-  mostrarCargando(true);
-  ocultarError();
-  ocultarResultados();
-  ocultarVacio();
-
-  const url = construirURL();
-
-  try {
-    const data = await jsonpRequest(url);
-    state.ultimaRespuesta = data;
-
-    if (!data.success) {
-      mostrarError(data.error || 'No se pudo completar la consulta.');
-      return;
-    }
-
-    if (!data.infracciones || data.infracciones.length === 0) {
-      mostrarVacio();
-      return;
-    }
-
-    renderizarResultados(data);
-
-  } catch (err) {
-    mostrarError('No se pudo conectar con el servicio. Verificá tu conexión e intentá nuevamente.');
-  } finally {
-    mostrarCargando(false);
-  }
-}
-
-function construirURL() {
-  const params = new URLSearchParams({
-    tipo: state.tipo,
-    valor: state.valorActual,
-    page: String(state.paginaActual)
-  });
-  return CONFIG.API_URL + '?' + params.toString();
-}
 
 /**
- * Ejecuta una petición JSONP contra baseUrl, agregando un parámetro
- * "callback" único. Devuelve una Promise que resuelve con el objeto JSON
- * ya parseado (Apps Script lo entrega envuelto en la llamada al callback).
+ * Carga la consulta oficial: intenta embeberla en el iframe y deja el link
+ * de respaldo siempre visible (por si el sitio oficial bloquea ser
+ * embebido vía X-Frame-Options — algo que no se puede detectar de forma
+ * confiable con JavaScript, así que el link no depende de esa detección).
  */
-function jsonpRequest(baseUrl) {
-  return new Promise((resolve, reject) => {
-    const callbackName = 'jsonpCb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
-    const script = document.createElement('script');
-    let resuelto = false;
-
-    const limpiar = () => {
-      delete window[callbackName];
-      if (script.parentNode) script.parentNode.removeChild(script);
-      clearTimeout(timeoutId);
-    };
-
-    window[callbackName] = (data) => {
-      resuelto = true;
-      limpiar();
-      resolve(data);
-    };
-
-    const timeoutId = setTimeout(() => {
-      if (!resuelto) {
-        limpiar();
-        reject(new Error('Tiempo de espera agotado'));
-      }
-    }, 15000);
-
-    script.onerror = () => {
-      if (!resuelto) {
-        limpiar();
-        reject(new Error('Error al cargar el recurso'));
-      }
-    };
-
-    const separador = baseUrl.indexOf('?') !== -1 ? '&' : '?';
-    script.src = baseUrl + separador + 'callback=' + callbackName;
-    document.body.appendChild(script);
-  });
+function mostrarConsultaOficial() {
+  el.iframeOficial.src = CONFIG.URL_OFICIAL;
+  el.linkOficial.href = CONFIG.URL_OFICIAL;
+  el.oficialEmbed.classList.remove('is-hidden');
+  el.oficialEmbed.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-
-// ============================================================================
-// RENDERIZADO DE RESULTADOS
-// ============================================================================
-
-function renderizarResultados(data) {
-  el.resultadosConsulta.textContent = data.consulta;
-  el.resultadosTotal.textContent =
-    data.total + (data.total === 1 ? ' infracción encontrada' : ' infracciones encontradas') +
-    (data.montoTotal ? ' — Total: ' + formatearMonto(data.montoTotal) : '');
-
-  el.listaInfracciones.innerHTML = '';
-  data.infracciones.forEach((inf) => {
-    el.listaInfracciones.appendChild(crearTarjetaInfraccion(inf));
-  });
-
-  actualizarPaginacion(data);
-
-  el.resultados.classList.remove('is-hidden');
-}
-
-function crearTarjetaInfraccion(inf) {
-  const card = document.createElement('article');
-  card.className = 'infraccion-card';
-
-  const top = document.createElement('div');
-  top.className = 'infraccion-top';
-
-  const acta = document.createElement('span');
-  acta.className = 'infraccion-acta';
-  acta.textContent = 'Acta ' + (inf.num_acta || '—');
-
-  const badge = document.createElement('span');
-  badge.className = 'badge ' + claseEstado(inf.estado);
-  badge.textContent = inf.estado || 'SIN ESTADO';
-
-  top.appendChild(acta);
-  top.appendChild(badge);
-  card.appendChild(top);
-
-  const grid = document.createElement('div');
-  grid.className = 'infraccion-grid';
-
-  const campos = [
-    ['Dominio', inf.dominio],
-    ['Fecha', formatearFecha(inf.fecha_infraccion)],
-    ['Hora', inf.hora_infraccion],
-    ['Vencimiento', formatearFecha(inf.vto1)],
-    ['Vel. máxima', inf.vel_max],
-    ['Vel. medida', inf.velocidad_medida],
-    ['Lugar', inf.zona, true],
-    ['Multa', formatearMonto(inf.multa)],
-    ['Importe voluntario', formatearMonto(inf.importe_voluntario)],
-    ['Pago online', inf.pago_online]
-  ];
-
-  campos.forEach(([label, valor, full]) => {
-    if (valor === undefined || valor === null || valor === '') return;
-    grid.appendChild(crearCampo(label, valor, full));
-  });
-
-  const montoField = crearCampo('A pagar', formatearMonto(inf.monto_a_pagar), true);
-  montoField.classList.add('monto-destacado');
-  grid.appendChild(montoField);
-
-  card.appendChild(grid);
-  return card;
-}
-
-function crearCampo(label, valor, full) {
-  const wrap = document.createElement('div');
-  wrap.className = 'infraccion-field' + (full ? ' full' : '');
-
-  const lbl = document.createElement('span');
-  lbl.className = 'label';
-  lbl.textContent = label;
-
-  const val = document.createElement('span');
-  val.className = 'value';
-  val.textContent = String(valor);
-
-  wrap.appendChild(lbl);
-  wrap.appendChild(val);
-  return wrap;
-}
-
-function claseEstado(estado) {
-  if (!estado) return 'badge-default';
-  const e = estado.toUpperCase();
-  if (e.indexOf('IMPAGA') !== -1) return 'badge-impaga';
-  if (e.indexOf('PAGADA') !== -1) return 'badge-pagada';
-  if (e.indexOf('CONVENIO') !== -1) return 'badge-convenio';
-  return 'badge-default';
-}
-
-// ============================================================================
-// PAGINACIÓN
-// ============================================================================
-
-function actualizarPaginacion(data) {
-  const lastPage = data.last_page || 1;
-  const currentPage = data.current_page || 1;
-
-  if (lastPage <= 1) {
-    el.paginacion.classList.add('is-hidden');
-    return;
-  }
-
-  el.paginacion.classList.remove('is-hidden');
-  el.paginacionInfo.textContent = 'Página ' + currentPage + ' de ' + lastPage;
-  el.btnAnterior.disabled = currentPage <= 1;
-  el.btnSiguiente.disabled = currentPage >= lastPage;
-}
-
-el.btnAnterior.addEventListener('click', () => {
-  if (state.paginaActual > 1) {
-    state.paginaActual -= 1;
-    ejecutarConsulta();
-  }
-});
-
-el.btnSiguiente.addEventListener('click', () => {
-  const lastPage = (state.ultimaRespuesta && state.ultimaRespuesta.last_page) || 1;
-  if (state.paginaActual < lastPage) {
-    state.paginaActual += 1;
-    ejecutarConsulta();
-  }
-});
 
 // ============================================================================
 // NUEVA CONSULTA
@@ -1041,24 +866,16 @@ el.btnSiguiente.addEventListener('click', () => {
 function reiniciarFormulario() {
   el.inputDominio.value = '';
   el.inputActa.value = '';
-  ocultarResultados();
-  ocultarVacio();
+  el.iframeOficial.src = 'about:blank';
+  el.oficialEmbed.classList.add('is-hidden');
   ocultarError();
-  state.paginaActual = 1;
 }
 
 el.btnNuevaConsulta.addEventListener('click', reiniciarFormulario);
-el.btnNuevaConsultaVacio.addEventListener('click', reiniciarFormulario);
 
 // ============================================================================
 // HELPERS DE UI
 // ============================================================================
-
-function mostrarCargando(mostrar) {
-  el.loading.classList.toggle('is-hidden', !mostrar);
-  el.btnConsultar.classList.toggle('is-loading', mostrar);
-  el.btnConsultar.disabled = mostrar;
-}
 
 function mostrarError(texto) {
   el.mensajeError.textContent = texto;
@@ -1068,37 +885,6 @@ function mostrarError(texto) {
 function ocultarError() {
   el.mensajeError.classList.add('is-hidden');
   el.mensajeError.textContent = '';
-}
-
-function ocultarResultados() {
-  el.resultados.classList.add('is-hidden');
-}
-
-function mostrarVacio() {
-  el.sinResultados.classList.remove('is-hidden');
-}
-
-function ocultarVacio() {
-  el.sinResultados.classList.add('is-hidden');
-}
-
-// ============================================================================
-// FORMATO
-// ============================================================================
-
-function formatearMonto(valor) {
-  if (valor === undefined || valor === null || valor === '') return '—';
-  const num = Number(valor);
-  if (isNaN(num)) return String(valor);
-  return '$ ' + num.toLocaleString('es-AR');
-}
-
-function formatearFecha(fechaISO) {
-  if (!fechaISO) return '—';
-  const partes = String(fechaISO).split('-');
-  if (partes.length !== 3) return fechaISO;
-  const [anio, mes, dia] = partes;
-  return dia + '/' + mes + '/' + anio;
 }
 
 </script>
