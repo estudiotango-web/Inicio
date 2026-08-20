@@ -671,7 +671,8 @@ a { color: var(--accent); }
  */
 
 const CONFIG = {
-  
+  // Pegá acá la URL /exec de tu Web App de Google Apps Script.
+  // Ejemplo: 'https://script.google.com/macros/s/AKfycb.../exec'
   API_URL: 'https://script.google.com/macros/s/AKfycbyIGZX8NIojtmuu33lwYWjRmfLXNTTfq-I9NAcNHxXP_Qfq24vPYCsGYO6SubfOMwIy/exec'
 };
 
@@ -799,16 +800,28 @@ el.form.addEventListener('submit', (ev) => {
 });
 
 // ============================================================================
-// LLAMADA AL BACKEND (Google Apps Script)
+// LLAMADA AL BACKEND (Google Apps Script) — JSONP
 // ============================================================================
 //
-// Estrategia de CORS elegida: fetch() GET directo contra el Web App de
-// Apps Script (ver README para el análisis completo). Un GET con solo
-// parámetros en la query string es una "solicitud simple" para el
-// navegador: no dispara preflight OPTIONS (que Apps Script no maneja) y
-// la respuesta final de Apps Script —tras el redirect interno a
-// script.googleusercontent.com— sí puede leerse desde JavaScript en
-// GitHub Pages. Es el mecanismo más confiable para este combo.
+// Estrategia de CORS elegida: JSONP.
+// Un Web App de Apps Script no garantiza el header
+// "Access-Control-Allow-Origin" en su respuesta, así que un fetch() común
+// entre orígenes distintos (por ejemplo GitHub Pages o un dominio propio
+// llamando a script.google.com) puede ser bloqueado por el navegador,
+// incluso siendo un GET simple. JSONP evita el problema por completo: en
+// vez de pedir el dato con fetch/XHR, se inserta un <script src="..."> que
+// apunta al Web App con un parámetro "callback". El navegador carga y
+// ejecuta ese script como JavaScript normal —sin ninguna restricción de
+// CORS, porque no es una petición fetch/XHR— y el backend responde con
+// "callback(JSON_DE_DATOS)" en vez de JSON puro.
+//
+// Limitaciones de JSONP (por eso solo se usa así):
+// - Solo sirve para lectura de datos NO sensibles (acá no hay cookies,
+//   sesión ni credenciales de por medio).
+// - El nombre de función de callback se genera del lado del cliente y se
+//   valida estrictamente en el backend (solo letras/números/guion bajo)
+//   para evitar inyección de código.
+// - No admite POST: por eso todo el flujo usa GET.
 
 async function ejecutarConsulta() {
   mostrarCargando(true);
@@ -819,13 +832,7 @@ async function ejecutarConsulta() {
   const url = construirURL();
 
   try {
-    const response = await fetch(url, { method: 'GET' });
-
-    if (!response.ok) {
-      throw new Error('HTTP ' + response.status);
-    }
-
-    const data = await response.json();
+    const data = await jsonpRequest(url);
     state.ultimaRespuesta = data;
 
     if (!data.success) {
@@ -854,6 +861,49 @@ function construirURL() {
     page: String(state.paginaActual)
   });
   return CONFIG.API_URL + '?' + params.toString();
+}
+
+/**
+ * Ejecuta una petición JSONP contra baseUrl, agregando un parámetro
+ * "callback" único. Devuelve una Promise que resuelve con el objeto JSON
+ * ya parseado (Apps Script lo entrega envuelto en la llamada al callback).
+ */
+function jsonpRequest(baseUrl) {
+  return new Promise((resolve, reject) => {
+    const callbackName = 'jsonpCb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+    const script = document.createElement('script');
+    let resuelto = false;
+
+    const limpiar = () => {
+      delete window[callbackName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+      clearTimeout(timeoutId);
+    };
+
+    window[callbackName] = (data) => {
+      resuelto = true;
+      limpiar();
+      resolve(data);
+    };
+
+    const timeoutId = setTimeout(() => {
+      if (!resuelto) {
+        limpiar();
+        reject(new Error('Tiempo de espera agotado'));
+      }
+    }, 15000);
+
+    script.onerror = () => {
+      if (!resuelto) {
+        limpiar();
+        reject(new Error('Error al cargar el recurso'));
+      }
+    };
+
+    const separador = baseUrl.indexOf('?') !== -1 ? '&' : '?';
+    script.src = baseUrl + separador + 'callback=' + callbackName;
+    document.body.appendChild(script);
+  });
 }
 
 // ============================================================================
