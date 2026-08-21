@@ -1300,3 +1300,113 @@ details.faq-item summary:hover{color:var(--gold2)}
   fill: #25D366;
   flex-shrink: 0;
 }
+/* ═══════════════════════════════════════
+   BADGE FLOTANTE — NUEVO SERVICIO MULTAS
+═══════════════════════════════════════ */
+.badge-multas-wrap{
+  position:fixed;
+  bottom:24px;
+  left:24px;
+  z-index:8500;
+  animation:badgeMultasIn .5s cubic-bezier(.22,1,.36,1) .6s both;
+}
+
+.badge-multas{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:linear-gradient(135deg,var(--s1),rgba(22,16,16,.97));
+  border:.5px solid rgba(201,168,76,.22);
+  border-radius:14px;
+  padding:10px 16px 10px 12px;
+  text-decoration:none;
+  box-shadow:0 8px 28px rgba(0,0,0,.4),0 0 0 .5px rgba(201,168,76,.06) inset;
+  transition:transform .2s ease, border-color .2s ease;
+}
+.badge-multas:hover{
+  transform:translateY(-2px);
+  border-color:rgba(201,168,76,.4);
+}
+
+.badge-multas-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold2);
+  flex-shrink:0;
+  box-shadow:0 0 0 0 rgba(226,193,106,.55);
+  animation:badgeMultasPulse 2.4s ease-out infinite;
+}
+
+.badge-multas-copy{
+  display:flex;
+  flex-direction:column;
+  line-height:1.25;
+}
+.badge-multas-tag{
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+}
+.badge-multas-title{
+  font-family:var(--serif);
+  font-size:.9rem;
+  font-weight:600;
+  color:var(--text);
+}
+
+.badge-multas-close{
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  width:20px;height:20px;
+  border-radius:50%;
+  background:var(--s2);
+  border:.5px solid rgba(255,255,255,.15);
+  color:var(--muted2);
+  font-size:.75rem;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .15s, color .15s;
+}
+.badge-multas-close:hover{
+  background:var(--s3);
+  color:var(--muted);
+}
+
+@keyframes badgeMultasIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes badgeMultasPulse{
+  0%{box-shadow:0 0 0 0 rgba(226,193,106,.45)}
+  70%{box-shadow:0 0 0 7px rgba(226,193,106,0)}
+  100%{box-shadow:0 0 0 0 rgba(226,193,106,0)}
+}
+
+/* Mobile: lo primero es no chocar con la barra inferior del modo resultado
+   ni ponerse tan grande que moleste en pantallas chicas */
+@media(max-width:860px){
+  .badge-multas-wrap{
+    bottom:16px;
+    left:16px;
+  }
+  .badge-multas{
+    padding:9px 14px 9px 11px;
+  }
+  .badge-multas-title{font-size:.85rem}
+
+  /* Igual que el resto de los flotantes: se oculta cuando aparece
+     la barra inferior fija del modo resultado, para no superponerse */
+  body.modo-resultado .badge-multas-wrap{
+    display:none;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .badge-multas-dot{animation:none}
+  .badge-multas-wrap{animation:none}
+}
