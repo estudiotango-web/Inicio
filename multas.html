@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Consulta de Infracciones Viales — Entre Ríos</title>
-<meta name="description" content="Consultá infracciones de tránsito en Entre Ríos por dominio o número de acta. Herramienta pública e independiente.">
+<title>Multas Entre Ríos — Consultá o dejá que lo hagamos por vos</title>
+<meta name="description" content="Consultá tus multas de tránsito en Entre Ríos vos mismo, o dejá que lo hagamos por vos y te avisamos por WhatsApp.">
 <style>
-/* ============================================================================
-   TOKENS
-   ============================================================================ */
+* { box-sizing: border-box; }
+
 :root {
   --bg: #10151c;
   --surface: #1a212b;
@@ -16,877 +15,503 @@
   --border: #2e3947;
   --text: #edeff2;
   --text-muted: #8b96a5;
-
-  --accent: #3e8fc4;      /* azul ruta provincial */
+  --accent: #3e8fc4;
   --accent-dark: #2c6d99;
-  --caution: #f2a93b;     /* convenio / pendiente */
-  --danger: #e5573f;      /* impaga */
-  --success: #48b884;     /* pagada */
-
-  --radius: 10px;
-  --radius-sm: 6px;
-  --font-display: 'Arial Narrow', Arial, "Helvetica Neue", sans-serif;
+  --success: #48b884;
+  --danger: #e5573f;
+  --radius: 12px;
+  --radius-sm: 8px;
   --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "Courier New", Courier, monospace;
-
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow: 0 4px 24px rgba(0,0,0,0.35);
 }
 
-* { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; }
-
-body {
+html, body {
   margin: 0;
+  padding: 0;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
 }
 
 .wrap {
-  max-width: 720px;
+  max-width: 560px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 28px 20px 60px;
 }
 
 a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
+.hidden { display: none !important; }
+
+/* Honeypot: invisible para personas, visible para bots que llenan todo */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
-  }
-}
-
-/* ============================================================================
-   HEADER
-   ============================================================================ */
-.site-header {
-  border-bottom: 1px solid var(--border);
-  padding: 18px 0;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand-mark {
-  color: var(--accent);
-  flex-shrink: 0;
-}
-
-.brand-title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.brand-sub {
-  margin: 0;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-/* ============================================================================
-   INTRO
-   ============================================================================ */
-.intro {
-  padding: 32px 0 8px;
-}
-
-.intro h1 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.9rem;
-  line-height: 1.15;
-  letter-spacing: 0.01em;
+/* ---------- HERO ---------- */
+.hero { text-align: center; margin-bottom: 28px; }
+.hero h1 {
+  font-size: 1.6rem;
+  line-height: 1.25;
   margin: 0 0 10px;
 }
-
-.intro-text {
+.hero p {
   color: var(--text-muted);
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
-/* ============================================================================
-   NOTICE
-   ============================================================================ */
-.notice {
-  margin: 20px 0;
-  padding: 14px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent);
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.notice p { margin: 0; }
-
-/* ============================================================================
-   QUERY CARD
-   ============================================================================ */
-.query-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 6px;
-  margin: 24px 0;
-}
-
-.tabs {
-  display: flex;
-  gap: 4px;
-  padding: 6px;
-}
-
-.tab {
-  flex: 1;
-  padding: 12px 10px;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 0.92rem;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.tab.is-active {
-  background: var(--accent);
-  color: #fff;
-}
-
-.tab:not(.is-active):hover {
-  background: var(--surface-2);
-  color: var(--text);
-}
-
-.panel {
-  padding: 18px 16px 16px;
-}
-
-.panel.is-hidden,
-[hidden] {
-  display: none !important;
-}
-
-.panel label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-
-.field-hint {
-  margin: 8px 0 0;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-/* --- Patente estilo cartel vial --- */
-.plate-input {
-  width: 100%;
-  padding: 16px 14px;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: 0.12em;
-  text-align: center;
-  text-transform: uppercase;
-  background: #f4f6f8;
-  color: #14212e;
-  border: 3px solid var(--accent);
-  border-radius: var(--radius-sm);
-}
-
-.plate-input::placeholder {
-  color: #a7b1bb;
-  font-weight: 400;
-}
-
-.acta-input {
-  width: 100%;
-  padding: 14px;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 1.15rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  background: var(--surface-2);
-  color: var(--text);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-sm);
-}
-
-.acta-input::placeholder { color: var(--text-muted); }
-
-/* ============================================================================
-   BOTONES
-   ============================================================================ */
-.btn-primary {
-  width: calc(100% - 32px);
-  margin: 4px 16px 16px;
-  padding: 16px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 1.02rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: background 0.15s ease, transform 0.05s ease;
-}
-
-.btn-primary:hover { background: var(--accent-dark); }
-.btn-primary:active { transform: scale(0.99); }
-
-.btn-primary:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-.btn-spinner {
-  display: none;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-
-.btn-primary.is-loading .btn-spinner { display: inline-block; }
-.btn-primary.is-loading .btn-label { opacity: 0.85; }
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.btn-secondary {
-  padding: 10px 16px;
-  background: transparent;
-  color: var(--accent);
-  border: 1.5px solid var(--accent);
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 0.88rem;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.btn-secondary:hover { background: rgba(62, 143, 196, 0.12); }
-
-.btn-page {
-  padding: 10px 14px;
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-page:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* ============================================================================
-   ALERTAS / ESTADOS
-   ============================================================================ */
-.alert {
-  margin: 16px 0;
-  padding: 14px 16px;
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-}
-
-.alert-error {
-  background: rgba(229, 87, 63, 0.12);
-  border: 1px solid var(--danger);
-  color: #ff9c8a;
-}
-
-.loading-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 40px 0;
-  color: var(--text-muted);
-}
-
-.loading-text { margin-left: 6px; font-size: 0.9rem; }
-
-.loading-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--accent);
-  animation: bounce 1s infinite ease-in-out;
-}
-
-.loading-dot:nth-child(2) { animation-delay: 0.15s; }
-.loading-dot:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes bounce {
-  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
-  40% { transform: scale(1); opacity: 1; }
-}
-
-.empty-state {
-  text-align: center;
-  padding: 48px 16px;
-  color: var(--text-muted);
-  background: var(--surface);
-  border: 1px dashed var(--border);
-  border-radius: var(--radius);
-  margin: 24px 0;
-}
-
-.empty-state p { margin: 0 0 16px; }
-
-/* ============================================================================
-   EMBEBIDO DEL SITIO OFICIAL
-   ============================================================================ */
-.oficial-embed {
-  margin: 24px 0;
-}
-
-.oficial-embed-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-}
-
-.oficial-embed-note {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  max-width: 460px;
-}
-
-.oficial-iframe-wrap {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-#iframe-oficial {
-  width: 100%;
-  height: 70vh;
-  min-height: 480px;
-  border: 0;
-  display: block;
-  background: #fff;
-}
-
-.oficial-embed-fallback-hint {
-  margin: 12px 0 0;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-#btn-nueva-consulta {
-  display: block;
-  margin: 16px auto 0;
-}
-
-/* ============================================================================
-   RESULTADOS
-   ============================================================================ */
-.resultados-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  margin: 24px 0 16px;
-  flex-wrap: wrap;
-}
-
-.resultados-consulta {
-  margin: 0 0 2px;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: 0.05em;
-}
-
-.resultados-total {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
-
-.lista-infracciones {
+/* ---------- CARDS DE OPCIÓN ---------- */
+.opciones {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  margin-bottom: 32px;
 }
 
-.infraccion-card {
+.opcion-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  text-align: left;
 }
 
-.infraccion-top {
-  display: flex;
-  justify-content: space-between;
+.opcion-card h2 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+}
+
+.opcion-card p {
+  margin: 0 0 14px;
+  color: var(--text-muted);
+  font-size: 0.87rem;
+}
+
+.opcion-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-}
-
-.infraccion-acta {
-  font-family: var(--font-mono);
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
   font-weight: 700;
   font-size: 0.95rem;
-  color: var(--text);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
 }
 
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
+.opcion-btn.primary {
+  background: var(--accent);
+  color: #fff;
+}
+.opcion-btn.primary:hover { background: var(--accent-dark); }
+
+.opcion-btn.secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+.opcion-btn.secondary:hover { background: rgba(62,143,196,0.12); }
+
+.opcion-nota {
+  margin-top: 8px;
   font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.badge-impaga { background: rgba(229, 87, 63, 0.16); color: #ff9c8a; }
-.badge-pagada { background: rgba(72, 184, 132, 0.16); color: #79dcb0; }
-.badge-convenio { background: rgba(242, 169, 59, 0.16); color: #f7c273; }
-.badge-default { background: var(--surface-2); color: var(--text-muted); }
-
-.infraccion-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 16px;
-}
-
-.infraccion-field {
-  min-width: 0;
-}
-
-.infraccion-field .label {
-  display: block;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   color: var(--text-muted);
-  margin-bottom: 2px;
+  text-align: center;
 }
 
-.infraccion-field .value {
-  font-size: 0.92rem;
-  word-break: break-word;
+/* ---------- FORMULARIO ---------- */
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  box-shadow: var(--shadow);
+  scroll-margin-top: 20px;
 }
 
-.infraccion-field.full { grid-column: 1 / -1; }
-
-.monto-destacado .value {
-  font-weight: 700;
+.form-card h2 {
+  margin: 0 0 4px;
   font-size: 1.05rem;
-  color: var(--caution);
 }
 
-/* ============================================================================
-   PAGINACIÓN
-   ============================================================================ */
-.paginacion {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.paginacion-info {
+.form-card > p.form-sub {
+  margin: 0 0 18px;
   color: var(--text-muted);
   font-size: 0.85rem;
 }
 
-/* ============================================================================
-   FOOTER
-   ============================================================================ */
-.site-footer {
-  border-top: 1px solid var(--border);
-  margin-top: 48px;
-  padding: 24px 0 60px;
+.field {
+  margin-bottom: 14px;
 }
 
-.site-footer p {
-  margin: 0;
+.field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.field .opt {
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.field input {
+  width: 100%;
+  padding: 12px 13px;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+}
+
+.field input:focus { border-color: var(--accent); }
+
+.field.patente input {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field-hint {
+  margin: 6px 0 0;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.btn-enviar {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.98rem;
+  cursor: pointer;
+  margin-top: 6px;
+}
+.btn-enviar:hover { background: var(--accent-dark); }
+.btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.alert {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+.alert-error {
+  background: rgba(229,87,63,0.12);
+  border: 1px solid var(--danger);
+  color: #ff9c8a;
+}
+.alert-success {
+  background: rgba(72,184,132,0.12);
+  border: 1px solid var(--success);
+  color: #8fe0bb;
+}
+
+.gracias {
+  text-align: center;
+  padding: 10px 4px 4px;
+}
+.gracias .check {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(72,184,132,0.15);
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  font-size: 1.4rem;
+}
+.gracias h2 { margin: 0 0 8px; font-size: 1.05rem; }
+.gracias p { margin: 0; color: var(--text-muted); font-size: 0.88rem; }
+.gracias a.wa-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.85rem;
+}
+
+.legal {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 0.7rem;
+  color: #5a6472;
   line-height: 1.6;
 }
-
-/* ============================================================================
-   RESPONSIVE
-   ============================================================================ */
-@media (min-width: 600px) {
-  .intro h1 { font-size: 2.3rem; }
-  .infraccion-grid { grid-template-columns: 1fr 1fr 1fr; }
-}
-
-@media (max-width: 380px) {
-  .infraccion-grid { grid-template-columns: 1fr; }
-}
-
+.legal a { color: #5a6472; text-decoration: underline; }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap">
-    <div class="brand">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 40 40" width="34" height="34">
-          <rect x="2" y="2" width="36" height="36" rx="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
-          <path d="M12 24 L20 12 L28 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <line x1="20" y1="12" x2="20" y2="28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <div>
-        <p class="brand-title">Infracciones ER</p>
-        <p class="brand-sub">Entre Ríos</p>
-      </div>
-    </div>
-  </div>
-</header>
+<div class="wrap">
 
-<main class="wrap">
-
-  <section class="intro">
-    <h1>Consultá tus infracciones de tránsito</h1>
-    <p class="intro-text">
-      Buscá multas registradas en el sistema de Monitoreo Vial de Entre Ríos,
-      por dominio del vehículo o por número de acta.
-    </p>
+  <section class="hero">
+    <h1>¿Tenés multas de tránsito en Entre Ríos?</h1>
+    <p>Elegí cómo querés resolverlo — vos mismo, o lo hacemos por vos.</p>
   </section>
 
-  <section class="notice" role="note">
-    <p>
-      Esta herramienta facilita la consulta de información pública disponible
-      en el sistema de Monitoreo Vial de Entre Ríos. <strong>No somos un
-      organismo oficial ni representamos al Gobierno de Entre Ríos.</strong>
-      Sitio oficial:
-      <a href="https://monitoreovialentrerios.info/" target="_blank" rel="noopener noreferrer">monitoreovialentrerios.info</a>
-    </p>
-  </section>
+  <section class="opciones">
 
-  <section class="query-card" aria-label="Formulario de consulta">
-
-    <div class="tabs" role="tablist" aria-label="Tipo de consulta">
-      <button type="button" class="tab is-active" role="tab" id="tab-dominio" aria-selected="true" aria-controls="panel-dominio" data-tipo="dominio">
-        Patente / Dominio
-      </button>
-      <button type="button" class="tab" role="tab" id="tab-acta" aria-selected="false" aria-controls="panel-acta" data-tipo="acta">
-        Número de acta
-      </button>
-    </div>
-
-    <form id="consulta-form" novalidate>
-
-      <div class="panel" id="panel-dominio" role="tabpanel" aria-labelledby="tab-dominio">
-        <label for="input-dominio">Ingresá el dominio</label>
-        <input
-          type="text"
-          id="input-dominio"
-          name="dominio"
-          class="plate-input"
-          placeholder="AB123CD"
-          maxlength="8"
-          autocomplete="off"
-          autocapitalize="characters"
-          inputmode="text"
-        >
-        <p class="field-hint">Formatos válidos: ABC123 o AB123CD. No hace falta usar espacios ni guiones.</p>
-      </div>
-
-      <div class="panel is-hidden" id="panel-acta" role="tabpanel" aria-labelledby="tab-acta" hidden>
-        <label for="input-acta">Ingresá el número de acta</label>
-        <input
-          type="text"
-          id="input-acta"
-          name="acta"
-          class="acta-input"
-          placeholder="R603376395"
-          maxlength="20"
-          autocomplete="off"
-          autocapitalize="characters"
-          inputmode="text"
-        >
-        <p class="field-hint">Podés incluir letras y números, tal como figura en la notificación.</p>
-      </div>
-
-      <button type="submit" class="btn-primary" id="btn-consultar">
-        <span class="btn-label">Consultar infracciones</span>
-        <span class="btn-spinner" aria-hidden="true"></span>
-      </button>
-
-    </form>
-  </section>
-
-  <section id="mensaje-error" class="alert alert-error is-hidden" role="alert" aria-live="assertive"></section>
-
-  <section id="oficial-embed" class="oficial-embed is-hidden" aria-live="polite">
-
-    <div class="oficial-embed-bar">
-      <p class="oficial-embed-note">
-        La consulta se hace directamente en el sitio oficial. Completá el
-        reCAPTCHA ahí abajo para ver el resultado.
-      </p>
-      <a id="link-oficial" class="btn-secondary" href="https://monitoreovialentrerios.info/#/consulta-infracciones" target="_blank" rel="noopener noreferrer">
-        Abrir en pestaña nueva ↗
+    <div class="opcion-card">
+      <h2>Consultarlo yo mismo</h2>
+      <p>Te llevamos directo al sitio oficial de Monitoreo Vial para que consultes tu patente o acta ahí mismo.</p>
+      <a
+        class="opcion-btn secondary"
+        href="https://monitoreovialentrerios.info/#/consulta-infracciones"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Ir al sitio oficial ↗
       </a>
     </div>
 
-    <div class="oficial-iframe-wrap">
-      <iframe
-        id="iframe-oficial"
-        title="Consulta oficial — Monitoreo Vial Entre Ríos"
-        loading="lazy"
-        referrerpolicy="strict-origin-when-cross-origin"
-      ></iframe>
+    <div class="opcion-card">
+      <h2>Que lo hagan por mí</h2>
+      <p>Dejanos tus datos, lo revisamos nosotros y te contactamos por WhatsApp con el resultado — y si corresponde, te contamos cómo podemos gestionar la baja.</p>
+      <button type="button" class="opcion-btn primary" id="btn-ir-form">
+        Quiero que lo revisen por mí
+      </button>
     </div>
-
-    <p class="oficial-embed-fallback-hint">
-      ¿No ves el formulario cargado arriba? El sitio oficial no permite ser
-      embebido en otras páginas — usá el botón "Abrir en pestaña nueva".
-    </p>
-
-    <button type="button" class="btn-secondary" id="btn-nueva-consulta">Nueva consulta</button>
 
   </section>
 
-</main>
+  <section class="form-card" id="form-card">
 
-<footer class="site-footer">
-  <div class="wrap">
-    <p>
-      Fuente de datos: sistema de Monitoreo Vial de Entre Ríos. Esta web es un
-      proyecto independiente, no oficial. Los datos mostrados corresponden a
-      información pública consultable en
-      <a href="https://monitoreovialentrerios.info/" target="_blank" rel="noopener noreferrer">monitoreovialentrerios.info</a>.
-    </p>
-  </div>
-</footer>
+    <div id="form-inner">
+      <h2>Contanos tu caso</h2>
+      <p class="form-sub">Completá lo que tengas a mano — no hace falta que sepas todo.</p>
+
+      <form id="pedido-form" novalidate>
+
+        <!-- Honeypot anti-spam: invisible para personas -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="web">No completar</label>
+          <input type="text" id="web" name="web" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="field patente">
+          <label for="patente">Patente / Dominio <span class="opt">(opcional)</span></label>
+          <input type="text" id="patente" placeholder="AB123CD" maxlength="8" autocomplete="off" autocapitalize="characters">
+        </div>
+
+        <div class="field">
+          <label for="acta">Número de acta <span class="opt">(opcional)</span></label>
+          <input type="text" id="acta" placeholder="R603376395" maxlength="20" autocomplete="off" autocapitalize="characters">
+        </div>
+
+        <div class="field">
+          <label for="dni">DNI <span class="opt">(opcional)</span></label>
+          <input type="text" id="dni" placeholder="30123456" maxlength="10" inputmode="numeric" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="whatsapp">WhatsApp de contacto</label>
+          <input type="tel" id="whatsapp" placeholder="341 5 123456" maxlength="20" inputmode="tel" autocomplete="off">
+          <p class="field-hint">Te vamos a escribir ahí con el resultado.</p>
+        </div>
+
+        <div id="mensaje-error" class="alert alert-error hidden" role="alert"></div>
+
+        <button type="submit" class="btn-enviar" id="btn-enviar">Enviar pedido</button>
+
+      </form>
+    </div>
+
+    <div id="gracias" class="gracias hidden">
+      <div class="check">✓</div>
+      <h2>¡Listo, lo recibimos!</h2>
+      <p>Te vamos a escribir por WhatsApp apenas lo revisemos.</p>
+      <a class="wa-link" id="wa-directo" href="#" target="_blank" rel="noopener noreferrer">
+        También podés escribirnos directo por WhatsApp →
+      </a>
+    </div>
+
+  </section>
+
+  <p class="legal">
+    Sitio independiente, no oficial. La consulta directa se realiza en
+    <a href="https://monitoreovialentrerios.info/" target="_blank" rel="noopener noreferrer">monitoreovialentrerios.info</a>.
+    No almacenamos tu WhatsApp ni tus datos para otro fin que contactarte por este pedido.
+  </p>
+
+</div>
 
 <script>
 /**
  * ============================================================================
- * CONSULTA DE INFRACCIONES VIALES - ENTRE RÍOS
- * Frontend (vanilla JS).
+ * MULTAS ENTRE RÍOS — landing + captación de pedidos
  * ============================================================================
- *
- * IMPORTANTE — POR QUÉ NO HAY BACKEND ACÁ:
- * La API de Monitoreo Vial ER solo acepta peticiones que declaren venir de
- * su propio frontend (valida Origin/Referer). No existe una API pública
- * alternativa (se investigó el portal nacional SINAI y el portal de datos
- * abiertos; ninguno cubre esta consulta puntual por patente/acta). Por eso
- * este sitio NO hace de proxy automático: valida el formato del dato
- * ingresado y ayuda a hacer la consulta directamente contra el sitio
- * oficial, embebido en un iframe cuando es posible, con un link de
- * respaldo siempre visible por si el sitio oficial no permite ser
- * embebido (X-Frame-Options). Todo el reCAPTCHA y la consulta en sí los
- * resuelve el propio usuario, con su navegador, contra el sitio oficial.
  */
 
 const CONFIG = {
-  URL_OFICIAL: 'https://monitoreovialentrerios.info/#/consulta-infracciones'
+  // Pegá acá la URL /exec del Web App de Apps Script (apps-script/Code.gs)
+  API_URL: 'https://script.google.com/macros/s/AKfycbxnNNPHoBVV1pdqkGBDYPvXDimTGL-DymXb6w87JoNaDECqPgLtXfAbIOv4VLHSSOgN/exec',
+
+  // Número de WhatsApp propio, en formato internacional sin + ni espacios
+  // (ej: 5493435020970). Se usa para el link "escribinos directo".
+  WHATSAPP_NUMERO: 'PEGAR_AQUI_NUMERO_WHATSAPP'
 };
-
-// ============================================================================
-// ESTADO
-// ============================================================================
-
-const state = {
-  tipo: 'dominio'
-};
-
-// ============================================================================
-// REFERENCIAS DEL DOM
-// ============================================================================
 
 const el = {
-  tabDominio: document.getElementById('tab-dominio'),
-  tabActa: document.getElementById('tab-acta'),
-  panelDominio: document.getElementById('panel-dominio'),
-  panelActa: document.getElementById('panel-acta'),
-  inputDominio: document.getElementById('input-dominio'),
-  inputActa: document.getElementById('input-acta'),
-  form: document.getElementById('consulta-form'),
-  btnConsultar: document.getElementById('btn-consultar'),
+  btnIrForm: document.getElementById('btn-ir-form'),
+  formCard: document.getElementById('form-card'),
+  formInner: document.getElementById('form-inner'),
+  form: document.getElementById('pedido-form'),
+  patente: document.getElementById('patente'),
+  acta: document.getElementById('acta'),
+  dni: document.getElementById('dni'),
+  whatsapp: document.getElementById('whatsapp'),
+  web: document.getElementById('web'),
   mensajeError: document.getElementById('mensaje-error'),
-  oficialEmbed: document.getElementById('oficial-embed'),
-  iframeOficial: document.getElementById('iframe-oficial'),
-  linkOficial: document.getElementById('link-oficial'),
-  btnNuevaConsulta: document.getElementById('btn-nueva-consulta')
+  btnEnviar: document.getElementById('btn-enviar'),
+  gracias: document.getElementById('gracias'),
+  waDirecto: document.getElementById('wa-directo')
 };
 
-// ============================================================================
-// TABS
-// ============================================================================
-
-function seleccionarTipo(tipo) {
-  state.tipo = tipo;
-  const esDominio = tipo === 'dominio';
-
-  el.tabDominio.classList.toggle('is-active', esDominio);
-  el.tabActa.classList.toggle('is-active', !esDominio);
-  el.tabDominio.setAttribute('aria-selected', String(esDominio));
-  el.tabActa.setAttribute('aria-selected', String(!esDominio));
-
-  el.panelDominio.hidden = !esDominio;
-  el.panelActa.hidden = esDominio;
-
-  ocultarError();
+// Link directo de WhatsApp (para "también podés escribirnos directo")
+if (CONFIG.WHATSAPP_NUMERO.indexOf('PEGAR_AQUI') === -1) {
+  el.waDirecto.href = 'https://wa.me/' + CONFIG.WHATSAPP_NUMERO +
+    '?text=' + encodeURIComponent('Hola, quiero consultar por una multa en Entre Ríos.');
 }
 
-el.tabDominio.addEventListener('click', () => seleccionarTipo('dominio'));
-el.tabActa.addEventListener('click', () => seleccionarTipo('acta'));
-
-// Normalización del input de dominio: mayúsculas, sin espacios ni guiones
-el.inputDominio.addEventListener('input', (ev) => {
-  const limpio = ev.target.value.toUpperCase().replace(/[\s-]/g, '');
-  ev.target.value = limpio;
+el.btnIrForm.addEventListener('click', () => {
+  el.formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  el.patente.focus({ preventScroll: true });
 });
 
-el.inputActa.addEventListener('input', (ev) => {
-  const limpio = ev.target.value.toUpperCase().replace(/\s/g, '');
-  ev.target.value = limpio;
+// Normalización de patente en mayúsculas, sin espacios ni guiones
+el.patente.addEventListener('input', (ev) => {
+  ev.target.value = ev.target.value.toUpperCase().replace(/[\s-]/g, '');
 });
-
-// ============================================================================
-// VALIDACIÓN EN FRONTEND
-// ============================================================================
-
-function validarDominio(valor) {
-  const patenteVieja = /^[A-Z]{3}[0-9]{3}$/;
-  const patenteNueva = /^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
-  return patenteVieja.test(valor) || patenteNueva.test(valor);
-}
-
-function validarActa(valor) {
-  return /^[A-Z0-9]{3,20}$/.test(valor);
-}
-
-// ============================================================================
-// ENVÍO DEL FORMULARIO
-// ============================================================================
-//
-// Este sitio NO consulta la API de Monitoreo Vial por sí mismo. Solo valida
-// el formato de lo que el usuario ingresó (para avisarle antes de un typo
-// evidente) y después carga la consulta oficial embebida, o lista para
-// abrir en pestaña nueva. Quien resuelve el reCAPTCHA y hace la consulta
-// real es el propio usuario, contra el sitio oficial.
+el.acta.addEventListener('input', (ev) => {
+  ev.target.value = ev.target.value.toUpperCase().replace(/\s/g, '');
+});
+el.dni.addEventListener('input', (ev) => {
+  ev.target.value = ev.target.value.replace(/\D/g, '');
+});
 
 el.form.addEventListener('submit', (ev) => {
   ev.preventDefault();
   ocultarError();
 
-  const valor = state.tipo === 'dominio'
-    ? el.inputDominio.value.trim()
-    : el.inputActa.value.trim();
+  const patente = el.patente.value.trim();
+  const acta = el.acta.value.trim();
+  const dni = el.dni.value.trim();
+  const whatsapp = el.whatsapp.value.trim();
 
-  if (!valor) {
-    mostrarError('Ingresá un valor para continuar.');
+  if (!whatsapp) {
+    mostrarError('Ingresá tu WhatsApp para que podamos contactarte.');
+    return;
+  }
+  if (!patente && !acta && !dni) {
+    mostrarError('Ingresá al menos la patente, el número de acta o tu DNI.');
+    return;
+  }
+  if (CONFIG.API_URL.indexOf('PEGAR_AQUI') !== -1) {
+    mostrarError('Falta configurar la URL del backend (CONFIG.API_URL).');
     return;
   }
 
-  if (state.tipo === 'dominio' && !validarDominio(valor)) {
-    mostrarError('El formato de patente no es válido. Usá ABC123 o AB123CD.');
-    return;
-  }
-
-  if (state.tipo === 'acta' && !validarActa(valor)) {
-    mostrarError('El número de acta ingresado no es válido.');
-    return;
-  }
-
-  mostrarConsultaOficial();
+  enviarPedido({ patente, acta, dni, whatsapp, web: el.web.value });
 });
 
+async function enviarPedido(datos) {
+  el.btnEnviar.disabled = true;
+  el.btnEnviar.textContent = 'Enviando…';
+
+  const params = new URLSearchParams(datos);
+  const url = CONFIG.API_URL + '?' + params.toString();
+
+  try {
+    const data = await jsonpRequest(url);
+
+    if (!data.ok) {
+      mostrarError(data.error || 'No pudimos registrar tu pedido.');
+      el.btnEnviar.disabled = false;
+      el.btnEnviar.textContent = 'Enviar pedido';
+      return;
+    }
+
+    el.formInner.classList.add('hidden');
+    el.gracias.classList.remove('hidden');
+
+  } catch (err) {
+    mostrarError('No se pudo conectar. Verificá tu conexión e intentá de nuevo.');
+    el.btnEnviar.disabled = false;
+    el.btnEnviar.textContent = 'Enviar pedido';
+  }
+}
+
 /**
- * Carga la consulta oficial: intenta embeberla en el iframe y deja el link
- * de respaldo siempre visible (por si el sitio oficial bloquea ser
- * embebido vía X-Frame-Options — algo que no se puede detectar de forma
- * confiable con JavaScript, así que el link no depende de esa detección).
+ * Mismo mecanismo JSONP ya probado contra Apps Script: evita el problema
+ * de que el Web App no garantiza headers CORS en su respuesta.
  */
-function mostrarConsultaOficial() {
-  el.iframeOficial.src = CONFIG.URL_OFICIAL;
-  el.linkOficial.href = CONFIG.URL_OFICIAL;
-  el.oficialEmbed.classList.remove('is-hidden');
-  el.oficialEmbed.scrollIntoView({ behavior: 'smooth', block: 'start' });
+function jsonpRequest(baseUrl) {
+  return new Promise((resolve, reject) => {
+    const callbackName = 'jsonpCb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+    const script = document.createElement('script');
+    let resuelto = false;
+
+    const limpiar = () => {
+      delete window[callbackName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+      clearTimeout(timeoutId);
+    };
+
+    window[callbackName] = (data) => {
+      resuelto = true;
+      limpiar();
+      resolve(data);
+    };
+
+    const timeoutId = setTimeout(() => {
+      if (!resuelto) {
+        limpiar();
+        reject(new Error('Tiempo de espera agotado'));
+      }
+    }, 15000);
+
+    script.onerror = () => {
+      if (!resuelto) {
+        limpiar();
+        reject(new Error('Error al cargar el recurso'));
+      }
+    };
+
+    const separador = baseUrl.indexOf('?') !== -1 ? '&' : '?';
+    script.src = baseUrl + separador + 'callback=' + callbackName;
+    document.body.appendChild(script);
+  });
 }
-
-// ============================================================================
-// NUEVA CONSULTA
-// ============================================================================
-
-function reiniciarFormulario() {
-  el.inputDominio.value = '';
-  el.inputActa.value = '';
-  el.iframeOficial.src = 'about:blank';
-  el.oficialEmbed.classList.add('is-hidden');
-  ocultarError();
-}
-
-el.btnNuevaConsulta.addEventListener('click', reiniciarFormulario);
-
-// ============================================================================
-// HELPERS DE UI
-// ============================================================================
 
 function mostrarError(texto) {
   el.mensajeError.textContent = texto;
-  el.mensajeError.classList.remove('is-hidden');
+  el.mensajeError.classList.remove('hidden');
 }
 
 function ocultarError() {
-  el.mensajeError.classList.add('is-hidden');
+  el.mensajeError.classList.add('hidden');
   el.mensajeError.textContent = '';
 }
-
 </script>
+
 </body>
 </html>
