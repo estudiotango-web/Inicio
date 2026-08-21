@@ -3,260 +3,286 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multas Entre Ríos — Consultá o dejá que lo hagamos por vos</title>
-<meta name="description" content="Consultá tus multas de tránsito en Entre Ríos vos mismo, o dejá que lo hagamos por vos y te avisamos por WhatsApp.">
+<title>Multas Argentina — Consultá o dejá que lo hagamos por vos</title>
+<meta name="description" content="Consultá tus multas de tránsito en cualquier provincia de Argentina vos mismo, o dejá que lo hagamos por vos y te avisamos por WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; }
+/* ═══════════════════════════════════════
+   RESET & VARIABLES — paleta bordó/dorado
+═══════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0}
 
-:root {
-  --bg: #10151c;
-  --surface: #1a212b;
-  --surface-2: #222b37;
-  --border: #2e3947;
-  --text: #edeff2;
-  --text-muted: #8b96a5;
-  --accent: #3e8fc4;
-  --accent-dark: #2c6d99;
-  --success: #48b884;
-  --danger: #e5573f;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "Courier New", Courier, monospace;
-  --shadow: 0 4px 24px rgba(0,0,0,0.35);
+:root{
+  --bordo:#6B0F1A;
+  --bordo2:#8B1525;
+  --bordo-dark:#260308;
+  --bordo-deep:#160206;
+  --gold:#C9A84C;
+  --gold2:#E2C16A;
+  --gold-dim:#8B6F34;
+  --gold-ghost:rgba(201,168,76,.08);
+  --bg:#0A0808;
+  --s1:#141010;
+  --s2:#1C1616;
+  --s3:#242020;
+  --s4:#2E2828;
+  --text:#EDE9E3;
+  --muted:#cabcae;
+  --muted2:#8e8072;
+  --muted3:#2E2B29;
+  --b1:rgba(255,255,255,.05);
+  --b2:rgba(255,255,255,.09);
+  --b3:rgba(255,255,255,.04);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Plus Jakarta Sans','DM Sans',system-ui,sans-serif;
+  --success:#6DBF95;
+  --danger:#E8705F;
+  --radius:14px;
+  --radius-sm:9px;
+  --shadow:0 8px 40px rgba(0,0,0,.35),0 0 0 .5px rgba(201,168,76,.06) inset;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  line-height: 1.5;
+html{scroll-behavior:smooth}
+html,body{height:100%}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  margin:0;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-.wrap {
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 28px 20px 60px;
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+
+.hidden{display:none !important}
+
+.wrap{
+  max-width:560px;
+  margin:0 auto;
+  padding:32px 20px 60px;
 }
 
-a { color: var(--accent); }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-
-.hidden { display: none !important; }
+a{color:var(--gold2);text-decoration:none}
+a:hover{color:var(--gold)}
 
 /* Honeypot: invisible para personas, visible para bots que llenan todo */
-.hp-field {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+.hp-field{
+  position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;
 }
 
 /* ---------- HERO ---------- */
-.hero { text-align: center; margin-bottom: 28px; }
-.hero h1 {
-  font-size: 1.6rem;
-  line-height: 1.25;
-  margin: 0 0 10px;
+.hero{text-align:center;margin-bottom:30px}
+.hero h1{
+  font-family:var(--serif);
+  font-size:1.85rem;font-weight:600;
+  line-height:1.25;letter-spacing:-.01em;
+  margin:0 0 10px;color:var(--text);
 }
-.hero p {
-  color: var(--text-muted);
-  margin: 0;
-  font-size: 0.95rem;
+.hero h1 em{font-style:italic;color:var(--gold2)}
+.hero p{
+  color:var(--muted);margin:0;font-size:.9rem;font-weight:300;
 }
 
 /* ---------- CARDS DE OPCIÓN ---------- */
-.opciones {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 32px;
+.opciones{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+
+.opcion-card{
+  background:linear-gradient(135deg,var(--s1),rgba(22,16,16,.97));
+  border:.5px solid rgba(201,168,76,.14);
+  border-radius:var(--radius);
+  padding:22px 20px;
+  box-shadow:var(--shadow);
+  text-align:left;
+  position:relative;overflow:hidden;
+}
+.opcion-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent);
 }
 
-.opcion-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
-  text-align: left;
+.opcion-card h2{
+  font-family:var(--serif);
+  margin:0 0 6px;font-size:1.1rem;font-weight:600;color:var(--text);
 }
 
-.opcion-card h2 {
-  margin: 0 0 6px;
-  font-size: 1.05rem;
+.opcion-card p{
+  margin:0 0 16px;color:var(--muted);font-size:.85rem;line-height:1.65;font-weight:300;
 }
 
-.opcion-card p {
-  margin: 0 0 14px;
-  color: var(--text-muted);
-  font-size: 0.87rem;
+.opcion-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  width:100%;justify-content:center;
+  padding:13px 16px;border-radius:var(--radius-sm);
+  font-weight:600;font-size:.9375rem;
+  cursor:pointer;border:none;text-decoration:none;
+  font-family:var(--sans);letter-spacing:.02em;
+  transition:all .2s ease;
 }
 
-.opcion-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  justify-content: center;
-  padding: 13px 16px;
-  border-radius: var(--radius-sm);
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  border: none;
-  text-decoration: none;
+.opcion-btn.primary{
+  background:linear-gradient(135deg,var(--bordo),var(--bordo2));
+  color:var(--text);
+  box-shadow:0 4px 20px rgba(107,15,26,.5);
+}
+.opcion-btn.primary:hover{
+  background:linear-gradient(135deg,var(--bordo2),#9B1A2A);
+  transform:translateY(-1px);
+  box-shadow:0 6px 24px rgba(107,15,26,.6);
 }
 
-.opcion-btn.primary {
-  background: var(--accent);
-  color: #fff;
+.opcion-btn.secondary{
+  background:rgba(255,255,255,.03);
+  color:var(--gold2);
+  border:.5px solid rgba(201,168,76,.3);
 }
-.opcion-btn.primary:hover { background: var(--accent-dark); }
+.opcion-btn.secondary:hover{background:rgba(201,168,76,.08)}
 
-.opcion-btn.secondary {
-  background: transparent;
-  color: var(--accent);
-  border: 1.5px solid var(--accent);
+/* ---------- SELECT DE JURISDICCIÓN ---------- */
+.select-field{margin-bottom:12px}
+.select-field label{
+  display:block;font-size:.78rem;font-weight:600;margin-bottom:6px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;
 }
-.opcion-btn.secondary:hover { background: rgba(62,143,196,0.12); }
+.select-field select{
+  width:100%;padding:12px 13px;
+  background:var(--s2);color:var(--text);
+  border:.5px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-sm);
+  font-size:.9375rem;font-family:var(--sans);
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;background-size:18px;
+  padding-right:38px;
+}
+.select-field select:focus{border-color:rgba(201,168,76,.4)}
 
-.opcion-nota {
-  margin-top: 8px;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  text-align: center;
+.jurisdiccion-badge{
+  display:inline-block;margin-top:10px;font-size:.7rem;
+  padding:4px 10px;border-radius:20px;font-weight:600;letter-spacing:.02em;
+  background:rgba(74,155,111,.12);color:var(--success);
+  border:.5px solid rgba(74,155,111,.25);
+}
+.jurisdiccion-badge.fallback{
+  background:rgba(201,168,76,.1);color:var(--gold2);
+  border-color:rgba(201,168,76,.22);
 }
 
 /* ---------- FORMULARIO ---------- */
-.form-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 22px 20px;
-  box-shadow: var(--shadow);
-  scroll-margin-top: 20px;
+.form-card{
+  background:linear-gradient(135deg,var(--s1),rgba(22,16,16,.97));
+  border:.5px solid rgba(201,168,76,.1);
+  border-radius:var(--radius);
+  padding:24px 20px;
+  box-shadow:var(--shadow);
+  scroll-margin-top:20px;
+  position:relative;overflow:hidden;
+}
+.form-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.18),transparent);
 }
 
-.form-card h2 {
-  margin: 0 0 4px;
-  font-size: 1.05rem;
+.form-card h2{
+  font-family:var(--serif);
+  margin:0 0 4px;font-size:1.15rem;font-weight:600;color:var(--text);
 }
 
-.form-card > p.form-sub {
-  margin: 0 0 18px;
-  color: var(--text-muted);
-  font-size: 0.85rem;
+.form-card > p.form-sub{
+  margin:0 0 18px;color:var(--muted);font-size:.83rem;font-weight:300;
 }
 
-.field {
-  margin-bottom: 14px;
+.field{margin-bottom:14px}
+
+.field label{
+  display:block;font-size:.78rem;font-weight:600;margin-bottom:6px;color:var(--muted);
 }
 
-.field label {
-  display: block;
-  font-size: 0.82rem;
-  font-weight: 600;
-  margin-bottom: 6px;
+.field .opt{color:var(--muted2);font-weight:400}
+
+.field input,
+.field select{
+  width:100%;padding:12px 13px;
+  background:var(--s2);color:var(--text);
+  border:.5px solid rgba(255,255,255,.1);
+  border-radius:var(--radius-sm);
+  font-size:.9375rem;font-family:var(--sans);
+  outline:none;transition:border-color .2s,box-shadow .2s;
 }
 
-.field .opt {
-  color: var(--text-muted);
-  font-weight: 400;
+.field select{
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;background-size:18px;
+  padding-right:38px;
 }
 
-.field input {
-  width: 100%;
-  padding: 12px 13px;
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem;
-  font-family: var(--font-body);
+.field input::placeholder{color:var(--muted2)}
+.field input:focus,
+.field select:focus{
+  border-color:rgba(201,168,76,.4);
+  box-shadow:0 0 0 3px rgba(201,168,76,.06);
 }
 
-.field input:focus { border-color: var(--accent); }
-
-.field.patente input {
-  font-family: var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.field.patente input{
+  font-family:'DM Sans',monospace;
+  letter-spacing:.08em;text-transform:uppercase;
 }
 
-.field-hint {
-  margin: 6px 0 0;
-  font-size: 0.72rem;
-  color: var(--text-muted);
+.field-hint{margin:6px 0 0;font-size:.72rem;color:var(--muted2)}
+
+.btn-enviar{
+  width:100%;padding:14px;
+  background:linear-gradient(135deg,var(--bordo),var(--bordo2));
+  color:var(--text);border:none;border-radius:var(--radius-sm);
+  font-weight:600;font-size:.95rem;font-family:var(--sans);
+  cursor:pointer;margin-top:6px;letter-spacing:.02em;
+  box-shadow:0 4px 20px rgba(107,15,26,.5);
+  transition:all .2s ease;
+}
+.btn-enviar:hover{
+  background:linear-gradient(135deg,var(--bordo2),#9B1A2A);
+  transform:translateY(-1px);
+}
+.btn-enviar:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+.alert{
+  margin-top:14px;padding:12px 14px;border-radius:var(--radius-sm);font-size:.83rem;
+}
+.alert-error{
+  background:rgba(163,45,45,.12);
+  border:.5px solid rgba(163,45,45,.3);
+  color:var(--danger);
+}
+.alert-success{
+  background:rgba(74,155,111,.12);
+  border:.5px solid rgba(74,155,111,.3);
+  color:var(--success);
 }
 
-.btn-enviar {
-  width: 100%;
-  padding: 14px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-weight: 700;
-  font-size: 0.98rem;
-  cursor: pointer;
-  margin-top: 6px;
+.gracias{text-align:center;padding:10px 4px 4px}
+.gracias .check{
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(74,155,111,.15);color:var(--success);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;font-size:1.4rem;
+  border:.5px solid rgba(74,155,111,.3);
 }
-.btn-enviar:hover { background: var(--accent-dark); }
-.btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; }
+.gracias h2{
+  font-family:var(--serif);margin:0 0 8px;font-size:1.1rem;font-weight:600;
+}
+.gracias p{margin:0;color:var(--muted);font-size:.87rem;font-weight:300}
+.gracias a.wa-link{display:inline-block;margin-top:14px;font-size:.85rem}
 
-.alert {
-  margin-top: 14px;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
+.legal{
+  margin-top:32px;text-align:center;font-size:.7rem;
+  color:var(--muted2);line-height:1.7;
 }
-.alert-error {
-  background: rgba(229,87,63,0.12);
-  border: 1px solid var(--danger);
-  color: #ff9c8a;
-}
-.alert-success {
-  background: rgba(72,184,132,0.12);
-  border: 1px solid var(--success);
-  color: #8fe0bb;
-}
-
-.gracias {
-  text-align: center;
-  padding: 10px 4px 4px;
-}
-.gracias .check {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: rgba(72,184,132,0.15);
-  color: var(--success);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 14px;
-  font-size: 1.4rem;
-}
-.gracias h2 { margin: 0 0 8px; font-size: 1.05rem; }
-.gracias p { margin: 0; color: var(--text-muted); font-size: 0.88rem; }
-.gracias a.wa-link {
-  display: inline-block;
-  margin-top: 14px;
-  font-size: 0.85rem;
-}
-
-.legal {
-  margin-top: 32px;
-  text-align: center;
-  font-size: 0.7rem;
-  color: #5a6472;
-  line-height: 1.6;
-}
-.legal a { color: #5a6472; text-decoration: underline; }
+.legal a{color:var(--muted2);text-decoration:underline;text-underline-offset:2px}
+.legal a:hover{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -264,23 +290,32 @@ a { color: var(--accent); }
 <div class="wrap">
 
   <section class="hero">
-    <h1>¿Tenés multas de tránsito en Entre Ríos?</h1>
-    <p>Elegí cómo querés resolverlo — vos mismo, o lo hacemos por vos.</p>
+    <h1>¿Tenés <em>multas</em> de tránsito en Argentina?</h1>
+    <p>Elegí tu provincia y cómo querés resolverlo — vos mismo, o lo hacemos por vos.</p>
   </section>
 
   <section class="opciones">
 
     <div class="opcion-card">
       <h2>Consultarlo yo mismo</h2>
-      <p>Te llevamos directo al sitio oficial de Monitoreo Vial para que consultes tu patente o acta ahí mismo.</p>
+      <p>Elegí tu provincia y te llevamos directo al sistema oficial para que consultes tu patente, acta o DNI ahí mismo.</p>
+
+      <div class="select-field">
+        <label for="jurisdiccion-select">Provincia / jurisdicción</label>
+        <select id="jurisdiccion-select"></select>
+      </div>
+
       <a
         class="opcion-btn secondary"
-        href="https://monitoreovialentrerios.info/#/consulta-infracciones"
+        id="btn-sitio-oficial"
+        href="#"
         target="_blank"
         rel="noopener noreferrer"
       >
         Ir al sitio oficial ↗
       </a>
+
+      <span class="jurisdiccion-badge" id="jurisdiccion-badge"></span>
     </div>
 
     <div class="opcion-card">
@@ -305,6 +340,11 @@ a { color: var(--accent); }
         <div class="hp-field" aria-hidden="true">
           <label for="web">No completar</label>
           <input type="text" id="web" name="web" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="provincia">Provincia <span class="opt">(opcional)</span></label>
+          <select id="provincia"></select>
         </div>
 
         <div class="field patente">
@@ -346,9 +386,8 @@ a { color: var(--accent); }
 
   </section>
 
-  <p class="legal">
-    Sitio independiente, no oficial. La consulta directa se realiza en
-    <a href="https://monitoreovialentrerios.info/" target="_blank" rel="noopener noreferrer">monitoreovialentrerios.info</a>.
+  <p class="legal" id="legal-texto">
+    Sitio independiente, no oficial. La consulta directa se realiza en el sitio oficial de cada provincia.
     No almacenamos tu WhatsApp ni tus datos para otro fin que contactarte por este pedido.
   </p>
 
@@ -357,7 +396,7 @@ a { color: var(--accent); }
 <script>
 /**
  * ============================================================================
- * MULTAS ENTRE RÍOS — landing + captación de pedidos
+ * MULTAS ARGENTINA — landing + captación de pedidos, todo el país
  * ============================================================================
  */
 
@@ -366,11 +405,56 @@ const CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbxnNNPHoBVV1pdqkGBDYPvXDimTGL-DymXb6w87JoNaDECqPgLtXfAbIOv4VLHSSOgN/exec',
 
   // Número de WhatsApp propio, en formato internacional sin + ni espacios
-  // (ej: 5493435020970). Se usa para el link "escribinos directo".
   WHATSAPP_NUMERO: '5493435020970'
 };
 
+/**
+ * Directorio de jurisdicciones.
+ *
+ * official: true  -> el link "url" ya fue verificado y apunta al sistema
+ *           oficial real de esa jurisdicción.
+ * official: false -> todavía NO se verificó un sistema provincial propio
+ *           (varias provincias solo tienen sistemas municipales, no uno
+ *           unificado). Por ahora apunta al sistema nacional SINAI/ANSV,
+ *           que cubre rutas nacionales y jurisdicciones adheridas.
+ *           Reemplazá la "url" de estas apenas confirmes el sitio correcto.
+ */
+const JURISDICCIONES = [
+  { slug: 'nacional',        nombre: 'Nacional (rutas nacionales — SINAI/ANSV)', url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: true },
+  { slug: 'caba',             nombre: 'CABA',                     url: 'https://buenosaires.gob.ar/tramites/consulta-de-infracciones', official: true },
+  { slug: 'buenos-aires',     nombre: 'Buenos Aires (Provincia)', url: 'https://infraccionesba.gba.gob.ar/consulta-infraccion', official: true },
+  { slug: 'cordoba',          nombre: 'Córdoba',                  url: 'https://www.rentascordoba.gob.ar/emision/ver-y-pagar/caminera', official: true },
+  { slug: 'santa-fe',         nombre: 'Santa Fe',                 url: 'https://www.santafe.gob.ar/juzgadovirtual/consultaInfraccion.do?method=inicio', official: true },
+  { slug: 'mendoza',          nombre: 'Mendoza',                  url: 'https://www.sistemas.seguridad.mendoza.gov.ar/repat/', official: true },
+  { slug: 'entre-rios',       nombre: 'Entre Ríos',               url: 'https://monitoreovialentrerios.info/#/consulta-infracciones', official: true },
+  { slug: 'tucuman',          nombre: 'Tucumán',                  url: 'https://www.rentastucuman.gob.ar/nomina/rentastuc2/multasaplicadas.php', official: true },
+  { slug: 'corrientes',       nombre: 'Corrientes',               url: 'https://corrientes.sigein.net/', official: true },
+  { slug: 'salta',            nombre: 'Salta (Capital)',          url: 'https://armsa.dgrmsalta.gov.ar/#/automotores/emision-boletas/multas-transito', official: true },
+
+  // TODO: reemplazar estas por el sistema oficial propio de cada provincia
+  // cuando lo confirmes. Por ahora van al sistema nacional SINAI/ANSV.
+  { slug: 'misiones',            nombre: 'Misiones',            url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'chaco',               nombre: 'Chaco',                url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'san-juan',             nombre: 'San Juan',            url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'jujuy',                nombre: 'Jujuy',                url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'la-pampa',             nombre: 'La Pampa',            url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'la-rioja',             nombre: 'La Rioja',            url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'neuquen',              nombre: 'Neuquén',              url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'rio-negro',            nombre: 'Río Negro',           url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'catamarca',            nombre: 'Catamarca',           url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'chubut',               nombre: 'Chubut',                url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'formosa',              nombre: 'Formosa',              url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'san-luis',             nombre: 'San Luis',            url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'santa-cruz',           nombre: 'Santa Cruz',          url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'santiago-del-estero',  nombre: 'Santiago del Estero', url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+  { slug: 'tierra-del-fuego',     nombre: 'Tierra del Fuego',    url: 'https://consultainfracciones.seguridadvial.gob.ar/', official: false },
+];
+
 const el = {
+  jurisdiccionSelect: document.getElementById('jurisdiccion-select'),
+  btnSitioOficial: document.getElementById('btn-sitio-oficial'),
+  jurisdiccionBadge: document.getElementById('jurisdiccion-badge'),
+  provinciaFormSelect: document.getElementById('provincia'),
   btnIrForm: document.getElementById('btn-ir-form'),
   formCard: document.getElementById('form-card'),
   formInner: document.getElementById('form-inner'),
@@ -386,10 +470,43 @@ const el = {
   waDirecto: document.getElementById('wa-directo')
 };
 
+// --- Poblar los dos selects (el del sitio oficial y el del formulario) ---
+function poblarSelect(selectEl, incluirVacio) {
+  if (incluirVacio) {
+    const optVacio = document.createElement('option');
+    optVacio.value = '';
+    optVacio.textContent = 'No sé / prefiero no decir';
+    selectEl.appendChild(optVacio);
+  }
+  JURISDICCIONES.forEach((j) => {
+    const opt = document.createElement('option');
+    opt.value = j.slug;
+    opt.textContent = j.nombre;
+    selectEl.appendChild(opt);
+  });
+}
+poblarSelect(el.jurisdiccionSelect, false);
+poblarSelect(el.provinciaFormSelect, true);
+
+function actualizarSitioOficial() {
+  const slug = el.jurisdiccionSelect.value;
+  const j = JURISDICCIONES.find((x) => x.slug === slug) || JURISDICCIONES[0];
+  el.btnSitioOficial.href = j.url;
+  if (j.official) {
+    el.jurisdiccionBadge.textContent = '✓ Link oficial verificado';
+    el.jurisdiccionBadge.classList.remove('fallback');
+  } else {
+    el.jurisdiccionBadge.textContent = 'Sistema provincial propio sin confirmar — te llevamos al nacional (SINAI/ANSV)';
+    el.jurisdiccionBadge.classList.add('fallback');
+  }
+}
+el.jurisdiccionSelect.addEventListener('change', actualizarSitioOficial);
+actualizarSitioOficial();
+
 // Link directo de WhatsApp (para "también podés escribirnos directo")
 if (CONFIG.WHATSAPP_NUMERO.indexOf('PEGAR_AQUI') === -1) {
   el.waDirecto.href = 'https://wa.me/' + CONFIG.WHATSAPP_NUMERO +
-    '?text=' + encodeURIComponent('Hola, quiero consultar por una multa en Entre Ríos.');
+    '?text=' + encodeURIComponent('Hola, quiero consultar por una multa de tránsito.');
 }
 
 el.btnIrForm.addEventListener('click', () => {
@@ -412,6 +529,7 @@ el.form.addEventListener('submit', (ev) => {
   ev.preventDefault();
   ocultarError();
 
+  const provincia = el.provinciaFormSelect.value;
   const patente = el.patente.value.trim();
   const acta = el.acta.value.trim();
   const dni = el.dni.value.trim();
@@ -430,7 +548,7 @@ el.form.addEventListener('submit', (ev) => {
     return;
   }
 
-  enviarPedido({ patente, acta, dni, whatsapp, web: el.web.value });
+  enviarPedido({ provincia, patente, acta, dni, whatsapp, web: el.web.value });
 });
 
 async function enviarPedido(datos) {
